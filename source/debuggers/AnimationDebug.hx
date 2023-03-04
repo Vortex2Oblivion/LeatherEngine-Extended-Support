@@ -11,8 +11,6 @@ import states.MainMenuState;
 import states.PlayState;
 import utilities.CoolUtil;
 import game.Character;
-import game.Boyfriend;
-import flixel.system.FlxSound;
 import flixel.addons.ui.FlxUIDropDownMenu;
 import flixel.FlxG;
 import flixel.FlxCamera;
@@ -20,7 +18,6 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.display.FlxGridOverlay;
-import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
@@ -39,9 +36,13 @@ class AnimationDebug extends MusicBeatState {
 	var camFollow:FlxObject;
 	var _file:FileReference;
 
-	public function new(daAnim:String = 'spooky') {
+	public function new(daAnim:String = 'spooky', selectedStage:String) {
 		super();
 		this.daAnim = daAnim;
+		stages = CoolUtil.coolTextFile(Paths.txt('stageList'));
+
+		if (selectedStage != null)
+			stage_Name = selectedStage;
 	}
 
 	var characters:Map<String, Array<String>> = ["default" => ["bf", "gf"]];
@@ -53,13 +54,26 @@ class AnimationDebug extends MusicBeatState {
 	var charDropDown:FlxUIDropDownMenuCustom;
 	var modDropDown:FlxUIDropDownMenuCustom;
 
-	var stage:StageGroup;
-	var stagePosition:FlxSprite;
+	var gridBG:FlxSprite;
 
 	/* CAMERA */
 	var gridCam:FlxCamera;
 	var charCam:FlxCamera;
 	var camHUD:FlxCamera;
+
+	/*STAGE*/
+	var stage:StageGroup;
+	var stagePosition:FlxSprite;
+
+	public var stages:Array<String>;
+	public var stage_Name:String = 'stage';
+	public var stageData:StageData;
+	
+	private var stage_Dropdown:FlxUIDropDownMenuCustom;
+	private var objects:Array<Array<Dynamic>> = [];
+
+
+
 
 	override function create() {
 		FlxG.mouse.visible = true;
@@ -82,13 +96,14 @@ class AnimationDebug extends MusicBeatState {
 		if (FlxG.sound.music.active)
 			FlxG.sound.music.stop();
 
-		var gridBG:FlxSprite = FlxGridOverlay.create(10, 10);
+		reloadStage();
+
+		gridBG = FlxGridOverlay.create(10, 10);
 		gridBG.scrollFactor.set(0, 0);
 		gridBG.cameras = [gridCam];
 		add(gridBG);
 
-		stage = new StageGroup("stage");
-		add(stage);
+
 
 		stagePosition = new FlxSprite().makeGraphic(32, 32, 0xFFFF0000);
 		add(stagePosition);
@@ -220,12 +235,47 @@ class AnimationDebug extends MusicBeatState {
 		modDropDown.cameras = [camHUD];
 		add(modDropDown);
 
+
+		stage_Dropdown = new FlxUIDropDownMenuCustom(modDropDown.x + modDropDown.width + 1, modDropDown.y, FlxUIDropDownMenu.makeStrIdLabelArray(stages, true),
+		function(stageName:String) {
+
+			
+			stage_Name = stages[Std.parseInt(stageName)];
+			reloadStage();
+			remove(char);
+			char.kill();
+			char.destroy();
+
+			daAnim = curCharList[0];
+			char = new Character(0, 0, daAnim);
+			char.debugMode = true;
+			add(char);
+
+			var position = stage.getCharacterPos(char.isPlayer ? 0 : 1, char);
+			char.setPosition(position[0], position[1]);
+
+			if (char.isPlayer)
+				stagePosition.setPosition(stage.player_1_Point.x, stage.player_1_Point.y);
+			else
+				stagePosition.setPosition(stage.player_2_Point.x, stage.player_2_Point.y);
+
+			animList = [];
+			genBoyOffsets(true);
+		});
+
+		stage_Dropdown.selectedLabel = stage_Name;
+		stage_Dropdown.scrollFactor.set();
+		stage_Dropdown.cameras = [camHUD];
+		add(stage_Dropdown);
+
+
 		offset_Button = new FlxButton(charDropDown.x, charDropDown.y - 30, "Save Offsets", function() {
 			saveOffsets();
 		});
 		offset_Button.scrollFactor.set();
 		offset_Button.cameras = [camHUD];
 		add(offset_Button);
+		
 
 		super.create();
 	}
@@ -401,5 +451,40 @@ class AnimationDebug extends MusicBeatState {
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
 		_file = null;
 		FlxG.log.error("Problem saving offsets file");
+	}
+	function reloadStage() {
+		objects = [];
+
+		clear();
+
+		add(camFollow);
+
+		stage = new StageGroup(stage_Name);
+		add(stage);
+
+		@:privateAccess
+		stageData = stage.stage_Data;
+
+		add(stage.infrontOfGFSprites);
+
+
+		add(stage.foregroundSprites);
+
+		add(gridBG);
+
+		add(stagePosition);
+
+		add(char);
+
+		add(animText);
+		add(moveText);
+
+		add(camFollow);
+
+		add(modDropDown);
+		add(charDropDown);
+		add(stage_Dropdown);
+
+		add(offset_Button);
 	}
 }
