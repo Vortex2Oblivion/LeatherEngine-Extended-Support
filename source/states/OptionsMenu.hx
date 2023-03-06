@@ -77,7 +77,7 @@ class OptionsMenu extends MusicBeatState {
 			#if debug
 			new GameStateOption("Charter Dev", 1, new ChartingStateDev()),
 			#end
-			new GameStateOption("Animation Debug", 2, new AnimationDebug("dad")),
+			new GameStateOption("Animation Debug", 2, new AnimationDebug("dad", "stage")),
 			new GameStateOption("Stage Editor", 3, new StageMakingState("stage")),
 			#if MODCHARTING_TOOLS
 			new GameStateOption("Modchart Editor", 4, new modcharting.ModchartEditorState()),

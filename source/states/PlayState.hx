@@ -391,7 +391,16 @@ class PlayState extends MusicBeatState {
 	**/
 	public static var luaModchart:ModchartUtilities = null;
 	#end
-
+	#if hscript
+	/**
+	 * The current hscript file
+	 */
+	 var hscript:HScript;
+	 /**
+	  * All of the current hscript files
+	  */
+	  var hscripts:Array<HScript> = [];
+	 #end
 	/**
 		Length of the current song's instrumental track in milliseconds.
 	**/
@@ -958,6 +967,8 @@ class PlayState extends MusicBeatState {
 				luaModchart = new ModchartUtilities(PolymodAssets.getPath(Paths.lua("scripts/" + PlayState.SONG.modchartPath)));
 				executeALuaState("create", [PlayState.SONG.song.toLowerCase()], MODCHART);
 			}
+			else
+				trace("Script Not Found!");
 		}
 
 		if (luaModchart == null && generatedSomeDumbEventLuas)
@@ -966,6 +977,19 @@ class PlayState extends MusicBeatState {
 		stage.createLuaStuff();
 
 		executeALuaState("create", [stage.stage], STAGE);
+		#else
+		throw("Lua scripting is disabled or not supported on this platform!");
+		#end
+		#if hscript
+		if (Assets.exists(Paths.hx("data/song data/" + SONG.song.toLowerCase() + "/script"))){
+			trace("HScript file found!\nLoading script!");
+			hscript = new HScript(Paths.hx("data/song data/" + SONG.song.toLowerCase() + "/script"));
+			hscript.start();
+
+			hscripts.push(hscript);
+		}
+		#else
+		throw("HScript is disabled or not supported on this platform!");
 		#end
 
 		ratingsGroup.cameras = [camHUD];
