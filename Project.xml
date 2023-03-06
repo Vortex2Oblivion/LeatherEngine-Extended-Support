@@ -39,16 +39,18 @@
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web" />
 	<assets path="assets/preload" rename="assets" exclude="*.mp3" unless="web" />
 
+	<assets path="mods" embed="false" exclude="*.ogg" if="web" />
+	<assets path="mods" embed="false" exclude="*.mp3" unless="web" />
+
+
+		<!-- <define name="PRELOAD_ALL" /> -->
+	<define name="PRELOAD_ALL" unless="web" />
+	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL" />
+
 	<!-- LEATHER ENGINE CUSTOMIZATION -->
 	<define name="VIDEOS_ALLOWED" if="windows || mac || android" />
 	<define name="LUA_ALLOWED" if="desktop" />
 
-	<assets path="mods" embed="false" exclude="*.ogg" if="web" />
-	<assets path="mods" embed="false" exclude="*.mp3" unless="web" />
-
-	<!-- <define name="PRELOAD_ALL" /> -->
-	<define name="PRELOAD_ALL" unless="web" />
-	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL" />
 
 	<!-- Remove this line if you want to build 32 bit, since the 32bit thingy doesn't automatically
 	work (oof) -->

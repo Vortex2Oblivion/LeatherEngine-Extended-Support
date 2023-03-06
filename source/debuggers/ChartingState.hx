@@ -1676,7 +1676,7 @@ class ChartingState extends MusicBeatState {
 
 				var idIcon:FlxSprite = new FlxSprite(Math.floor((daNoteInfo + 1) * GRID_SIZE) - 16,
 					Math.floor(getYfromStrum((daStrumTime - sectionStartTime()))) - 12);
-				idIcon.loadGraphic(Paths.image("idSprite", "shared"));
+				idIcon.loadGraphic(Paths.image("charter/idSprite", "shared"));
 				idIcon.setGraphicSize(20, 20);
 				idIcon.updateHitbox();
 				idIcon.antialiasing = false;
@@ -1703,7 +1703,7 @@ class ChartingState extends MusicBeatState {
 				if (Std.int(event[1]) >= Std.int(sectionStartTime()) && Std.int(event[1]) < Std.int(sectionStartTime(curSection + 1))) {
 					var eventSprite:EventSprite = new EventSprite(event[1]);
 
-					eventSprite.loadGraphic(Paths.image("eventSprite", "shared"));
+					eventSprite.loadGraphic(Paths.image("charter/eventSprite", "shared"));
 
 					eventSprite.setGraphicSize(GRID_SIZE, GRID_SIZE);
 					eventSprite.updateHitbox();
