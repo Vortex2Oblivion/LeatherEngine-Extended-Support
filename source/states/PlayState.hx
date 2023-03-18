@@ -2214,7 +2214,6 @@ class PlayState extends MusicBeatState {
 				}
 
 				var swagWidth = daNote.width;
-				var center:Float = strumY + swagWidth / 2;
 
 				if (Options.getData("downscroll")) {
 					daNote.y = strumY + (0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(speed, 2));
@@ -2224,7 +2223,7 @@ class PlayState extends MusicBeatState {
 						if (daNote.animation.curAnim.name.endsWith('end') && daNote.prevNote != null)
 							daNote.y += daNote.prevNote.height;
 						else
-							daNote.y += daNote.height / speed;
+							daNote.y += daNote.height / speed / 2;
 
 						if ((daNote.wasGoodHit || daNote.prevNote.wasGoodHit) && daNote.shouldHit) {
 							// Clip to strumline
