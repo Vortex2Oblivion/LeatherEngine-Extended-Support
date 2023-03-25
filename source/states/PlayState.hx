@@ -1002,7 +1002,8 @@ class PlayState extends MusicBeatState {
 		splash_group.add(cache_splash);
 
 		#if (MODCHARTING_TOOLS && linc_luajit)
-		if (executeModchart || generatedSomeDumbEventLuas || stage.stageScript != null) {
+		if (executeModchart || generatedSomeDumbEventLuas || stage.stageScript != null || Assets.exists(Paths.json("song data/modchart")))
+		{
 			playfieldRenderer = new PlayfieldRenderer(strumLineNotes, notes, this);
 			playfieldRenderer.cameras = [camHUD];
 			add(playfieldRenderer);

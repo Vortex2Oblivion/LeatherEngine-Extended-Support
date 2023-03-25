@@ -1,13 +1,10 @@
 package debuggers;
 
 import flixel.FlxObject;
-import states.TitleState;
 import game.EventSprite;
 import utilities.NoteVariables;
-import game.Character;
 import modding.CharacterConfig;
 import ui.FlxUIDropDownMenuCustom;
-import lime.tools.AssetType;
 import game.Song;
 import states.LoadingState;
 import utilities.CoolUtil;
@@ -22,22 +19,16 @@ import game.Song.SwagSong;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
-import flixel.addons.ui.FlxInputText;
-import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUICheckBox;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
-import flixel.addons.ui.FlxUITooltip.FlxUITooltipStyle;
-import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
-import flixel.math.FlxPoint;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
-import flixel.ui.FlxSpriteButton;
 import flixel.util.FlxColor;
 import haxe.Json;
 import lime.utils.Assets;
@@ -123,6 +114,7 @@ class ChartingState extends MusicBeatState {
 
 	var min_zoom:Float = 0.5;
 	var max_zoom:Float = 16;
+
 
 	override function create() {
 		#if NO_PRELOAD_ALL
@@ -351,6 +343,8 @@ class ChartingState extends MusicBeatState {
 		};
 
 		modchart_Input = new FlxUIInputText(10, check_mute_inst.y + check_mute_inst.height + 2, 70, _song.modchartPath, 8);
+
+
 
 		cutscene_Input = new FlxUIInputText(modchart_Input.x, modchart_Input.y + modchart_Input.height + 2, 70, _song.cutscene, 8);
 		endCutscene_Input = new FlxUIInputText(cutscene_Input.x, cutscene_Input.y + cutscene_Input.height + 2, 70, _song.endCutscene, 8);
