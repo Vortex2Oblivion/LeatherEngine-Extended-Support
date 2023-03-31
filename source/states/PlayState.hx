@@ -157,6 +157,11 @@ class PlayState extends MusicBeatState {
 	public var notes:FlxTypedGroup<Note>;
 
 	/**
+	 	The arrows that are actually being pressed 
+	**/
+	var babyArrow:StrumNote;
+
+	/**
 		`Array` of all the notes waiting to be spawned into the game (when their time comes to prevent lag).
 	**/
 	public var unspawnNotes:Array<Note> = [];
@@ -576,7 +581,7 @@ class PlayState extends MusicBeatState {
 	#end
 
 	/**
-		`FlxTypedGroup` of `NoteSplash`s used to contain all note splashes
+		`FlxTypedGroup` of `NoteSplash`s used to contain all note splash_group
 		and make performance better as a result by using `.recycle`.
 	**/
 	public var splash_group:FlxTypedSpriteGroup<NoteSplash> = new FlxTypedSpriteGroup<NoteSplash>();
@@ -1718,7 +1723,7 @@ class PlayState extends MusicBeatState {
 			usedKeyCount = SONG.playerKeyCount;
 
 		for (i in 0...usedKeyCount) {
-			var babyArrow:StrumNote = new StrumNote(0, strumLine.y, i, null, null, null, usedKeyCount);
+			babyArrow = new StrumNote(0, strumLine.y, i, null, null, null, usedKeyCount);
 
 			babyArrow.frames = Paths.getSparrowAtlas('ui skins/' + SONG.ui_Skin + "/arrows/default");
 
@@ -2206,36 +2211,32 @@ class PlayState extends MusicBeatState {
 				var coolStrum = (daNote.mustPress ? playerStrums.members[Math.floor(Math.abs(daNote.noteData))] : enemyStrums.members[Math.floor(Math.abs(daNote.noteData))]);
 				var strumY = coolStrum.y;
 
-				if ((daNote.y > FlxG.height || daNote.y < daNote.height) || (daNote.x > FlxG.width || daNote.x < daNote.width)) {
-					daNote.active = false;
-					daNote.visible = false;
-				} else {
-					daNote.visible = true;
-					daNote.active = true;
-				}
+				daNote.visible = true;
+				daNote.active = true;
 
-				var swagWidth = daNote.width;
-
-				if (Options.getData("downscroll")) {
-					daNote.y = strumY + (0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(speed, 2));
-
-					if (daNote.isSustainNote) {
-						// Remember = minus makes notes go up, plus makes them go down
-						if (daNote.animation.curAnim.name.endsWith('end') && daNote.prevNote != null)
-							daNote.y += daNote.prevNote.height;
-						else
-							daNote.y += daNote.height / speed / 2;
-
-						if ((daNote.wasGoodHit || daNote.prevNote.wasGoodHit) && daNote.shouldHit) {
-							// Clip to strumline
-							var swagRect = new FlxRect(0, 0, daNote.frameWidth, daNote.frameHeight);
-							swagRect.height = ((coolStrum.y + (coolStrum.height / 2)) - daNote.y) / daNote.scale.y;
-							swagRect.y = daNote.frameHeight - swagRect.height;
-
-							daNote.clipRect = swagRect;
+				if (Options.getData("downscroll"))
+					{
+						daNote.y = strumY + (0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(speed, 2));
+	
+						if (daNote.isSustainNote)
+						{
+							// Remember = minus makes notes go up, plus makes them go down
+							daNote.y += daNote.height / speed;
+	
+							if (((daNote.wasGoodHit || daNote.prevNote.wasGoodHit) && daNote.shouldHit)
+								&& daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= (strumLine.y + Note.swagWidth / 2))
+							{
+								// Clip to strumline
+								var swagRect = new FlxRect(0, 0, daNote.frameWidth * 2, daNote.frameHeight * 2);
+								swagRect.height = (coolStrum.y + (coolStrum.width / 2) - daNote.y) / daNote.scale.y;
+								swagRect.y = daNote.frameHeight - swagRect.height;
+	
+								daNote.clipRect = swagRect;
+							}
 						}
 					}
-				} else {
+				else
+				{
 					daNote.y = strumY - (0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(speed, 2));
 
 					if (daNote.isSustainNote) {
@@ -2327,7 +2328,7 @@ class PlayState extends MusicBeatState {
 								spr.playAnim('confirm', true);
 								spr.resetAnim = 0;
 
-								if (!daNote.isSustainNote && Options.getData("opponentNoteSplashes")) {
+								if (!daNote.isSustainNote && Options.getData("opponentNotesplash_group")) {
 									var splash = splash_group.recycle(NoteSplash);
 									splash.setup_splash(spr.ID, spr, false);
 
@@ -2917,7 +2918,7 @@ class PlayState extends MusicBeatState {
 
 		hitNotes += hitNoteAmount;
 
-		if ((daRating == "sick" || daRating == "marvelous") && Options.getData("playerNoteSplashes")) {
+		if ((daRating == "sick" || daRating == "marvelous") && Options.getData("playerNotesplash_group")) {
 			playerStrums.forEachAlive(function(spr:FlxSprite) {
 				if (spr.ID == Math.abs(noteData)) {
 					var splash = splash_group.recycle(NoteSplash);
@@ -4394,6 +4395,67 @@ class PlayState extends MusicBeatState {
 
 					addBgStuff();
 				}
+			case "change keycount":
+				var toChange:Int = Std.parseInt(event[2]);
+				var toChangeAlt:Int = Std.parseInt(event[3]);
+				SONG.keyCount = toChangeAlt;	
+				SONG.playerKeyCount = toChange;
+				SONG.mania = toChange;
+				playerStrums.clear();
+				enemyStrums.clear();
+				strumLineNotes.clear();
+				splash_group.clear();
+				binds = Options.getData("binds", "binds")[SONG.playerKeyCount - 1];
+				if(Options.getData("middlescroll"))
+					{
+						generateStaticArrows(50, false);
+						generateStaticArrows(0.5, true);
+					}
+					else
+					{
+						if(characterPlayingAs == 0)
+						{
+							generateStaticArrows(0, false);
+							generateStaticArrows(1, true);
+							playerStrums.add(babyArrow);								
+						}
+						else
+						{
+							generateStaticArrows(1, false);
+							generateStaticArrows(0, true);
+							enemyStrums.add(babyArrow);
+						}
+					}
+				#if MODCHARTING_TOOLS
+				NoteMovement.getDefaultStrumPos(this);
+				#end
+				for (note in unspawnNotes) {
+					note.newNew(note.strumTime, note.noteData, note.prevNote, note.isSustainNote, note.character, note.arrow_Type, PlayState.SONG, note.characters, note.mustPress, note.inEditor);
+				}
+				
+				for (note in notes.members) {
+					note.newNew(note.strumTime, note.noteData, null, note.isSustainNote, note.character, note.arrow_Type, PlayState.SONG, note.characters, note.mustPress, note.inEditor);
+				}
+				add(strumLineNotes);
+				#if (MODCHARTING_TOOLS && linc_luajit)
+				if (executeModchart || generatedSomeDumbEventLuas || stage.stageScript != null || Assets.exists(Paths.json("song data/" + SONG.song.toLowerCase() + '/modchart')))
+				{
+					playfieldRenderer = new PlayfieldRenderer(strumLineNotes, notes, this);
+					playfieldRenderer.cameras = [camHUD];
+					add(playfieldRenderer);
+				}
+				#end
+				add(splash_group);				
+				#if linc_luajit
+				for (i in 0...strumLineNotes.length)
+				{
+					var member = strumLineNotes.members[i];
+			
+					setLuaVar("defaultStrum" + i + "X", member.x);
+					setLuaVar("defaultStrum" + i + "Y", member.y);
+					setLuaVar("defaultStrum" + i + "Angle", member.angle);
+				}
+				#end
 		}
 
 		//                            name       pos      param 1   param 2

@@ -14,3 +14,5 @@ Camera Flash~Color (example: 'red')~Duration
 No Shader~Character (BF, Dad, GF)~Nothing
 Add Trail~Object Name (dad, boyfriend, girlfriend, etc)~Properties, formatted like: '10,3,0.4,0.05' (sprite count, frame delay, alpha, alpha diff)
 Remove Trail~Object Name (dad, boyfriend, girlfriend, etc)~Nothing
+Change Character~Character To Change (Dad, BF, GF)~Character Name (dad, bf, gf, pico, etc)
+Change Keycount~Player One Keycount~Player Two Keycount
