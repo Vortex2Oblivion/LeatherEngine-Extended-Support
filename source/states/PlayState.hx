@@ -3,7 +3,6 @@ package states;
 import modcharting.ModchartEditorState;
 import flixel.group.FlxSpriteGroup;
 #if sys
-import sys.FileSystem;
 #end
 #if discord_rpc
 import utilities.Discord.DiscordClient;
@@ -15,7 +14,6 @@ import polymod.backends.PolymodAssets;
 import hxcodec.VideoHandler;
 #end
 #if MODCHARTING_TOOLS
-import modcharting.ModchartFuncs;
 import modcharting.NoteMovement;
 import modcharting.PlayfieldRenderer;
 #end
@@ -23,10 +21,7 @@ import modding.HScript;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import utilities.Options;
 import flixel.util.FlxStringUtil;
-import openfl.display.BitmapData;
 import flixel.graphics.FlxGraphic;
-import flixel.system.FlxAssets.FlxShader;
-import flixel.addons.display.FlxShaderMaskCamera;
 import substates.ResultsScreenSubstate;
 import haxe.Json;
 import game.Replay;
@@ -34,17 +29,14 @@ import lime.utils.Assets;
 import game.StrumNote;
 import game.Cutscene;
 import game.NoteSplash;
-import flixel.graphics.frames.FlxFramesCollection;
 import flixel.tweens.misc.VarTween;
 import modding.ModchartUtilities;
-import lime.app.Application;
 import utilities.NoteVariables;
 import flixel.input.FlxInput.FlxInputState;
 import flixel.group.FlxGroup;
 import utilities.Ratings;
 import debuggers.ChartingState;
 import game.Section.SwagSection;
-import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -75,7 +67,6 @@ import utilities.CoolUtil;
 import substates.PauseSubState;
 import substates.GameOverSubstate;
 import game.Highscore;
-import openfl.utils.Assets as OpenFlAssets;
 
 using StringTools;
 
@@ -1007,7 +998,7 @@ class PlayState extends MusicBeatState {
 		splash_group.add(cache_splash);
 
 		#if (MODCHARTING_TOOLS && linc_luajit)
-		if (executeModchart || generatedSomeDumbEventLuas || stage.stageScript != null || Assets.exists(Paths.json("song data/" + SONG.song.toLowerCase() + '/modchart')))
+		if (SONG.modchartingTools)
 		{
 			playfieldRenderer = new PlayfieldRenderer(strumLineNotes, notes, this);
 			playfieldRenderer.cameras = [camHUD];
@@ -4404,7 +4395,6 @@ class PlayState extends MusicBeatState {
 				playerStrums.clear();
 				enemyStrums.clear();
 				strumLineNotes.clear();
-				splash_group.clear();
 				binds = Options.getData("binds", "binds")[SONG.playerKeyCount - 1];
 				if(Options.getData("middlescroll"))
 					{
@@ -4438,7 +4428,7 @@ class PlayState extends MusicBeatState {
 				}
 				add(strumLineNotes);
 				#if (MODCHARTING_TOOLS && linc_luajit)
-				if (executeModchart || generatedSomeDumbEventLuas || stage.stageScript != null || Assets.exists(Paths.json("song data/" + SONG.song.toLowerCase() + '/modchart')))
+				if (SONG.modchartingTools)
 				{
 					playfieldRenderer = new PlayfieldRenderer(strumLineNotes, notes, this);
 					playfieldRenderer.cameras = [camHUD];

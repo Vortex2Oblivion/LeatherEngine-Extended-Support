@@ -344,6 +344,13 @@ class ChartingState extends MusicBeatState {
 
 		modchart_Input = new FlxUIInputText(10, check_mute_inst.y + check_mute_inst.height + 2, 70, _song.modchartPath, 8);
 
+		var check_modchart_tools = new FlxUICheckBox(modchart_Input.x + (modchart_Input.width * 2) + 10, modchart_Input.y, null, null, "Use Modcharting Tools", 100);
+		check_modchart_tools.checked = _song.modchartingTools;
+
+		check_modchart_tools.callback = function() {
+			_song.modchartingTools = check_modchart_tools.checked;
+			trace('CHECKED!');
+		};
 
 
 		cutscene_Input = new FlxUIInputText(modchart_Input.x, modchart_Input.y + modchart_Input.height + 2, 70, _song.cutscene, 8);
@@ -436,6 +443,7 @@ class ChartingState extends MusicBeatState {
 		tab_group_song.add(check_mute_vocals);
 		tab_group_song.add(check_char_ids);
 		tab_group_song.add(modchart_Input);
+		tab_group_song.add(check_modchart_tools);
 		tab_group_song.add(cutscene_Input);
 		tab_group_song.add(endCutscene_Input);
 		tab_group_song.add(saveButton);

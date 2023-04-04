@@ -34,6 +34,7 @@ typedef SwagSong = {
 	var stage:String;
 	var validScore:Bool;
 	var modchartPath:String;
+	var modchartingTools:Bool;
 	var keyCount:Null<Int>;
 	var playerKeyCount:Null<Int>;
 	var timescale:Array<Int>;
@@ -55,6 +56,7 @@ class Song {
 	public var notes:Array<SwagSection>;
 	public var bpm:Float;
 	public var needsVoices:Bool = true;
+	public var modchartingTools:Bool = false;
 	public var speed:Float = 1;
 
 	public var player1:String = 'bf';
