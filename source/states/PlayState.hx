@@ -1408,7 +1408,7 @@ class PlayState extends MusicBeatState {
 		paused = false;
 		canPause = true;
 
-		if (Options.getData("middlescroll")) {
+		if (Options.getData("middlescroll") || Options.getData("rythmHUD")) {
 			generateStaticArrows(50, false);
 			generateStaticArrows(0.5, true);
 		} else {
@@ -4396,7 +4396,7 @@ class PlayState extends MusicBeatState {
 				enemyStrums.clear();
 				strumLineNotes.clear();
 				binds = Options.getData("binds", "binds")[SONG.playerKeyCount - 1];
-				if(Options.getData("middlescroll"))
+				if(Options.getData("middlescroll") || Options.getData("rythmHUD"))
 					{
 						generateStaticArrows(50, false);
 						generateStaticArrows(0.5, true);

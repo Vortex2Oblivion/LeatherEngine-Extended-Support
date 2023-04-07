@@ -2102,8 +2102,12 @@ class ModchartUtilities {
 		});
 
 		// had to change this cuz i already have a `set()` function, sorry mates ;-;
-		setLuaFunction('setBeat', function(beat:Float, argsAsString:String) {
+		setLuaFunction('setMod', function(beat:Float, argsAsString:String) {
 			ModchartFuncs.set(beat, argsAsString);
+		});
+
+		setLuaFunction('easeMod', function(beat:Float, time:Float, easeStr:String, argsAsString:String) {
+			ModchartFuncs.ease(beat, time, easeStr, argsAsString);
 		});
 
 		setLuaFunction('ease', function(beat:Float, time:Float, easeStr:String, argsAsString:String) {

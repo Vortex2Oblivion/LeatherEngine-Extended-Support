@@ -69,7 +69,8 @@ class OptionsMenu extends MusicBeatState {
 			new BoolOption("Bigger Score Text", "biggerScoreInfo", 5),
 			new BoolOption("Bigger Info Text", "biggerInfoText", 6),
 			new StringSaveOption("Time Bar Style", ["leather engine", "psych engine", "old kade engine"], 7, "timeBarStyle"),
-			new PageOption("Screen Effects", 8, "Screen Effects")
+			new PageOption("Screen Effects", 8, "Screen Effects"),
+			new BoolOption("Rythm HUD", "rythmHUD", 9)
 		],
 		"Tools" => [
 			new PageOption("Back", 0, "Categories"),

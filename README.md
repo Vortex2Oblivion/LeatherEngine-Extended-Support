@@ -48,7 +48,7 @@ You can load, share, and play replays of songs you've played! They can even be i
 
 - SrPerez - Original 9 Key and 6 Key Designs
 
-- larsiusprime - Scrollable Drop Down Menu
+- MAJigsaw77 - [flxgif](https://github.com/MAJigsaw77/flxgif) - the thing the game uses to play gif files
 
 - PolybiusProxy - hxCodec
 
@@ -60,6 +60,6 @@ You can load, share, and play replays of songs you've played! They can even be i
 
 - Smokey555 - Adobe Animate Spritemap -> FlxFramesCollection Support
 
-- larsiusprime + Polymod Contributors - [polymod](https://github.com/larsiusprime/polymod) (funny cool mod loader!!!)
+- larsiusprime + Polymod Contributors - [polymod](https://github.com/larsiusprime/polymod) (funny cool mod loader!!!) & Scrollable Drop Down Menu
 
 - TheZoroForce240 + FNF-Modcharting-Tools Contributors - [fnf-modcharting-tools](https://github.com/TheZoroForce240/FNF-Modcharting-Tools) (cool modchart shits, check them out!!!)

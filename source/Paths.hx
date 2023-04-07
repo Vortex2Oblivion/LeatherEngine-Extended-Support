@@ -76,6 +76,9 @@ class Paths {
 	inline static public function image(key:String, ?library:String):String
 		return getPath('images/$key.png', IMAGE, library);
 
+	inline static public function gif(key:String, ?library:String):String
+		return getPath('images/$key.gif', IMAGE, library);
+
 	inline static public function font(key:String):String
 		return 'assets/fonts/$key';
 

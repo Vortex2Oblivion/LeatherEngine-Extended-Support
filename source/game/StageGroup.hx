@@ -19,6 +19,7 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import modding.CharacterConfig;
 import game.DancingSprite.BackgroundGirls;
+import flxgif.FlxGifSprite;
 
 using StringTools;
 
@@ -271,6 +272,7 @@ class StageGroup extends FlxGroup {
 
 							for (Object in stage_Data.objects) {
 								var Sprite = new FlxSprite(Object.position[0], Object.position[1]);
+								var GifSprite = new FlxGifSprite(Object.position[0], Object.position[1]);
 
 								if (Object.color != null && Object.color != [])
 									Sprite.color = FlxColor.fromRGB(Object.color[0], Object.color[1], Object.color[2]);
@@ -306,7 +308,10 @@ class StageGroup extends FlxGroup {
 
 									if (Object.start_Animation != "" && Object.start_Animation != null && Object.start_Animation != "null")
 										Sprite.animation.play(Object.start_Animation);
-								} else
+								}
+								else if (Object.is_Gif)
+									GifSprite.loadGif(Paths.gif(stage + "/" + Object.file_Name, "stages"));
+								else
 									Sprite.loadGraphic(Paths.image(stage + "/" + Object.file_Name, "stages"));
 
 								if (Object.uses_Frame_Width)
@@ -324,13 +329,17 @@ class StageGroup extends FlxGroup {
 									switch (Object.layer.toLowerCase()) {
 										case "foreground":
 											foregroundSprites.add(Sprite);
+											foregroundSitprites.add(GifSprite);
 										case "gf":
 											infrontOfGFSprites.add(Sprite);
+											infrontOfGFSprites.add(GifSprite);
 										default:
 											add(Sprite);
+											add(GifSprite);
 									}
 								} else
 									add(Sprite);
+									add(GifSprite);
 							}
 						}
 					}
@@ -531,6 +540,7 @@ typedef StageObject = {
 	// Image Info //
 	var file_Name:String;
 	var is_Animated:Bool;
+	var is_Gif:Bool;
 	// Animations //
 	var animations:Array<CharacterAnimation>;
 	var start_Animation:String;

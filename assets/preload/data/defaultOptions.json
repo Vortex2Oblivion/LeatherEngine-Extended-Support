@@ -89,6 +89,10 @@
             "value": "standard"
         },
         {
+            "option": "rythmHUD",
+            "value": false
+        },
+        {
             "option": "judgementTimings",
             "value": [25, 50, 70, 100]
         },

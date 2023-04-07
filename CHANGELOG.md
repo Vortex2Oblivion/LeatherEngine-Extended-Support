@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Memory Leaks option (stops clearing asset caches).
 - Skip Results Screen Options.
 - You can now zoom into the Animation Debug using the mouse.
+- You can now use .gif files in stages.
 
 ### Fixed
 
