@@ -109,7 +109,7 @@
 
 	<haxelib name="flxanimate" />
 
-	<haxelib name="flxgif" if="desktop" />
+	<haxelib name="flxgif" />
 
 	<haxelib name="discord_rpc" if="desktop" />
 	<haxelib name="linc_luajit" if="LUA_ALLOWED" />

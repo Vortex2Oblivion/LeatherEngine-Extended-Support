@@ -11,8 +11,6 @@ import lime.utils.Assets;
 import haxe.Json;
 import flixel.util.FlxColor;
 import flixel.math.FlxPoint;
-import states.PlayState;
-import flixel.util.FlxTimer;
 import flixel.system.FlxSound;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -20,9 +18,7 @@ import flixel.group.FlxGroup;
 import states.PlayState;
 import modding.CharacterConfig;
 import game.DancingSprite.BackgroundGirls;
-#if desktop
 import flxgif.FlxGifSprite;
-#end
 
 using StringTools;
 
@@ -275,9 +271,7 @@ class StageGroup extends FlxGroup {
 
 							for (Object in stage_Data.objects) {
 								var Sprite = new FlxSprite(Object.position[0], Object.position[1]);
-								#if desktop
 								var GifSprite = new FlxGifSprite(Object.position[0], Object.position[1]);
-								#end
 
 								if (Object.color != null && Object.color != [])
 									Sprite.color = FlxColor.fromRGB(Object.color[0], Object.color[1], Object.color[2]);
@@ -314,10 +308,8 @@ class StageGroup extends FlxGroup {
 									if (Object.start_Animation != "" && Object.start_Animation != null && Object.start_Animation != "null")
 										Sprite.animation.play(Object.start_Animation);
 								}
-								#if desktop
 								else if (Object.is_Gif)
 									GifSprite.loadGif(Paths.gif(stage + "/" + Object.file_Name, "stages"));
-								#end
 								else
 									Sprite.loadGraphic(Paths.image(stage + "/" + Object.file_Name, "stages"));
 
@@ -336,25 +328,17 @@ class StageGroup extends FlxGroup {
 									switch (Object.layer.toLowerCase()) {
 										case "foreground":
 											foregroundSprites.add(Sprite);
-											#if desktop
 											foregroundSprites.add(GifSprite);
-											#end
 										case "gf":
 											infrontOfGFSprites.add(Sprite);
-											#if desktop
 											infrontOfGFSprites.add(GifSprite);
-											#end
 										default:
 											add(Sprite);
-											#if desktop
 											add(GifSprite);
-											#end
 									}
 								} else
 									add(Sprite);
-									#if desktop
 									add(GifSprite);
-									#end
 							}
 						}
 					}
@@ -555,9 +539,7 @@ typedef StageObject = {
 	// Image Info //
 	var file_Name:String;
 	var is_Animated:Bool;
-	#if desktop
 	var is_Gif:Bool;
-	#end
 	// Animations //
 	var animations:Array<CharacterAnimation>;
 	var start_Animation:String;
