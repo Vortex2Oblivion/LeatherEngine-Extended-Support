@@ -223,7 +223,7 @@ class FlxMath
 	 * @param	rect		The Rectangle to test within
 	 * @return	true if pointX/pointY is within the Rectangle, otherwise false
 	 */
-     #if (haxe < "4.3.0")
+    #if (haxe < "4.3.0")
 	public static function pointInRectangle(pointX:Float, pointY:Float, rect:Rectangle):Bool
 	{
 		return pointX >= rect.x && pointX <= rect.right && pointY >= rect.y && pointY <= rect.bottom;
