@@ -84,7 +84,6 @@ jobs:
           haxelib install flixel-ui
           haxelib install flixel-addons
           haxelib install polymod
-          haxelib install flxgif
           haxelib git openfl https://github.com/openfl/openfl
           haxelib git flixelTextureAtlas https://github.com/Smokey555/Flixel-TextureAtlas.git
           haxelib git fnf-modcharting-tools https://github.com/TheZoroForce240/FNF-Modcharting-Tools
