@@ -1,4 +1,4 @@
-package modding;
+package modding.scripts.haxe;
 
 import openfl.utils.Assets;
 import hscript.Parser;

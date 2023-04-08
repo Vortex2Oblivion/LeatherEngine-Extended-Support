@@ -17,7 +17,7 @@ import hxcodec.VideoHandler;
 import modcharting.NoteMovement;
 import modcharting.PlayfieldRenderer;
 #end
-import modding.HScript;
+import modding.scripts.haxe.HScript;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import utilities.Options;
 import flixel.util.FlxStringUtil;

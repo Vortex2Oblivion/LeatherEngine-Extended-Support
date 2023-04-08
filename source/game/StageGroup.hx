@@ -17,6 +17,7 @@ import flixel.system.FlxSound;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
+import states.PlayState;
 import modding.CharacterConfig;
 import game.DancingSprite.BackgroundGirls;
 import flxgif.FlxGifSprite;
@@ -329,7 +330,7 @@ class StageGroup extends FlxGroup {
 									switch (Object.layer.toLowerCase()) {
 										case "foreground":
 											foregroundSprites.add(Sprite);
-											foregroundSitprites.add(GifSprite);
+											foregroundSprites.add(GifSprite);
 										case "gf":
 											infrontOfGFSprites.add(Sprite);
 											infrontOfGFSprites.add(GifSprite);
