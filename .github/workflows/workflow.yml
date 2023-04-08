@@ -44,7 +44,7 @@ jobs:
           haxelib install flxgif
           haxelib git hxCodec https://github.com/polybiusproxy/hxCodec
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
-          haxelib git flixelTextureAtlas https://github.com/Smokey555/Flixel-TextureAtlas.git
+          haxelib install flxanimate
           haxelib git fnf-modcharting-tools https://github.com/TheZoroForce240/FNF-Modcharting-Tools
           haxelib install hxcpp-debug-server
           haxelib list
@@ -85,7 +85,7 @@ jobs:
           haxelib install flixel-addons
           haxelib install polymod
           haxelib git openfl https://github.com/openfl/openfl
-          haxelib git flixelTextureAtlas https://github.com/Smokey555/Flixel-TextureAtlas.git
+          haxelib install flxanimate
           haxelib git fnf-modcharting-tools https://github.com/TheZoroForce240/FNF-Modcharting-Tools
           haxelib list
       - name: Create Version Tag
@@ -128,7 +128,7 @@ jobs:
           haxelib git hxCodec https://github.com/polybiusproxy/hxCodec
           haxelib git openfl https://github.com/openfl/openfl
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
-          haxelib git flixelTextureAtlas https://github.com/Smokey555/Flixel-TextureAtlas.git
+          haxelib install flxanimate
           haxelib git fnf-modcharting-tools https://github.com/TheZoroForce240/FNF-Modcharting-Tools
           haxelib install hxcpp-debug-server
           haxelib list
@@ -172,7 +172,7 @@ jobs:
           haxelib git hxCodec https://github.com/polybiusproxy/hxCodec
           haxelib git openfl https://github.com/openfl/openfl
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
-          haxelib git flixelTextureAtlas https://github.com/Smokey555/Flixel-TextureAtlas.git
+          haxelib install flxanimate
           haxelib git fnf-modcharting-tools https://github.com/TheZoroForce240/FNF-Modcharting-Tools
           haxelib install hxcpp-debug-server
           haxelib list

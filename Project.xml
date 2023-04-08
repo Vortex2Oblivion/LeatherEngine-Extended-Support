@@ -107,8 +107,7 @@
 
 	<haxelib name="polymod" />
 
-	<!-- haxelib git flixelTextureAtlas https://github.com/Smokey555/Flixel-TextureAtlas.git -->
-	<haxelib name="flixelTextureAtlas" />
+	<haxelib name="flxanimate" />
 
 	<haxelib name="flxgif" if="desktop" />
 
