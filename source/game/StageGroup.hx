@@ -346,7 +346,9 @@ class StageGroup extends FlxGroup {
 											#end
 										default:
 											add(Sprite);
+											#if desktop
 											add(GifSprite);
+											#end
 									}
 								} else
 									add(Sprite);
