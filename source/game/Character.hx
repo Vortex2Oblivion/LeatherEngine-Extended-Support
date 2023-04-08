@@ -1,6 +1,5 @@
 package game;
 
-import animateatlas.AtlasFrameMaker;
 import utilities.Options;
 import flixel.FlxG;
 import flixel.addons.effects.FlxTrail;
