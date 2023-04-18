@@ -122,6 +122,8 @@
 	<haxelib name="fnf-modcharting-tools" />
 	<define name="MODCHARTING_TOOLS" if="fnf-modcharting-tools" />
 	<define name="LEATHER" if="MODCHARTING_TOOLS" />
+	<haxeflag name="--macro" value="allowPackage('flash')" />
+	<haxeflag name="--macro" value="include('my.pack')" />
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
