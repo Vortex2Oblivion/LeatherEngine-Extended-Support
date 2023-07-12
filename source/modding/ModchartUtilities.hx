@@ -2077,7 +2077,7 @@ class ModchartUtilities {
 			getActorByName(actor).shader = funnyCustomShader;
 		});
 
-		setLuaFunction("setActorNoShader", function(actor:String){
+		setLuaFunction("setActorNoCustomShader", function(actor:String){
 			getActorByName(actor).shader = null;
 		});
 
@@ -2087,7 +2087,7 @@ class ModchartUtilities {
 			cameraFromString(camera).setFilters([new ShaderFilter(funnyCustomShader)]);
 		});
 
-		setLuaFunction("setCameraNoShader", function(camera:String){
+		setLuaFunction("setCameraNoCustomShader", function(camera:String){
 			cameraFromString(camera).setFilters(null);
 		});
 
