@@ -42,7 +42,6 @@
 	<!-- LEATHER ENGINE CUSTOMIZATION -->
 	<define name="VIDEOS_ALLOWED" if="windows || mac || android" />
 	<define name="LUA_ALLOWED" if="desktop" />
-	<define name="3D_ALLOWED" />
 
 	<assets path="mods" embed="false" exclude="*.ogg" if="web" />
 	<assets path="mods" embed="false" exclude="*.mp3" unless="web" />
@@ -106,7 +105,6 @@
 
 	<haxelib name="polymod" />
 
-	<haxelib name="away3d" if="3D_ALLOWED"/>
 
 
 	<!-- haxelib git flixelTextureAtlas https://github.com/Smokey555/Flixel-TextureAtlas.git -->
