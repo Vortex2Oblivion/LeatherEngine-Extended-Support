@@ -125,28 +125,29 @@ class CoolUtil {
 		@author Leather128
 	**/
 	public static function coolError(message:Null<String> = null, title:Null<String> = null):Void {
-		#if !linux
-		Application.current.window.alert(message, title);
-		#else
-		trace(title + " - " + message, ERROR);
+		trace(title + " /// " + message, ERROR);
 
-		var text:FlxText = new FlxText(8, 0, 1280, title + " - " + message, 24);
-		text.color = FlxColor.RED;
+		var text:FlxText = new FlxText(0, 0, 1280, title + "\n\n" + message, 32);
+		text.font = Paths.font("vcr.ttf");
+		text.color = 0xFF6183;
+		text.alignment = CENTER;
 		text.borderSize = 1.5;
 		text.borderStyle = OUTLINE;
 		text.borderColor = FlxColor.BLACK;
 		text.scrollFactor.set();
 		text.cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 
-		FlxG.state.add(text);
-
-		FlxTween.tween(text, {alpha: 0, y: 8}, 5, {
+		FlxTween.tween(text, {alpha: 0, y: 64}, 4, {
 			onComplete: function(_) {
-				FlxG.state.remove(text);
-				text.destroy();
-			}
+				if (text != null && text.exists) {
+					FlxG.state.remove(text);
+					text.destroy();
+				}
+			},
+			startDelay: 1
 		});
-		#end
+
+		FlxG.state.add(text);
 	}
 
 	/**
@@ -224,7 +225,7 @@ class CoolUtil {
 	 * 
 	 * [`Format`, `Divisor`]
 	 */
-	 public static var byte_formats:Array<Array<Dynamic>> = [
+	public static var byte_formats:Array<Array<Dynamic>> = [
 		["$bytes b", 1.0],
 		["$bytes kb", 1024.0],
 		["$bytes mb", 1048576.0],
