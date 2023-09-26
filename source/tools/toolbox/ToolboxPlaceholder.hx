@@ -60,10 +60,7 @@ class ToolboxPlaceholder extends states.MusicBeatState {
 			ui_Skin = Options.getData("uiSkin");
 
 		if (PlayState.instance == null) {
-			pages["Tools"][1] = null;
-			#if debug
-			pages["Tools"][2] = null;
-			#end
+			pages["Tools"][0] = null;
 		}
 
 		MusicBeatState.windowNameSuffix = "";
