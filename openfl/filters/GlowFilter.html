@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"><!-- use theme color or fallback -->
+<!--use textcolor from settings, otherwise create a contrasting color to theme color-->
+<head><meta charset="utf-8"/><link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-select.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,600italic,400" rel="stylesheet" type="text/css"/><link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet" type="text/css"/><script src="../../jquery-3.6.0.min.js"></script><script src="../../bootstrap/js/bootstrap.min.js"></script><script src="../../bootstrap/js/bootstrap-select.min.js"></script><link href="../../styles.css" rel="stylesheet"/><link href="../../extra-styles.css" rel="stylesheet"/><link href="../../haxe-nav.css" rel="stylesheet"/><link href="../../dark-mode.css" rel="stylesheet"/><script>var dox = {rootPath: "../../",platforms: ["doc"]};</script><script src="../../nav.js"></script><script src="../../index.js"></script><link rel="icon" href="../../favicon.ico" type="image/x-icon"/><title>openfl.filters.GlowFilter - Leather Engine Documentation</title><meta name="description" content="The GlowFilter class lets you apply a glow effect to display objects. You
+have several options for the style of the glow, including inner or outer
+glow and knockout mode. The glow filter is similar to the drop shadow
+filter with the &lt;code&gt;distance&lt;/code&gt; and &lt;code&gt;angle&lt;/code&gt; properties of
+the drop shadow filter set to 0. You can apply the filter to any display
+object(that is, objects that inherit from the DisplayObject class), such
+as MovieClip, SimpleButton, TextField, and Video objects, as well as to
+BitmapData objects."/></head><body><script>/* Here to prevent flash of unstyled content */let systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;if ((!localStorage.theme && systemDarkMode) || localStorage.theme == "dark") {document.body.style.backgroundColor = "#111";document.body.style.opacity = "0";document.addEventListener("DOMContentLoaded", function(event) {toggleTheme();document.body.style.backgroundColor = "";document.body.style.opacity = "";});}</script><style>
+.navbar .brand {
+	display: inline-block;
+	float: none;
+	text-shadow: 0 0 0 transparent;
+}
+</style><nav class="nav"><div class="navbar"><div class="navbar-inner" style="background:#FAFAFA; border-bottom:1px solid rgba(0,0,0,.09)"><div class="container"><a class="brand" style="color:#000000" href="../../">Leather Engine Documentation</a><a href="#" id="theme-toggle" class="brand" style="color:#000000" onclick="toggleTheme()" title="Toggle Dark Mode"><i class="fa fa-moon-o"></i></a></div></div></div></nav><div class="container main-content"><div class="row-fluid"><div class="span3"><div class="well sidebar-nav"><form class="form-search" id="searchForm"><div class="input-prepend input-block-level"><span class="add-on"><i class="fa fa-search"></i></span><input id="search" type="text" placeholder="Filter (Ctrl+P)" autocomplete="off"/></div></form></div><div class="well sidebar-nav" id="explorer"><div id="nav"></div></div></div><div class="span9"><div class="page-header"><h1><small>final class</small> GlowFilter</h1><h4><small>package <a href="../../openfl/filters/index.html">openfl.filters</a></small></h4><h4><small>extends <a class="type" title="openfl.filters.BitmapFilter - The BitmapFilter class is the base class for all image filter effects." href="../../openfl/filters/BitmapFilter.html">BitmapFilter</a></small></h4>    <span class="label label-meta label-meta-directlyUsed" title="Marks types that are directly referenced by non-extern code.">@:directlyUsed</span><span class="label label-meta label-meta-fileXml" title="Include a given XML attribute snippet in the `Build.xml` entry for the file.">@:fileXml(&quot;tags=\&quot;haxe,release\&quot;&quot;)</span><span class="label label-meta label-meta-noDebug" title="Does not generate debug information even if `--debug` is set.">@:noDebug</span><span class="label label-meta label-meta-access" title="Forces private access to package, type or field.">@:access(openfl.geom.ColorTransform)</span><span class="label label-meta label-meta-access" title="Forces private access to package, type or field.">@:access(openfl.geom.Point)</span><span class="label label-meta label-meta-access" title="Forces private access to package, type or field.">@:access(openfl.geom.Rectangle)</span><span class="label label-meta label-meta-final" title="Prevents a class or interface from being extended or a method from being overridden. Deprecated by the keyword `final`.">@:final</span></div><div class="body"><div class="doc doc-main"><p>The GlowFilter class lets you apply a glow effect to display objects. You
+have several options for the style of the glow, including inner or outer
+glow and knockout mode. The glow filter is similar to the drop shadow
+filter with the <code>distance</code> and <code>angle</code> properties of
+the drop shadow filter set to 0. You can apply the filter to any display
+object(that is, objects that inherit from the DisplayObject class), such
+as MovieClip, SimpleButton, TextField, and Video objects, as well as to
+BitmapData objects.</p>
+<p>The use of filters depends on the object to which you apply the
+filter:</p><ul><li>To apply filters to display objects, use the <code>filters</code>
+property(inherited from DisplayObject). Setting the <code>filters</code>
+property of an object does not modify the object, and you can remove the
+filter by clearing the <code>filters</code> property.</li><li>To apply filters to BitmapData objects, use the
+<code><a href="../../openfl/display/BitmapData.html#applyFilter">BitmapData.applyFilter</a>()</code> method. Calling
+<code>applyFilter()</code> on a BitmapData object takes the source
+BitmapData object and the filter object and generates a filtered image as a
+result.</li></ul>
+<p>If you apply a filter to a display object, the
+<code>cacheAsBitmap</code> property of the display object is set to
+<code><a href="../../Bool.html">true</a></code>. If you clear all filters, the original value of
+<code>cacheAsBitmap</code> is restored.</p>
+<p>This filter supports Stage scaling. However, it does not support general
+scaling, rotation, and skewing. If the object itself is scaled(if
+<code>scaleX</code> and <code>scaleY</code> are set to a value other than
+1.0), the filter is not scaled. It is scaled only when the user zooms in on
+the Stage.</p>
+<p>A filter is not applied if the resulting image exceeds the maximum
+dimensions. In AIR 1.5 and Flash Player 10, the maximum is 8,191 pixels in
+width or height, and the total number of pixels cannot exceed 16,777,215
+pixels.(So, if an image is 8,191 pixels wide, it can only be 2,048 pixels
+high.) In Flash Player 9 and earlier and AIR 1.1 and earlier, the
+limitation is 2,880 pixels in height and 2,880 pixels in width. For
+example, if you zoom in on a large movie clip with a filter applied, the
+filter is turned off if the resulting image exceeds the maximum
+dimensions.</p></div><h3 class="section">Constructor</h3><div class="fields"><div class="field "><a name="new"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ knockout : false, inner : false, quality : 1, strength : 2, blurY : 6, blurX : 6, alpha : 1, color : 0xFF0000 })</span><a href="#new"><span class="identifier">new</span></a>(<span style="white-space:nowrap">color:<a class="type" title="Int - The standard Int type." href="../../Int.html">Int</a> = 0xFF0000,</span> <span style="white-space:nowrap">alpha:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a> = 1,</span> <span style="white-space:nowrap">blurX:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a> = 6,</span> <span style="white-space:nowrap">blurY:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a> = 6,</span> <span style="white-space:nowrap">strength:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a> = 2,</span> <span style="white-space:nowrap">quality:<a class="type" title="Int - The standard Int type." href="../../Int.html">Int</a> = 1,</span> <span style="white-space:nowrap">inner:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false,</span> <span style="white-space:nowrap">knockout:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>)</code></h3><div class="doc"><p>Initializes a new GlowFilter instance with the specified parameters.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>color</code></th><td><p>The color of the glow, in the hexadecimal format
+0x<em>RRGGBB</em>. The default value is 0xFF0000.</p></td></tr><tr><th style="width:25%;"><code>alpha</code></th><td><p>The alpha transparency value for the color. Valid values
+are 0 to 1. For example, .25 sets a transparency value of
+25%.</p></td></tr><tr><th style="width:25%;"><code>blurX</code></th><td><p>The amount of horizontal blur. Valid values are 0 to 255
+(floating point). Values that are a power of 2(such as 2,</p>
+<pre><code>			4, 8, 16 and 32) are optimized to render more quickly than
+			other values.
+</code></pre></td></tr><tr><th style="width:25%;"><code>blurY</code></th><td><p>The amount of vertical blur. Valid values are 0 to 255
+(floating point). Values that are a power of 2(such as 2,</p>
+<pre><code>			4, 8, 16 and 32) are optimized to render more quickly than
+			other values.
+</code></pre></td></tr><tr><th style="width:25%;"><code>strength</code></th><td><p>The strength of the imprint or spread. The higher the
+value, the more color is imprinted and the stronger the
+contrast between the glow and the background. Valid values
+are 0 to 255.</p></td></tr><tr><th style="width:25%;"><code>quality</code></th><td><p>The number of times to apply the filter. Use the
+BitmapFilterQuality constants:</p><ul><li><code>BitmapFilterQuality.LOW</code></li><li><code>BitmapFilterQuality.MEDIUM</code></li><li><code>BitmapFilterQuality.HIGH</code></li></ul>
+<p>For more information, see the description of the
+<code>quality</code> property.</p></td></tr><tr><th style="width:25%;"><code>inner</code></th><td><p>Specifies whether the glow is an inner glow. The value
+<code> <a href="../../Bool.html">true</a></code> specifies an inner glow. The value
+<code><a href="../../Bool.html">false</a></code> specifies an outer glow(a glow around
+the outer edges of the object).</p></td></tr><tr><th style="width:25%;"><code>knockout</code></th><td><p>Specifies whether the object has a knockout effect. The
+value <code><a href="../../Bool.html">true</a></code> makes the object's fill
+transparent and reveals the background color of the
+document.</p></td></tr></table></div></div></div><h3 class="section">Variables</h3><div class="fields"><div class="field "><a name="alpha"></a><h3 class="anchor"><code><a href="#alpha"><span class="identifier">alpha</span></a>:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a></code></h3><div class="doc"><p>The alpha transparency value for the color. Valid values are 0 to 1. For
+example, .25 sets a transparency value of 25%. The default value is 1.</p></div></div><div class="field "><a name="blurX"></a><h3 class="anchor"><code><a href="#blurX"><span class="identifier">blurX</span></a>:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a></code></h3><div class="doc"><p>The amount of horizontal blur. Valid values are 0 to 255(floating point).
+The default value is 6. Values that are a power of 2(such as 2, 4, 8, 16,
+and 32) are optimized to render more quickly than other values.</p></div></div><div class="field "><a name="blurY"></a><h3 class="anchor"><code><a href="#blurY"><span class="identifier">blurY</span></a>:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a></code></h3><div class="doc"><p>The amount of vertical blur. Valid values are 0 to 255(floating point).
+The default value is 6. Values that are a power of 2(such as 2, 4, 8, 16,
+and 32) are optimized to render more quickly than other values.</p></div></div><div class="field "><a name="color"></a><h3 class="anchor"><code><a href="#color"><span class="identifier">color</span></a>:<a class="type" title="Int - The standard Int type." href="../../Int.html">Int</a></code></h3><div class="doc"><p>The color of the glow. Valid values are in the hexadecimal format
+0x<em>RRGGBB</em>. The default value is 0xFF0000.</p></div></div><div class="field "><a name="inner"></a><h3 class="anchor"><code><a href="#inner"><span class="identifier">inner</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Specifies whether the glow is an inner glow. The value <code><a href="../../Bool.html">true</a></code>
+indicates an inner glow. The default is <code><a href="../../Bool.html">false</a></code>, an outer glow
+(a glow around the outer edges of the object).</p></div></div><div class="field "><a name="knockout"></a><h3 class="anchor"><code><a href="#knockout"><span class="identifier">knockout</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Specifies whether the object has a knockout effect. A value of
+<code><a href="../../Bool.html">true</a></code> makes the object's fill transparent and reveals the
+background color of the document. The default value is <code><a href="../../Bool.html">false</a></code>
+(no knockout effect).</p></div></div><div class="field "><a name="quality"></a><h3 class="anchor"><code><a href="#quality"><span class="identifier">quality</span></a>:<a class="type" title="Int - The standard Int type." href="../../Int.html">Int</a></code></h3><div class="doc"><p>The number of times to apply the filter. The default value is
+<code>BitmapFilterQuality.LOW</code>, which is equivalent to applying the
+filter once. The value <code>BitmapFilterQuality.MEDIUM</code> applies the
+filter twice; the value <code>BitmapFilterQuality.HIGH</code> applies it
+three times. Filters with lower values are rendered more quickly.</p>
+<p>For most applications, a <code>quality</code> value of low, medium, or
+high is sufficient. Although you can use additional numeric values up to
+15 to achieve different effects, higher values are rendered more slowly.
+Instead of increasing the value of <code>quality</code>, you can often get
+a similar effect, and with faster rendering, by simply increasing the
+values of the <code>blurX</code> and <code>blurY</code> properties.</p></div></div><div class="field "><a name="strength"></a><h3 class="anchor"><code><a href="#strength"><span class="identifier">strength</span></a>:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a></code></h3><div class="doc"><p>The strength of the imprint or spread. The higher the value, the more
+color is imprinted and the stronger the contrast between the glow and the
+background. Valid values are 0 to 255. The default is 2.</p></div></div></div><h3 class="section">Methods</h3><div class="fields"></div>  <div class="inherited-fields well"><h3 class="section">Inherited Variables</h3><div class="fields"><div style="display:none"></div></div><h3 class="section">Inherited Methods</h3><div class="fields"><div style="display:none"></div></div></div></div></div></div></div><footer class="section site-footer" style="background:#FAFAFA"><div class="container"><div class="copyright"><p style="color:#000000">&copy; 2024 &nbsp;</p></div></div></footer><script src="../../highlighter.js"></script><link href="../../highlighter.css" rel="stylesheet"/></body></html>

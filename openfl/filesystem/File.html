@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en"><!-- use theme color or fallback -->
+<!--use textcolor from settings, otherwise create a contrasting color to theme color-->
+<head><meta charset="utf-8"/><link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-select.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,600italic,400" rel="stylesheet" type="text/css"/><link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet" type="text/css"/><script src="../../jquery-3.6.0.min.js"></script><script src="../../bootstrap/js/bootstrap.min.js"></script><script src="../../bootstrap/js/bootstrap-select.min.js"></script><link href="../../styles.css" rel="stylesheet"/><link href="../../extra-styles.css" rel="stylesheet"/><link href="../../haxe-nav.css" rel="stylesheet"/><link href="../../dark-mode.css" rel="stylesheet"/><script>var dox = {rootPath: "../../",platforms: ["doc"]};</script><script src="../../nav.js"></script><script src="../../index.js"></script><link rel="icon" href="../../favicon.ico" type="image/x-icon"/><title>openfl.filesystem.File - Leather Engine Documentation</title><meta name="description" content="A File object represents a path to a file or directory. This can be an existing file
+or directory, or it can be one that does not yet exist; for instance, it can represent
+the path to a file or directory that you plan to create."/></head><body><script>/* Here to prevent flash of unstyled content */let systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;if ((!localStorage.theme && systemDarkMode) || localStorage.theme == "dark") {document.body.style.backgroundColor = "#111";document.body.style.opacity = "0";document.addEventListener("DOMContentLoaded", function(event) {toggleTheme();document.body.style.backgroundColor = "";document.body.style.opacity = "";});}</script><style>
+.navbar .brand {
+	display: inline-block;
+	float: none;
+	text-shadow: 0 0 0 transparent;
+}
+</style><nav class="nav"><div class="navbar"><div class="navbar-inner" style="background:#FAFAFA; border-bottom:1px solid rgba(0,0,0,.09)"><div class="container"><a class="brand" style="color:#000000" href="../../">Leather Engine Documentation</a><a href="#" id="theme-toggle" class="brand" style="color:#000000" onclick="toggleTheme()" title="Toggle Dark Mode"><i class="fa fa-moon-o"></i></a></div></div></div></nav><div class="container main-content"><div class="row-fluid"><div class="span3"><div class="well sidebar-nav"><form class="form-search" id="searchForm"><div class="input-prepend input-block-level"><span class="add-on"><i class="fa fa-search"></i></span><input id="search" type="text" placeholder="Filter (Ctrl+P)" autocomplete="off"/></div></form></div><div class="well sidebar-nav" id="explorer"><div id="nav"></div></div></div><div class="span9"><div class="page-header"><h1><small>class</small> File</h1><h4><small>package <a href="../../openfl/filesystem/index.html">openfl.filesystem</a></small></h4><h4><small>extends <a class="type" title="openfl.net.FileReference - The FileReference class provides a means to upload and download files between a user&#039;s computer and a server." href="../../openfl/net/FileReference.html">FileReference</a> &rsaquo; <a class="type" title="openfl.events.EventDispatcher - The EventDispatcher class is the base class for all classes that dispatch events." href="../../openfl/events/EventDispatcher.html">EventDispatcher</a></small></h4>    <span class="label label-meta label-meta-directlyUsed" title="Marks types that are directly referenced by non-extern code.">@:directlyUsed</span><span class="label label-meta label-meta-fileXml" title="Include a given XML attribute snippet in the `Build.xml` entry for the file.">@:fileXml(&quot;tags=\&quot;haxe,release\&quot;&quot;)</span><span class="label label-meta label-meta-noDebug" title="Does not generate debug information even if `--debug` is set.">@:noDebug</span></div><div class="body"><div class="doc doc-main"><p>A File object represents a path to a file or directory. This can be an existing file
+or directory, or it can be one that does not yet exist; for instance, it can represent
+the path to a file or directory that you plan to create.</p>
+<p>The File class has a number of properties and methods for getting information about the
+file system and for performing operations, such as copying files and directories.</p>
+<p>You can use File objects along with the FileStream class to read and write files.</p>
+<p>The File class extends the FileReference class. The FileReference class represents a
+pointer to a file, but the File class adds properties and methods that are not exposed
+in Flash or HTML5.</p>
+<p>The File class includes static properties that let you reference commonly used directory
+locations. These static properties include:</p><ul><li>File.applicationStorageDirectory—a storage directory unique to each installed    application</li><li>File.applicationDirectory—the read-only directory where the application is installed
+(along with any installed assets)</li><li>File.desktopDirectory—the user's desktop directory</li><li>File.documentsDirectory—the user's documents directory</li><li>File.userDirectory—the user directory</li></ul>
+<p>These properties have meaningful values on different operating systems. For example,
+Mac OS, Linux, and Windows each have different native paths to the user's desktop directory.
+However, the File.desktopDirectory property points to the correct desktop directory path
+on each of these platforms. To write applications that work well across platforms, use these
+properties as the basis for referencing other files used by the application. Then use the
+resolvePath() method to refine the path. For example, this code points to the preferences.xml
+file in the application storage directory:</p>
+<pre><code class="prettyprint haxe">var prefsFile:File = File.applicationStorageDirectory;
+prefsFile = prefsFile.resolvePath("preferences.xml");</code></pre>
+<p>If you use a literal native path in referencing a file, it will only work on one platform.
+For example, the following File object would only work on Windows:</p>
+<pre><code class="prettyprint haxe">new File("C:\Documents and Settings\joe\My Documents\test.txt")</code></pre>
+<p>The application storage directory is particularly useful. It gives an application-specific
+storage directory for the OpenFL application. It is defined by the File.applicationStorageDirectory
+property.</p><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>cancel</code></th><td><p>Dispatched when a pending asynchronous operation is canceled.</p></td></tr><tr class="indent"><th style="width:25%;"><code>complete</code></th><td><p>Dispatched when an asynchronous operation is complete.</p></td></tr><tr class="indent"><th style="width:25%;"><code>directoryListing</code></th><td><p>Dispatched when a directory list is available as a result of a
+call to the getDirectoryListingAsync() method.</p></td></tr><tr class="indent"><th style="width:25%;"><code>ioError</code></th><td><p>Dispatched when an error occurs during an asynchronous file operation.</p></td></tr><tr class="indent"><th style="width:25%;"><code>securityError</code></th><td><p>Dispatched when an operation violates a security constraint.</p></td></tr><tr class="indent"><th style="width:25%;"><code>select</code></th><td><p>Dispatched when the user selects a file or directory from a file-
+or directory-browsing dialog box.</p></td></tr><tr class="indent"><th style="width:25%;"><code>selectMultiple</code></th><td><p>Dispatched when the user selects files from the dialog box opened
+by a call to the browseForOpenMultiple() method.</p></td></tr></table><p class="javadoc">See also:</p><ul><li><div class="inline-content"><p><a href="https://api.openfl.org/openfl/filesystem/FileStream.html">Related: FileStream</a></p></div></li></ul></div><h3 class="section">Static variables</h3><div class="fields"><div class="field "><a name="applicationDirectory"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#applicationDirectory"><span class="identifier">applicationDirectory</span></a>:<a class="type" title="openfl.filesystem.File - A File object represents a path to a file or directory." href="../../openfl/filesystem/File.html">File</a></code></h3><div class="doc"><p>The folder containing the application's installed files.</p>
+<p>The url<em> property for this object uses the app URL scheme (not the file URL scheme). This
+means that the url string is specified starting with "app:" (not "file:"). Also, if you
+create a File object relative to the File.applicationDirectory directory (by using the
+resolvePath() method), the url property of the File object also uses the app URL scheme.
+</em>The url property is currently unsupported on all targets execpt AIR.</p>
+<p>Note: You cannot write to files or directories that have paths that use the app: URL scheme.
+Also, you cannot delete or create files or folders that have paths that use the app: URL
+scheme. Modifying content in the application directory is a bad practice, for security
+reasons, and is blocked by the operating system on some platforms. If you want to store
+application-specific data, consider using the application storage directory
+(File.applicationStorageDirectory). If you want any of the content in the application
+storage directory to have access to the application-privileged functionality (AIR APIs),
+you can expose that functionality by using a sandbox bridge.</p>
+<p>The applicationDirectory property provides a way to reference the application directory
+that works across platforms. If you set a File object to reference the application
+directory using the nativePath or url property, it will only work on the platform for
+which that path is valid.</p>
+<p>On Android, the nativePath property of a File object pointing to the application directory
+is an empty string. Use the url property to access application files.</p></div></div><div class="field "><a name="applicationStorageDirectory"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#applicationStorageDirectory"><span class="identifier">applicationStorageDirectory</span></a>:<a class="type" title="openfl.filesystem.File - A File object represents a path to a file or directory." href="../../openfl/filesystem/File.html">File</a></code></h3><div class="doc"><p>The application's private storage directory.</p>
+<p>Each application has a unique, persistent application storage directory, which is
+created when you first access File.applicationStorageDirectory. This directory is unique
+to each application and user. This directory is a convenient location to store user-specific
+or application-specific data.</p>
+<p>The url property<em> for this object uses the app-storage URL scheme (not the file URL scheme).
+This means that the url string is specified starting with "app-storage:" (not "file:").
+Also, if you create a File object relative to the File.applicationStoreDirectory directory
+(by using the resolvePath() method), the url of the File object also uses the app-storage
+URL scheme (as in the example).
+</em>The url property is currently unsupported on all targets execpt AIR.</p>
+<p>The applicationStorageDirectory property provides a way to reference the application
+storage directory that works across platforms. If you set a File object to reference the
+application storage directory using the nativePath or url property, it will only work on
+the platform for which that path is valid.</p>
+<p>The following code creates a File object pointing to the "images" subdirectory of the application storage directory.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+
+var tempFiles:File = File.applicationStorageDirectory;
+tempFiles = tempFiles.resolvePath("images/");
+trace(tempFiles.url); // app-storage:/images</code></pre></div></div><div class="field "><a name="desktopDirectory"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#desktopDirectory"><span class="identifier">desktopDirectory</span></a>:<a class="type" title="openfl.filesystem.File - A File object represents a path to a file or directory." href="../../openfl/filesystem/File.html">File</a></code></h3><div class="doc"><p>The user's desktop directory.</p>
+<p>The desktopDirectory property provides a way to reference the desktop directory that works across platforms. If you
+set a File object to reference the desktop directory using the nativePath or url property, it will only work on the
+platform for which that path is valid.</p>
+<p>If an operating system does not support a desktop directory, a suitable directory in the file system is used instead.</p>
+<p>The following code outputs a list of files and directories contained in the user's desktop directory.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+var desktop:File = File.desktopDirectory;
+
+var files:Array = desktop.getDirectoryListing();
+
+for (i in 0...files.length) {
+	trace(files[i].nativePath);
+}</code></pre></div></div><div class="field "><a name="documentsDirectory"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#documentsDirectory"><span class="identifier">documentsDirectory</span></a>:<a class="type" title="openfl.filesystem.File - A File object represents a path to a file or directory." href="../../openfl/filesystem/File.html">File</a></code></h3><div class="doc"><p>The user's documents directory.</p>
+<p>On Windows, this is the My Documents directory (for example, C:\Documents and Settings\userName\My
+Documents). On Mac OS, the default location is /Users/userName/Documents. On Linux, the default location
+is /home/userName/Documents (on an English system), and the property observes the xdg-user-dirs setting.</p>
+<p>The documentsDirectory property provides a way to reference the documents directory that works across
+platforms. If you set a File object to reference the documents directory using the nativePath or url
+property, it will only work on the platform for which that path is valid.</p>
+<p>If an operating system does not support a documents directory, a suitable directory in the file system
+is used instead.</p>
+<p>The following code uses the File.documentsDirectory property and the File.createDirectory() method to
+ensure that a directory named "OpenFL Test" exists in the user's documents directory.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+
+var directory:File = File.documentsDirectory;
+directory = directory.resolvePath("OpenFL Test");
+
+File.createDirectory(directory);
+trace(directory.exists); // true</code></pre></div></div><div class="field "><a name="lineEnding"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#lineEnding"><span class="identifier">lineEnding</span></a>:<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>The line-ending character sequence used by the host operating system.</p>
+<p>On Mac OS and Linux, this is the line-feed character (character code
+<code>0x0A</code> hexadecimal). On Windows, this is the carriage return character
+(character code <code>0x0D</code> hexadecimal) followed by the line-feed character
+(character code <code>0x0A</code> hexadecimal).</p></div></div><div class="field "><a name="separator"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#separator"><span class="identifier">separator</span></a>:<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>The host operating system's path component separator character.</p>
+<p>On Mac OS and Linux, this is the forward slash (<code>/</code>) character. On
+Windows, it is the backslash (<code>\</code>) character.</p>
+<p>Note: When using the backslash character in a String literal, remember
+to type the character twice (as in <code>"directory\\file.ext"</code>). Each pair
+of backslashes in a String literal represent a single backslash in the
+String.</p></div></div><div class="field "><a name="userDirectory"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#userDirectory"><span class="identifier">userDirectory</span></a>:<a class="type" title="openfl.filesystem.File - A File object represents a path to a file or directory." href="../../openfl/filesystem/File.html">File</a></code></h3><div class="doc"><p>The user's directory.</p>
+<p>On Windows, this is the parent of the My Documents directory (for example, C:\Documents and Settings\userName).
+On Mac OS, it is /Users/userName. On Linux, it is /home/userName.</p>
+<p>The userDirectory property provides a way to reference the user directory that works across platforms. If you
+set the nativePath or url property of a File object directly, it will only work on the platform for which that
+path is valid.</p>
+<p>If an operating system does not support a user directory, a suitable directory in the file system is used
+instead.</p>
+<p>The following code outputs a list of files and directories contained in the root level of the user directory:</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+
+var files:Array = File.userDirectory.listDirectory();
+for (i in 0...files.length) {
+	trace(files[i].nativePath);
+}</code></pre></div></div></div><h3 class="section">Static methods</h3><div class="fields"><div class="field "><a name="createTempDirectory"></a><h3 class="anchor"><code><span class="label label-static">static</span><a href="#createTempDirectory"><span class="identifier">createTempDirectory</span></a>():<a class="type" title="openfl.filesystem.File - A File object represents a path to a file or directory." href="../../openfl/filesystem/File.html">File</a></code></h3><div class="doc"><p>Returns a reference to a new temporary directory. This is a new directory in the system's
+temporary directory path.</p>
+<p>This method lets you identify a new, unique directory, without having to query the system to
+see that the directory is new and unique.</p>
+<p>You may want to delete the temporary directory before closing the application, since on some
+devices it is not deleted automatically.</p><p class="javadoc">Returns:</p><div class="indent inline-content"><p>File A File object referencing the new temporary directory.
+The following code uses the createTempFile() method to obtain a reference to a new temporary
+directory.</p>
+<pre><code class="prettyprint haxe">import openfl.File;
+var temp:File = File.createTempDirectory();
+trace(temp.nativePath);</code></pre>
+<p>Each time you run this code, a new (unique) file is created.</p></div></div></div><div class="field "><a name="createTempFile"></a><h3 class="anchor"><code><span class="label label-static">static</span><a href="#createTempFile"><span class="identifier">createTempFile</span></a>():<a class="type" title="openfl.filesystem.File - A File object represents a path to a file or directory." href="../../openfl/filesystem/File.html">File</a></code></h3><div class="doc"><p>Returns a reference to a new temporary file. This is a new file in the system's temporary
+directory path.</p>
+<p>This method lets you identify a new, unique file, without having to query the system to see that
+the file is new and unique.</p>
+<p>You may want to delete the temporary file before closing the application, since it is not deleted
+automatically.</p><p class="javadoc">Returns:</p><div class="indent inline-content"><p>File A File object referencing the new temporary file;
+The following code uses the createTempFile() method to obtain a reference to a new temporary file.</p>
+<pre><code class="prettyprint haxe">import openfl.File;
+var temp:File = File.createTempFile();
+trace(temp.nativePath);</code></pre></div></div></div><div class="field "><a name="getRootDirectories"></a><h3 class="anchor"><code><span class="label label-static">static</span><a href="#getRootDirectories"><span class="identifier">getRootDirectories</span></a>():<a class="type" title="Array - An Array is a storage for values." href="../../Array.html">Array</a>&lt;<a class="type" title="openfl.filesystem.File - A File object represents a path to a file or directory." href="../../openfl/filesystem/File.html">File</a>&gt;</code></h3><div class="doc"><p>Returns an array of File objects, listing the file system root directories.</p>
+<p>For example, on Windows this is a list of volumes such as the C: drive and the D: drive. An empty
+drive, such as a CD or DVD drive in which no disc is inserted, is not included in this array. On Mac
+OS and Linux, this method always returns the unique root directory for the machine (the "/" directory)</p>
+<pre><code>	On file systems for which the root is not readable, such as the Android file system, the properties of
+	the returned File object do not always reflect the true value. For example, on Android, the
+	spaceAvailable property reports 0.
+
+	@returns Array An array of File objects, listing the root directories.
+
+	The following code outputs a list of root directories:
+
+	```haxe
+	import flash.filesystem.File;
+	var rootDirs:Array = File.getRootDirectories();
+
+	for (i in 0...rootDirs.length) {
+		trace(rootDirs[i].nativePath);
+	}
+	```
+</code></pre></div></div></div><h3 class="section">Constructor</h3><div class="fields"><div class="field "><a name="new"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ path : null })</span><a href="#new"><span class="identifier">new</span></a>(<span style="white-space:nowrap">?path:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>)</code></h3><div class="doc"><p>The constructor function for the File class.</p>
+<p>If you pass a path argument, the File object points to the specified path, and the nativePath property and and url
+property are set to reflect that path.</p>
+<p>Although you can pass a path argument to specify a file path, consider whether doing so may result in platform-specific
+code. For example, a native path such as "C:\Documents and Settings\bob\Desktop" or a URL such as
+"file:///C:/Documents%20and%20Settings/bob/Desktop" is only valid on Windows. It is far better to use the following
+static properties, which represent commonly used directories, and which are valid on all platforms:</p>
+<pre><code>*File.applicationDirectory
+*File.applicationStorageDirectory
+*File.desktopDirectory
+*File.documentsDirectory
+*File.userDirectory
+</code></pre>
+<p>You can then use the resolvePath() method to get a path relative to these directories. For example, the following code
+sets up a File object to point to the settings.xml file in the application storage directory:</p>
+<pre><code class="prettyprint haxe">var file:File = File.applicationStorageDirectory.resolvePath("settings.xml");</code></pre><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>path</code></th><td><p>The path to the file. You can specify the path by using either a URL or native path (platform-specific)
+notation.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>ArgumentError</code></th><td><p>The syntax of the path parameter is invalid.</p></td></tr></table></div></div></div><h3 class="section">Variables</h3><div class="fields"><div class="field "><a name="exists"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#exists"><span class="identifier">exists</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether the referenced file or directory exists.  The value is true if the File object points
+to an existing file or directory, false otherwise.</p>
+<p>The following code creates a temporary file, then deletes it and uses the File.exists property to check
+for the existence of the file.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.*;
+
+var temp:File = File.createTempFile();
+trace(temp.exists); // true
+temp.deleteFile();
+trace(temp.exists); // false</code></pre></div></div><div class="field "><a name="icon"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value(null)</span><span class="label">read only</span><a href="#icon"><span class="identifier">icon</span></a>:<a class="type" title="openfl.desktop.Icon - The Icon class represents an operating system icon." href="../../openfl/desktop/Icon.html">Icon</a><span> = null</span></code></h3><div class="doc"><p>An Icon object containing the icons defined for the file. An Icon object
+is an array of BitmapData objects corresponding to the various icon
+states. On Linux, the Icon object contains no icons. On Android, the
+<code>icon</code> property is <code>null</code>.</p></div></div><div class="field "><a name="isDirectory"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#isDirectory"><span class="identifier">isDirectory</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether the reference is to a directory.  The value is true if the File object points to a directory; false otherwise.</p>
+<p>The following code creates an array of File objects pointing to files and directories in the user directory and then uses the
+isDirectory property to list only those File objects that point to directories (not to files).</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.*;
+
+var userDirFiles:Array = File.userDirectory.getDirectoryListing();
+for (i in 0...userDirFiles.length) {
+	if (userDirFiles[i].isDirectory) {
+		trace(userDirFiles[i].nativePath);
+	}
+}</code></pre></div></div><div class="field "><a name="isHidden"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#isHidden"><span class="identifier">isHidden</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether the referenced file or directory is "hidden." The value is true if the
+referenced file or directory is hidden, false otherwise.</p>
+<p>The following code creates an array of File objects pointing to files and directories in
+the user directory and then uses the isHidden property to list hidden files and directories.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.*;
+
+var userDirFiles:Array = File.userDirectory.getDirectoryListing();
+for (i in 0...userDirFiles.length) {
+	if (userDirFiles[i].isHidden) {
+		trace(userDirFiles[i].nativePath);
+	}
+}</code></pre></div></div><div class="field "><a name="nativePath"></a><h3 class="anchor"><code><a href="#nativePath"><span class="identifier">nativePath</span></a>:<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>The full path in the host operating system representation. On Mac OS and Linux, the forward
+slash (/) character is used as the path separator. However, in Windows, you can set the nativePath
+property by using the forward slash character or the backslash () character as the path separator,
+and AIR automatically replaces forward slashes with the appropriate backslash character.</p>
+<p>Before writing code to set the nativePath property directly, consider whether doing so may result
+in platform-specific code. For example, a native path such as "C:\Documents and Settings\bob\Desktop"
+is only valid on Windows. It is far better to use the following static properties, which represent
+commonly used directories, and which are valid on all platforms:</p>
+<pre><code>*File.applicationDirectory
+*File.applicationStorageDirectory
+*File.desktopDirectory
+*File.documentsDirectory
+*File.userDirectory
+</code></pre>
+<p>You can use the resolvePath() method to get a path relative to these directories.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>ArgumentError</code></th><td><p>The syntax of the path is invalid.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The caller is not in the application security sandbox.
+The following code shows the difference between the nativePath property and the url property of a File object.
+The comments show results on an example Windows computer.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+var docs:File = File.documentsDirectory;
+trace(docs.nativePath); // C:\Documents and Settings\turing\My Documents
+trace(docs.url); // file:///C:/Documents%20and%20Settings/turing/My%20Documents</code></pre></td></tr></table></div></div><div class="field "><a name="parent"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#parent"><span class="identifier">parent</span></a>:<a class="type" title="openfl.filesystem.File - A File object represents a path to a file or directory." href="../../openfl/filesystem/File.html">File</a></code></h3><div class="doc"><p>The directory that contains the file or directory referenced by this File object.</p>
+<p>If the file or directory does not exist, the parent property still returns the File object that points to the
+containing directory, even if that directory does not exist.</p>
+<p>This property is identical to the return value for resolvePath("..") except that the parent of a root directory
+is null.</p>
+<p>The following code uses the parent property to show the directory that contains a temporary file.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+
+var tempFile:File = File.createTempDirectory();
+trace(tempFile.parent.nativePath);
+tempFile.deleteFile();</code></pre></div></div></div><h3 class="section">Methods</h3><div class="fields"><div class="field "><a name="browse"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ typeFilter : null })</span><a href="#browse"><span class="identifier">browse</span></a>(<span style="white-space:nowrap">?typeFilter:<a class="type" title="Array - An Array is a storage for values." href="../../Array.html">Array</a>&lt;<a class="type" title="openfl.net.FileFilter - The FileFilter class is used to indicate what files on the user&#039;s system are shown in the file-browsing dialog box that is displayed when the FileReference." href="../../openfl/net/FileFilter.html">FileFilter</a>&gt;</span>):<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Displays a file-browsing dialog box that lets the user select a file to upload.</p></div></div><div class="field "><a name="browseForDirectory"></a><h3 class="anchor"><code><a href="#browseForDirectory"><span class="identifier">browseForDirectory</span></a>(<span style="white-space:nowrap">title:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Displays a directory chooser dialog box, in which the user can select a directory.  When the user selects the
+directory, the select event is dispatched. The target property of the select event is the File object pointing to
+the selected directory.</p>
+<p>The directory chooser dialog is not always displayed in front of windows that are "owned" by another window
+(windows that have a non-null owner property). To avoid window ordering issues, hide owned windows before calling
+this method.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>title</code></th><td><p>The string that is displayed in the title bar of the dialog box.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>A browse operation (browseForOpen(), browseForOpenMultiple(), browseForSave(),
+browseForDirectory()) is currently running.
+The following code uses the File.browseForDirectory() method to let the user select a directory. When the directory
+is selected, the code lists the contents of the selected directory in the trace() output.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+import openfl.events.Event;
+var directory:File = File.documentsDirectory;
+try
+{
+	directory.browseForDirectory("Select Directory");
+	directory.addEventListener(Event.SELECT, directorySelected);
+}
+catch (error:Error)
+{
+	trace("Failed:", error.message);
+}
+function directorySelected(event:Event):Void
+{
+	directory = event.target as File;
+	var files:Array = directory.getDirectoryListing();
+	for(i in 0...files.length)
+	{
+		trace(files[i].name);
+	}
+}</code></pre></td></tr></table><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>cancel</code></th><td><p>Dispatched when the user clicks the Cancel button in the Open File dialog box.</p></td></tr><tr class="indent"><th style="width:25%;"><code>select</code></th><td><p>Dispatched when the user selects a directory and closes the directory chooser dialog box.</p></td></tr></table></div></div><div class="field "><a name="browseForOpen"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ typeFilter : null })</span><a href="#browseForOpen"><span class="identifier">browseForOpen</span></a>(<span style="white-space:nowrap">title:<a class="type" title="String - The basic String class." href="../../String.html">String</a>,</span> <span style="white-space:nowrap">?typeFilter:<a class="type" title="Array - An Array is a storage for values." href="../../Array.html">Array</a>&lt;<a class="type" title="openfl.net.FileFilter - The FileFilter class is used to indicate what files on the user&#039;s system are shown in the file-browsing dialog box that is displayed when the FileReference." href="../../openfl/net/FileFilter.html">FileFilter</a>&gt;</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Displays the Open File dialog box, in which the user can select a file to open.</p>
+<p>When the user selects the file, the select event is dispatched. The target property of the select event is the File
+object pointing to the selected file.</p>
+<p>The Open File dialog is not always displayed in front of windows that are "owned" by another window (windows that
+have a non-null owner property). To avoid window ordering issues, hide owned windows before calling this method.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>title</code></th><td><p>The string that is displayed in the title bar of the dialog box.</p></td></tr><tr><th style="width:25%;"><code>typeFilter</code></th><td><p>An array of FileFilter instances used to filter the files that are displayed in the dialog box.
+If you omit this parameter, all files are displayed. For more information, see the FileFilter class.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>A browse operation (browseForOpen(), browseForOpenMultiple(), browseForSave(),
+browseForDirectory()) is currently running.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The application does not have the necessary permissions.
+The following code uses the File.browseForOpen() method to let the user choose a text file. When the file is
+selected, the code reads the file data into a string.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.*;
+import openfl.events.Event;
+import openfl.net.FileFilter;
+var fileToOpen:File = new File();
+var txtFilter:FileFilter = new FileFilter("Text", "*.as;*.css;*.html;*.txt;*.xml");
+try
+{
+	fileToOpen.browseForOpen("Open", [txtFilter]);
+	fileToOpen.addEventListener(Event.SELECT, fileSelected);
+}
+catch (error:Error)
+{
+	trace("Failed:", error.message);
+}
+function fileSelected(event:Event):Void
+{
+	var stream:FileStream = new FileStream();
+	stream.open(event.target, FileMode.READ);
+	var fileData:String = stream.readUTFBytes(stream.bytesAvailable);
+	trace(fileData);
+}</code></pre></td></tr></table><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>cancel</code></th><td><p>Dispatched when the user clicks the Cancel button in the Open File dialog box.</p></td></tr><tr class="indent"><th style="width:25%;"><code>select</code></th><td><p>Dispatched when the user selects a directory and closes the directory chooser dialog box.</p></td></tr></table></div></div><div class="field "><a name="browseForOpenMultiple"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ typeFilter : null })</span><a href="#browseForOpenMultiple"><span class="identifier">browseForOpenMultiple</span></a>(<span style="white-space:nowrap">title:<a class="type" title="String - The basic String class." href="../../String.html">String</a>,</span> <span style="white-space:nowrap">?typeFilter:<a class="type" title="Array - An Array is a storage for values." href="../../Array.html">Array</a>&lt;<a class="type" title="openfl.net.FileFilter - The FileFilter class is used to indicate what files on the user&#039;s system are shown in the file-browsing dialog box that is displayed when the FileReference." href="../../openfl/net/FileFilter.html">FileFilter</a>&gt;</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Displays the Open File dialog box, in which the user can select one or more files to open.</p>
+<p>When the user selects the files, the selectMultiple event is dispatched. The target property of the select event
+is this File object. Unlike browseForOpen(), with the browseForOpenMultiple() method, this File object is not
+updated to reference any of the chosen files. Instead, the resulting selectMultiple event contains an array of
+the chosen files.</p>
+<p>The Open File dialog is not always displayed in front of windows that are "owned" by another window (windows that
+have a non-null owner property). To avoid window ordering issues, hide owned windows before calling this method.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>title</code></th><td><p>The string that is displayed in the title bar of the dialog box.</p></td></tr><tr><th style="width:25%;"><code>typeFilter</code></th><td><p>An array of FileFilter instances used to filter the files that are displayed in the dialog box.
+If you omit this parameter, all files are displayed. For more information, see the FileFilter class.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>A browse operation (browseForOpen(), browseForOpenMultiple(), browseForSave(),
+browseForDirectory()) is currently running.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The application does not have the necessary permissions.
+The following code uses the File.browseForOpenMultiple() method to let the user choose multiple files. When the
+files are selected, the code outputs the paths for the selected files.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.*;
+import openfl.events.FileListEvent;
+var docsDir:File = File.documentsDirectory;
+try
+{
+	docsDir.browseForOpenMultiple("Select Files");
+	docsDir.addEventListener(FileListEvent.SELECT_MULTIPLE, filesSelected);
+}
+catch (error:Error)
+{
+	trace("Failed:", error.message);
+}
+function filesSelected(event:FileListEvent):Void
+{
+	for (i in 0...event.files.length)
+	{
+		trace(event.files[i].nativePath);
+	}
+}</code></pre></td></tr></table><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>cancel</code></th><td><p>Dispatched when the user clicks the Cancel button in the Open File dialog box.</p></td></tr><tr class="indent"><th style="width:25%;"><code>select</code></th><td><p>Dispatched when the user selects a directory and closes the directory chooser dialog box.</p></td></tr></table></div></div><div class="field "><a name="browseForSave"></a><h3 class="anchor"><code><a href="#browseForSave"><span class="identifier">browseForSave</span></a>(<span style="white-space:nowrap">title:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Displays the Save File dialog box, in which the user can select a file destination.</p>
+<p>When the user selects the file, the select event is dispatched. The target property of the select event is the
+File object pointing to the selected Save destination.</p>
+<p>The Save File dialog is not always displayed in front of windows that are "owned" by another window (windows
+that have a non-null owner property). To avoid window ordering issues, hide owned windows before calling this
+method.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>title</code></th><td><p>The string that is displayed in the title bar of the dialog box.
+If you omit this parameter, all files are displayed. For more information, see the FileFilter class.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>A browse operation (browseForOpen(), browseForOpenMultiple(), browseForSave(),
+browseForDirectory()) is currently running.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The application does not have the necessary permissions.
+The following code uses the File.browseForSave() method to let the user select a path for saving a file. When
+the files are selected, the code saves data to the selected file path.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.*;
+import openfl.events.Event;
+var docsDir:File = File.documentsDirectory;
+try
+{
+	docsDir.browseForSave("Save As");
+	docsDir.addEventListener(Event.SELECT, saveData);
+}
+catch (error:Error)
+{
+	trace("Failed:", error.message);
+}
+function saveData(event:Event):Void
+{
+	var newFile:File = event.target as File;
+	var str:String = "Hello.";
+	if (!newFile.exists)
+	{
+		var stream:FileStream = new FileStream();
+		stream.open(newFile, FileMode.WRITE);
+		stream.writeUTFBytes(str);
+		stream.close();
+	}
+}</code></pre></td></tr></table><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>cancel</code></th><td><p>Dispatched when the user clicks the Cancel button in the Open File dialog box.</p></td></tr><tr class="indent"><th style="width:25%;"><code>select</code></th><td><p>Dispatched when the user selects a directory and closes the directory chooser dialog box.</p></td></tr></table></div></div><div class="field "><a name="cancel"></a><h3 class="anchor"><code><a href="#cancel"><span class="identifier">cancel</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Cancels any pending asynchronous operation.</p></div></div><div class="field "><a name="canonicalize"></a><h3 class="anchor"><code><a href="#canonicalize"><span class="identifier">canonicalize</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Canonicalizes the File path.</p>
+<p>If the File object represents an existing file or directory, canonicalization adjusts the path so that it
+matches the case of the actual file or directory name. If the File object is a symbolic link,
+canonicalization adjusts the path so that it matches the file or directory that the link points to,
+regardless of whether the file or directory that is pointed to exists. On case sensitive file systems (such
+as Linux), when multiple files exist with names differing only in case, the canonicalize() method adjusts
+the path to match the first file found (in an order determined by the file system).</p>
+<p>The following code shows how to use the canonicalize() method to find the correct capitalization of a
+directory name. Before running this example, create a directory named <em>OpenFL Test</em> on the desktop of your computer.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.*;
+
+var path:File = File.desktopDirectory.resolvePath("openfl test");
+trace(path.nativePath);
+path.canonicalize();
+trace(path.nativePath); // ...\OpenFL Test</code></pre></div></div><div class="field "><a name="clone"></a><h3 class="anchor"><code><a href="#clone"><span class="identifier">clone</span></a>():<a class="type" title="openfl.filesystem.File - A File object represents a path to a file or directory." href="../../openfl/filesystem/File.html">File</a></code></h3><div class="doc"><p>Returns a copy of this File object. Event registrations are not copied.</p>
+<p>Note: This method does not copy the file itself. It simply makes a copy of the instance of the Haxe
+File object. To copy a file, use the copyTo() method.</p></div></div><div class="field "><a name="copyTo"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ overwrite : false })</span><a href="#copyTo"><span class="identifier">copyTo</span></a>(<span style="white-space:nowrap">newLocation:<a class="type" title="openfl.net.FileReference - The FileReference class provides a means to upload and download files between a user&#039;s computer and a server." href="../../openfl/net/FileReference.html">FileReference</a>,</span> <span style="white-space:nowrap">overwrite:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Copies the file or directory at the location specified by this File object to the location
+specified by the newLocation parameter. The copy process creates any required parent directories
+(if possible). When overwriting files using copyTo(), the file attributes are also overwritten.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>newLocation</code></th><td><p>The target location of the new file. Note that this File object specifies the
+resulting (copied) file or directory, not the path to the containing directory.</p></td></tr><tr><th style="width:25%;"><code>overwrite</code></th><td><p>If false, the copy fails if the file specified by the target parameter already
+exists. If true, the operation overwrites existing file or directory of the same name.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IOError</code></th><td><p>The source does not exist; or the source could not be copied to the target; or
+the source and destination refer to the same file or folder and overwrite is set to true. On
+Windows, you cannot copy a file that is open or a directory that contains a file that is open.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The application does not have the necessary permissions.
+The following code shows how to use the copyTo() method to copy a file. Before running this code,
+create a test1.txt file in the AIR Test subdirectory of the documents directory on your computer.
+The resulting copied file is named test2.txt, and it is also in the OpenFL Test subdirectory. When
+you set the overwrite parameter to true, the operation overwrites any existing test2.txt file.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+import openfl.events.Event;
+var sourceFile:FileReference = File.documentsDirectory;
+sourceFile = sourceFile.resolvePath("OpenFL Test/test1.txt");
+var destination:FileReference = File.documentsDirectory;
+destination = destination.resolvePath("OpenFL Test/test2.txt");
+if (sourceFile.copyTo(destination, true)) {
+	trace("Done.");
+}</code></pre>
+<p>The following code shows how to use the copyTo() method to copy a file. Before running this code,
+create a test1.txt file in the OpenFL Test subdirectory of the home directory on your computer. The
+resulting copied file is named test2.txt. The try and catch statements show how to respond to errors.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+var sourceFile:File = File.documentsDirectory;
+sourceFile = sourceFile.resolvePath("OpenFL Test/test1.txt");
+var destination:File = File.documentsDirectory;
+destination = destination.resolvePath("OpenFL Test/test2.txt");
+try
+{
+	sourceFile.copyTo(destination, true);
+}
+catch (error:Error)
+{
+	trace("Error:", error.message);
+}</code></pre></td></tr></table></div></div><div class="field "><a name="copyToAsync"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ overwrite : false })</span><a href="#copyToAsync"><span class="identifier">copyToAsync</span></a>(<span style="white-space:nowrap">newLocation:<a class="type" title="openfl.net.FileReference - The FileReference class provides a means to upload and download files between a user&#039;s computer and a server." href="../../openfl/net/FileReference.html">FileReference</a>,</span> <span style="white-space:nowrap">overwrite:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Begins copying the file or directory at the location specified by this File object to the
+location specified by the destination parameter.</p>
+<p>Upon completion, either a complete event (successful) or an ioError event (unsuccessful) is dispatched.
+The copy process creates any required parent directories (if possible).</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>newLocation</code></th><td><p>The target location of the new file. Note that this File object specifies the
+resulting (copied) file or directory, not the path to the containing directory.</p></td></tr><tr><th style="width:25%;"><code>overwrite</code></th><td><p>If false, the copy fails if the file specified by the target parameter already
+exists. If true, the operation overwrites existing file or directory of the same name.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The application does not have the necessary permissions to write to the destination.
+The following code shows how to use the copyToAsync() method to copy a file. Before running this code,
+be sure to create a test1.txt file in the OpenFL Test subdirectory of the documents directory on your computer.
+The resulting copied file is named test2.txt, and it is also in the <em>OpenFL Test</em> subdirectory. When you set the
+overwrite parameter to true, the operation overwrites any existing test2.txt file.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+import openfl.events.Event;
+var sourceFile:File = File.documentsDirectory;
+sourceFile = sourceFile.resolvePath("OpenFL Test/test1.txt");
+var destination:File = File.documentsDirectory;
+destination = destination.resolvePath("OpenFL Test/test2.txt");
+sourceFile.copyToAsync(destination, true);
+sourceFile.addEventListener(Event.COMPLETE, fileCopiedHandler);
+function fileCopiedHandler(event:Event):Void {
+	trace("Done.");
+}</code></pre></td></tr></table><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>complete</code></th><td><p>Dispatched when the file or directory has been successfully copied.</p></td></tr><tr class="indent"><th style="width:25%;"><code>ioError</code></th><td><p>The source does not exist; or the source could not be copied to the target; or the source
+and destination refer to the same file or folder and overwrite is set to true. On Windows, you cannot
+copy a file that is open or a directory that contains a
+file that is open.</p></td></tr></table></div></div><div class="field "><a name="createDirectory"></a><h3 class="anchor"><code><a href="#createDirectory"><span class="identifier">createDirectory</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Creates the specified directory and any necessary parent directories. If the directory already exists,
+no action is taken.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IOError</code></th><td><p>The directory did not exist and could not be created.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The application does not have the necessary permissions.
+The following code moves a file named test.txt on the desktop to the OpenFL Test subdirectory of the
+documents directory. The call to the createDirectory() method ensures that the <em>OpenFL Test</em> directory
+exists before the file is moved.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.*;
+var source:File = File.desktopDirectory.resolvePath("test.txt");
+var target:File = File.documentsDirectory.resolvePath("OpenFL Test/test.txt");
+var targetParent:File = target.parent;
+targetParent.createDirectory();
+source.moveTo(target, true);</code></pre></td></tr></table></div></div><div class="field "><a name="deleteDirectory"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ deleteDirectoryContents : false })</span><a href="#deleteDirectory"><span class="identifier">deleteDirectory</span></a>(<span style="white-space:nowrap">deleteDirectoryContents:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Deletes the directory.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>deleteDirectoryContents</code></th><td><p>Specifies whether or not to delete a directory that contains files or
+subdirectories. When false, if the directory contains files or directories, a call to this method throws
+an exception.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IOError</code></th><td><p>The directory does not exist, or the directory could not be deleted. On Windows, you
+cannot delete a directory that contains a file that is open.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The application does not have the necessary permissions to delete the directory.
+The following code creates an empty directory and then uses the deleteDirectory() method to delete the directory.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+var directory:File = File.documentsDirectory.resolvePath("Empty Junk Directory/");
+File.createDirectory(directory);
+trace(directory.exists); // true
+directory.deleteDirectory();
+trace(directory.exists); // false</code></pre></td></tr></table></div></div><div class="field "><a name="deleteDirectoryAsync"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ deleteDirectoryContents : false })</span><a href="#deleteDirectoryAsync"><span class="identifier">deleteDirectoryAsync</span></a>(<span style="white-space:nowrap">deleteDirectoryContents:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Deletes the directory asynchronously.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>deleteDirectoryContents</code></th><td><p>Specifies whether or not to delete a directory that contains files or
+subdirectories. When false, if the directory contains files or directories, a call to this method throws
+an exception.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The application does not have the necessary permissions to delete the directory.</p></td></tr></table><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>complete</code></th><td><p>Dispatched when the directory has been deleted successfully.</p></td></tr><tr class="indent"><th style="width:25%;"><code>ioError</code></th><td><p>The directory does not exist or could not be deleted. On Windows, you cannot delete a
+directory that contains a file that is open.</p></td></tr></table></div></div><div class="field "><a name="deleteFile"></a><h3 class="anchor"><code><a href="#deleteFile"><span class="identifier">deleteFile</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Deletes the file.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IOError</code></th><td><p>The directory does not exist, or the directory could not be deleted. On Windows, you
+cannot delete a directory that contains a file that is open.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The application does not have the necessary permissions to delete the directory.
+The following code creates a temporary file and then calls the deleteFile() method to delete it.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.*;
+var file:File = File.createTempFile();
+trace(file.exists); // true
+file.deleteFile();
+trace(file.exists); // false</code></pre></td></tr></table></div></div><div class="field "><a name="deleteFileAsync"></a><h3 class="anchor"><code><a href="#deleteFileAsync"><span class="identifier">deleteFileAsync</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Deletes the file asynchronously.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The application does not have the necessary permissions to delete the directory.</p></td></tr></table><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>complete</code></th><td><p>Dispatched when the directory has been deleted successfully.</p></td></tr><tr class="indent"><th style="width:25%;"><code>ioError</code></th><td><p>The directory does not exist or could not be deleted. On Windows, you cannot delete a
+directory that contains a file that is open.</p></td></tr></table></div></div><div class="field "><a name="getDirectoryListing"></a><h3 class="anchor"><code><a href="#getDirectoryListing"><span class="identifier">getDirectoryListing</span></a>():<a class="type" title="Array - An Array is a storage for values." href="../../Array.html">Array</a>&lt;<a class="type" title="openfl.filesystem.File - A File object represents a path to a file or directory." href="../../openfl/filesystem/File.html">File</a>&gt;</code></h3><div class="doc"><p>Returns an array of File objects corresponding to files and directories in the directory
+represented by this File object. This method does not explore the contents of subdirectories.</p><p class="javadoc">Returns:</p><div class="indent inline-content"><p>Array An array of File objects.
+The following code shows how to use the getDirectoryListing() method to enumerate the contents of the
+user directory.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+var directory:File = File.userDirectory;
+var list:Array = directory.getDirectoryListing();
+for (i in 0...list.length) {
+	trace(list[i].nativePath);
+}</code></pre></div></div></div><div class="field "><a name="getDirectoryListingAsync"></a><h3 class="anchor"><code><a href="#getDirectoryListingAsync"><span class="identifier">getDirectoryListingAsync</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Asynchronously retrieves an array of File objects corresponding to the contents of the
+directory represented by this File object.</p><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>ioError</code></th><td><p>You do not have adequate permissions to read this directory, or the directory does
+not exist.</p></td></tr><tr class="indent"><th style="width:25%;"><code>directoryListing</code></th><td><p>The directory contents have been enumerated successfully. The contents
+event includes a files property, which is the resulting array of File objects.
+The following code shows how to use the getDirectoryListingAsync() method to enumerate the contents
+of the user directory.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+import openfl.events.FileListEvent;
+var directory:File = File.userDirectory;
+directory.getDirectoryListingAsync();
+directory.addEventListener(FileListEvent.DIRECTORY_LISTING, directoryListingHandler);
+function directoryListingHandler(event:FileListEvent):Void {
+	var list:Array = event.files;
+	for (i in 0...list.length) {
+		trace(list[i].nativePath);
+	}
+}</code></pre></td></tr></table></div></div><div class="field "><a name="getRelativePath"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ useDotDot : false })</span><a href="#getRelativePath"><span class="identifier">getRelativePath</span></a>(<span style="white-space:nowrap">ref:<a class="type" title="openfl.net.FileReference - The FileReference class provides a means to upload and download files between a user&#039;s computer and a server." href="../../openfl/net/FileReference.html">FileReference</a>,</span> <span style="white-space:nowrap">useDotDot:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>Finds the relative path between two File paths.</p>
+<p>The relative path is the list of components that can be appended to (resolved against) this reference
+in order to locate the second (parameter) reference. The relative path is returned using the "/"
+separator character.</p>
+<p>Optionally, relative paths may include ".." references, but such paths will not cross conspicuous volume
+boundaries.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>ref</code></th><td><p>A File object against which the path is given.</p></td></tr><tr><th style="width:25%;"><code>useDotDot</code></th><td><p>Specifies whether the resulting relative path can use ".." components.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>String The relative path between this file (or directory) and the ref file (or directory), if possible; otherwise null.</p></div><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>ArgumentError</code></th><td><p>The reference is null.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The caller is not in the application security sandbox.</p></td></tr></table></div></div><div class="field "><a name="moveTo"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ overwrite : false })</span><a href="#moveTo"><span class="identifier">moveTo</span></a>(<span style="white-space:nowrap">newLocation:<a class="type" title="openfl.net.FileReference - The FileReference class provides a means to upload and download files between a user&#039;s computer and a server." href="../../openfl/net/FileReference.html">FileReference</a>,</span> <span style="white-space:nowrap">overwrite:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Moves the file or directory at the location specified by this File object to the
+location specified by the destination parameter.</p>
+<p>To rename a file, set the destination parameter to point to a path that is in the
+file's directory, but with a different filename.</p>
+<p>The move process creates any required parent directories (if possible).</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>newLocation</code></th><td><p>The target location for the move. This object specifies the path to the
+resulting (moved) file or directory, not the path to the containing directory.</p></td></tr><tr><th style="width:25%;"><code>overwrite</code></th><td><p>If false, the move fails if the target file already exists. If true, the
+operation overwrites any existing file or directory of the same name.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IOError</code></th><td><p>The source does not exist; or the destination exists and overwrite is set to
+false; or the source file or directory could not be moved to the target location; or the source
+and destination refer to the same file or folder and overwrite is set to true. On Windows, you
+cannot move a file that is open or a directory that contains a file that is open.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The application does not have the necessary permissions to move the file.
+The following code shows how to use the moveTo() method to rename a file. The original filename
+is test1.txt and the resulting filename is test2.txt. Since both the source and destination File
+object point to the same directory (the Apollo Test subdirectory of the user's documents directory),
+the moveTo() method renames the file, rather than moving it to a new directory. Before running this
+code, create a test1.txt file in the OpenFL Test subdirectory of the documents directory on your
+computer. When you set the overwrite parameter to true, the operation overwrites any existing test2.txt
+file.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+import openfl.events.Event;
+var sourceFile:File = File.documentsDirectory;
+sourceFile = sourceFile.resolvePath("OpenFL Test/test1.txt");
+var destination:File = File.documentsDirectory;
+destination = destination.resolvePath("Apollo Test/test2.txt");
+try
+{
+	sourceFile.moveTo(destination, true);
+}
+catch (error:Error)
+{
+	trace("Error:" + error.message);
+}</code></pre></td></tr></table></div></div><div class="field "><a name="moveToAsync"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ overwrite : false })</span><a href="#moveToAsync"><span class="identifier">moveToAsync</span></a>(<span style="white-space:nowrap">newLocation:<a class="type" title="openfl.net.FileReference - The FileReference class provides a means to upload and download files between a user&#039;s computer and a server." href="../../openfl/net/FileReference.html">FileReference</a>,</span> <span style="white-space:nowrap">overwrite:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Begins moving the file or directory at the location specified by this File object to
+the location specified by the newLocation parameter.</p>
+<p>To rename a file, set the destination parameter to point to a path that is in the file's directory, but
+with a different filename.</p>
+<p>The move process creates any required parent directories (if possible).</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>newLocation</code></th><td><p>The target location for the move. This object specifies the path to the
+resulting (moved) file or directory, not the path to the containing directory.</p></td></tr><tr><th style="width:25%;"><code>overwrite</code></th><td><p>If false, the move fails if the target file already exists. If true, the
+operation overwrites any existing file or directory of the same name.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>The application does not have the necessary permissions to move the file.
+The following code shows how to use the moveToAsync() method to rename a file. The original filename
+is test1.txt and the resulting name is test2.txt. Since both the source and destination File object
+point to the same directory (the <em>OpenFL Test</em> subdirectory of the user's documents directory), the
+moveToAsync() method renames the file, rather than moving it to a new directory. Before running this
+code, create a test1.txt file in the <em>OpenFL Test</em> subdirectory of the documents directory on your
+computer. When you set overwrite parameter to true, the operation overwrites any existing test2.txt file.</p>
+<pre><code class="prettyprint haxe">import openfl.filesystem.File;
+import openfl.events.Event;
+var sourceFile:File = File.documentsDirectory;
+sourceFile = sourceFile.resolvePath("OpenFL Test/test1.txt");
+var destination:File = File.documentsDirectory;
+destination = destination.resolvePath("OpenFL Test/test2.txt");
+sourceFile.moveToAsync(destination, true);
+sourceFile.addEventListener(Event.COMPLETE, fileMoveCompleteHandler);
+function fileMoveCompleteHandler(event:Event):Void
+{
+	trace("Done.")
+}
+		```</code></pre></td></tr></table><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>complete</code></th><td><p>Dispatched when the file or directory has been successfully moved.</p></td></tr><tr class="indent"><th style="width:25%;"><code>ioError</code></th><td><p>The source does not exist; or the destination exists and overwrite is false; or
+the source could not be moved to the target; or the source and destination refer to the same file
+or folder and overwrite is set to true. On Windows, you cannot move a file that is open or a directory
+that contains a file that is open.</p></td></tr></table></div></div><div class="field "><a name="openWithDefaultApplication"></a><h3 class="anchor"><code><a href="#openWithDefaultApplication"><span class="identifier">openWithDefaultApplication</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Opens the file in the application registered by the operating system to open this file type.</p></div></div><div class="field "><a name="resolvePath"></a><h3 class="anchor"><code><a href="#resolvePath"><span class="identifier">resolvePath</span></a>(<span style="white-space:nowrap">path:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="openfl.filesystem.File - A File object represents a path to a file or directory." href="../../openfl/filesystem/File.html">File</a></code></h3><div class="doc"><p>Creates a new File object with a path relative to this File object's path, based on the path
+parameter (a string).</p>
+<p>You can use a relative path or absolute path as the path parameter.</p>
+<p>If you specify a relative path, the given path is "appended" to the path of the File object. However, use
+of ".." in the path can return a resulting path that is not a child of the File object. The resulting
+reference need not refer to an actual file system location.</p>
+<p>If you specify an absolute file reference, the method returns the File object pointing to that path. The
+absolute file reference should use valid native path syntax for the user's operating system (such as
+"C:\test" on Windows). Do not use a URL (such as "file:///c:/test") as the path parameter.</p>
+<p>All resulting paths are normalized as follows:</p>
+<pre><code>Any "." element is ignored.
+Any ".." element consumes its parent entry.
+No ".." reference that reaches the file system root or the application-persistent storage root passes
+that node; it is ignored.
+</code></pre>
+<p>You should always use the forward slash (/) character as the path separator. On Windows, you can also use
+the backslash () character, but you should not. Using the backslash character can lead to applications
+that do not work on other platforms.</p>
+<p>Filenames and directory names are case-sensitive on Linux.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>path</code></th><td><p>The path to append to this File object's path (if the path parameter is a relative path); or
+the path to return (if the path parameter is an absolute path).</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>File A new File object pointing to the resulting path.</p></div></div></div></div>  <div class="inherited-fields well"><h3 class="section">Inherited Variables</h3><div class="fields"><h4><a href="#" class="expand-button"><i class="fa fa-arrow-circle-o-right"></i></a> Defined by <a class="type" title="openfl.net.FileReference - The FileReference class provides a means to upload and download files between a user&#039;s computer and a server." href="../../openfl/net/FileReference.html">FileReference</a></h4><div style="display:none"><div class="field "><a name="creationDate"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#creationDate"><span class="identifier">creationDate</span></a>:<a class="type" title="Date - The Date class provides a basic structure for date and time related information." href="../../Date.html">Date</a></code></h3><div class="doc"><p>The creation date of the file on the local disk. If the object is was
+not populated, a call to get the value of this property returns
+<code>null</code>.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IOError</code></th><td><p>If the file information cannot be
+accessed, an exception is thrown with a
+message indicating a file I/O error.</p></td></tr><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>If the <code><a href="../../openfl/net/FileReference.html#browse">FileReference.browse</a>()</code>,
+<code>FileReferenceList.browse()</code>, or
+<code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code> method was
+not called successfully, an exception is
+thrown with a message indicating that
+functions were called in the incorrect
+sequence or an earlier call was
+unsuccessful. In this case, the value of
+the <code>creationDate</code> property is <code>null</code>.</p></td></tr></table></div></div><div class="field "><a name="creator"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#creator"><span class="identifier">creator</span></a>:<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>The Macintosh creator type of the file, which is only used in Mac OS
+versions prior to Mac OS X. In Windows or Linux, this property is
+<code>null</code>. If the FileReference object was not populated, a call to get
+the value of this property returns <code>null</code>.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>On Macintosh, if the
+<code><a href="../../openfl/net/FileReference.html#browse">FileReference.browse</a>()</code>,
+<code>FileReferenceList.browse()</code>, or
+<code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code> method was
+not called successfully, an exception is
+thrown with a message indicating that
+functions were called in the incorrect
+sequence or an earlier call was
+unsuccessful. In this case, the value of
+the <code>creator</code> property is <code>null</code>.</p></td></tr></table></div></div><div class="field "><a name="data"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#data"><span class="identifier">data</span></a>:<a class="type" title="openfl.utils.ByteArray - The ByteArray class provides methods and properties to optimize reading, writing, and working with binary data." href="../../openfl/utils/ByteArray.html">ByteArray</a></code></h3><div class="doc"><p>The ByteArray object representing the data from the loaded file after
+a successful call to the <code>load()</code> method.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IOError</code></th><td><p>If the file cannot be opened or read, or
+if a similar error is encountered in
+accessing the file, an exception is
+thrown with a message indicating a file
+I/O error. In this case, the value of
+the <code>data</code> property is <code>null</code>.</p></td></tr><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>If the <code>load()</code> method was not called
+successfully, an exception is thrown
+with a message indicating that functions
+were called in the incorrect sequence or
+an earlier call was unsuccessful. In
+this case, the value of the <code>data</code>
+property is <code>null</code>.</p></td></tr></table></div></div><div class="field "><a name="extension"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#extension"><span class="identifier">extension</span></a>:<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>The filename extension.</p>
+<p>A file's extension is the part of the name following (and not including)
+the final dot ("."). If there is no dot in the filename, the extension
+is <code>null</code>.</p>
+<p>Note: You should use the <code>extension</code> property to determine a file's
+type; do not use the <code>creator</code> or <code>type</code> properties. You should consider
+the <code>creator</code> and <code>type</code> properties to be considered deprecated. They
+apply to older versions of Mac OS.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>If the reference is not initialized</p></td></tr></table></div></div><div class="field "><a name="modificationDate"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#modificationDate"><span class="identifier">modificationDate</span></a>:<a class="type" title="Date - The Date class provides a basic structure for date and time related information." href="../../Date.html">Date</a></code></h3><div class="doc"><p>The date that the file on the local disk was last modified. If the
+FileReference object was not populated, a call to get the value of
+this property returns <code>null</code>.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IOError</code></th><td><p>If the file information cannot be
+accessed, an exception is thrown with a
+message indicating a file I/O error.</p></td></tr><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>If the <code><a href="../../openfl/net/FileReference.html#browse">FileReference.browse</a>()</code>,
+<code>FileReferenceList.browse()</code>, or
+<code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code> method was
+not called successfully, an exception is
+thrown with a message indicating that
+functions were called in the incorrect
+sequence or an earlier call was
+unsuccessful. In this case, the value of
+the <code>modificationDate</code> property is
+<code>null</code>.</p></td></tr></table></div></div><div class="field "><a name="name"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#name"><span class="identifier">name</span></a>:<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>The name of the file on the local disk. If the FileReference object
+was not populated (by a valid call to <code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code> or <code>
+<a href="../../openfl/net/FileReference.html#browse">FileReference.browse</a>()</code>), Flash Player throws an error when you try to
+get the value of this property.
+All the properties of a FileReference object are populated by calling
+the <code>browse()</code> method. Unlike other FileReference properties, if you
+call the <code>download()</code> method, the <code>name</code> property is populated when
+the <code>select</code> event is dispatched.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>If the <code><a href="../../openfl/net/FileReference.html#browse">FileReference.browse</a>()</code>,
+<code>FileReferenceList.browse()</code>, or
+<code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code> method was
+not called successfully, an exception is
+thrown with a message indicating that
+functions were called in the incorrect
+sequence or an earlier call was
+unsuccessful.</p></td></tr></table></div></div><div class="field "><a name="size"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#size"><span class="identifier">size</span></a>:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a></code></h3><div class="doc"><p>The size of the file on the local disk in bytes. If <code>size</code> is 0, an
+exception is thrown.</p>
+<p><em>Note:</em> In the initial version of ActionScript 3.0, the <code>size</code>
+property was defined as a <code>uint</code> object, which supported files with
+sizes up to about 4 GB. It was later implemented as a <code>Number</code> object to
+support larger files. In OpenFL, it is <code><a href="../../Float.html">Float</a></code> to match <code>Number</code>.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IOError</code></th><td><p>If the file cannot be opened or read, or
+if a similar error is encountered in
+accessing the file, an exception is
+thrown with a message indicating a file
+I/O error.</p></td></tr><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>If the <code><a href="../../openfl/net/FileReference.html#browse">FileReference.browse</a>()</code>,
+<code>FileReferenceList.browse()</code>, or
+<code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code> method was
+not called successfully, an exception is
+thrown with a message indicating that
+functions were called in the incorrect
+sequence or an earlier call was
+unsuccessful.</p></td></tr></table></div></div><div class="field "><a name="type"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#type"><span class="identifier">type</span></a>:<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>The file type.
+In Windows or Linux, this property is the file extension. On the
+Macintosh, this property is the four-character file type, which is
+only used in Mac OS versions prior to Mac OS X. If the FileReference
+object was not populated, a call to get the value of this property
+returns <code>null</code>.</p>
+<p>For Windows, Linux, and Mac OS X, the file extension ?the portion
+of the <code>name</code> property that follows the last occurrence of the dot (.)
+character ?identifies the file type.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>If the <code><a href="../../openfl/net/FileReference.html#browse">FileReference.browse</a>()</code>,
+<code>FileReferenceList.browse()</code>, or
+<code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code> method was
+not called successfully, an exception is
+thrown with a message indicating that
+functions were called in the incorrect
+sequence or an earlier call was
+unsuccessful. In this case, the value of
+the <code>type</code> property is <code>null</code>.</p></td></tr></table></div></div></div><div style="display:none"></div></div><h3 class="section">Inherited Methods</h3><div class="fields"><h4><a href="#" class="expand-button"><i class="fa fa-arrow-circle-o-right"></i></a> Defined by <a class="type" title="openfl.net.FileReference - The FileReference class provides a means to upload and download files between a user&#039;s computer and a server." href="../../openfl/net/FileReference.html">FileReference</a></h4><div style="display:none"><div class="field "><a name="download"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ defaultFileName : null })</span><a href="#download"><span class="identifier">download</span></a>(<span style="white-space:nowrap">request:<a class="type" title="openfl.net.URLRequest - The URLRequest class captures all of the information in a single HTTP request." href="../../openfl/net/URLRequest.html">URLRequest</a>,</span> <span style="white-space:nowrap">?defaultFileName:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Opens a dialog box that lets the user download a file from a remote
+server. Although Flash Player has no restriction on the size of files
+you can upload or download, the player officially supports uploads or
+downloads of up to 100 MB.
+The <code>download()</code> method first opens an operating-system dialog box
+that asks the user to enter a filename and select a location on the
+local computer to save the file. When the user selects a location and
+confirms the download operation (for example, by clicking Save), the
+download from the remote server begins. Listeners receive events to
+indicate the progress, success, or failure of the download. To
+ascertain the status of the dialog box and the download operation
+after calling <code>download()</code>, your code must listen for events such as
+<code>cancel</code>, <code>open</code>, <code>progress</code>, and <code>complete</code>.</p>
+<p>The <code><a href="../../openfl/net/FileReference.html#upload">FileReference.upload</a>()</code> and <code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code> functions
+are nonblocking. These functions return after they are called, before
+the file transmission is complete. In addition, if the FileReference
+object goes out of scope, any upload or download that is not yet
+completed on that object is canceled upon leaving the scope. Be sure
+that your FileReference object remains in scope for as long as the
+upload or download is expected to continue.</p>
+<p>When the file is downloaded successfully, the properties of the
+FileReference object are populated with the properties of the local
+file. The <code>complete</code> event is dispatched if the download is
+successful.</p>
+<p>Only one <code>browse()</code> or <code>download()</code> session can be performed at a time
+(because only one dialog box can be invoked at a time).</p>
+<p>This method supports downloading of any file type, with either HTTP or
+HTTPS.</p>
+<p>You cannot connect to commonly reserved ports. For a complete list of
+blocked ports, see "Restricting Networking APIs" in the <em>ActionScript
+3.0 Developer's Guide</em>.</p>
+<p><strong>Note</strong>: If your server requires user authentication, only SWF files
+running in a browser ?that is, using the browser plug-in or ActiveX
+control ?can provide a dialog box to prompt the user for a user
+name and password for authentication, and only for downloads. For
+uploads using the plug-in or ActiveX control, or for uploads and
+downloads using the stand-alone or external player, the file transfer
+fails.</p>
+<p>When you use this method , consider the Flash Player security model:</p><ul><li>Loading operations are not allowed if the calling SWF file is in an
+untrusted local sandbox.</li><li>The default behavior is to deny access between sandboxes. A website
+can enable access to a resource by adding a URL policy file.</li><li>You can prevent a SWF file from using this method by setting the
+<code>allowNetworking</code> parameter of the the <code>object</code> and <code>embed</code> tags in
+the HTML page that contains the SWF content.</li><li>In Flash Player 10 and Flash Player 9 Update 5, you can only call
+this method successfully in response to a user event (for example, in
+an event handler for a mouse click or keypress event). Otherwise,
+calling this method results in Flash Player throwing an Error
+exception.</li></ul>
+<p>However, in Adobe AIR, content in the <code>application</code> security sandbox
+(content installed with the AIR application) is not restricted by
+these security limitations.</p>
+<p>For more information related to security, see the Flash Player
+Developer Center Topic: &lt;a
+href="<a href="http://www.adobe.com/go/devnet_security_en">http://www.adobe.com/go/devnet_security_en</a>"
+scope="external">Security</a>.</p>
+<p>When you download a file using this method, it is flagged as
+downloaded on operating systems that flag downloaded files:</p><ul><li>Windows XP service pack 2 and later, and on Windows Vista</li><li>Mac OS 10.5 and later</li></ul>
+<p>Some operating systems, such as Linux, do not flag downloaded files.</p>
+<p>Note that because of new functionality added to the Flash Player, when
+publishing to Flash Player 10, you can have only one of the following
+operations active at one time: <code><a href="../../openfl/net/FileReference.html#browse">FileReference.browse</a>()</code>,
+<code><a href="../../openfl/net/FileReference.html#upload">FileReference.upload</a>()</code>, <code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code>,
+<code><a href="../../openfl/net/FileReference.html#load">FileReference.load</a>()</code>, <code><a href="../../openfl/net/FileReference.html#save">FileReference.save</a>()</code>. Otherwise, Flash
+Player throws a runtime error (code 2174). Use
+<code><a href="../../openfl/net/FileReference.html#cancel">FileReference.cancel</a>()</code> to stop an operation in progress. This
+restriction applies only to Flash Player 10. Previous versions of
+Flash Player are unaffected by this restriction on simultaneous
+multiple operations.</p>
+<p>In Adobe AIR, the download dialog is not always displayed in front of
+windows that are "owned" by another window (windows that have a
+non-null <code>owner</code> property). To avoid window ordering issues, hide
+owned windows before calling this method.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>request</code></th><td><p>The URLRequest object. The <code>url</code> property of
+the URLRequest object should contain the URL of
+the file to download to the local computer. If
+this parameter is <code>null</code>, an exception is
+thrown. The <code>requestHeaders</code> property of the
+URLRequest object is ignored; custom HTTP
+request headers are not supported in uploads or
+downloads. To send <code>POST</code> or GET parameters to
+the server, set the value of <code><a href="../../openfl/net/URLRequest.html#data">URLRequest.data</a></code>
+to your parameters, and set <code><a href="../../openfl/net/URLRequest.html#method">URLRequest.method</a></code>
+to either <code><a href="../../openfl/net/URLRequestMethod.html#POST">URLRequestMethod.POST</a></code> or
+<code><a href="../../openfl/net/URLRequestMethod.html#GET">URLRequestMethod.GET</a></code>.
+On some browsers, URL strings are limited in
+length. Lengths greater than 256 characters may
+fail on some browsers or servers.</p></td></tr><tr><th style="width:25%;"><code>defaultFileName</code></th><td><p>The default filename displayed in the dialog
+box for the file to be downloaded. This string
+must not contain the following characters: <code>/ \ : * ? " &lt; &gt; | %</code>
+If you omit this parameter, the filename of the
+remote URL is parsed and used as the default.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>ArgumentError</code></th><td><p>If <code>url.data</code> is of type ByteArray, an
+exception is thrown. For use with the
+<code><a href="../../openfl/net/FileReference.html#upload">FileReference.upload</a>()</code> and
+<code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code> methods,
+<code>url.data</code> can only be of type
+URLVariables or String.</p></td></tr><tr class="indent"><th style="width:25%;"><code>Error</code></th><td><p>If the method is not called in response
+to a user action, such as a mouse event
+or keypress event.</p></td></tr><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>Thrown in the following situations: 1)
+Another browse session is in progress;
+only one file browsing session can be
+performed at a time. 2) The value passed
+to <code>request</code> does not contain a valid
+path or protocol. 3) The filename to
+download contains prohibited characters.
+4) A setting in the user's mms.cfg file
+prohibits this operation.</p></td></tr><tr class="indent"><th style="width:25%;"><code>MemoryError</code></th><td><p>This error can occur for the following
+reasons: 1) Flash Player cannot convert
+the <code><a href="../../openfl/net/URLRequest.html#data">URLRequest.data</a></code> parameter from
+UTF8 to MBCS. This error is applicable
+if the URLRequest object passed to the
+<code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code> method is set
+to perform a GET operation and if
+<code><a href="../../openfl/system/System.html#useCodePage">System.useCodePage</a></code> is set to <code><a href="../../Bool.html">true</a></code>.
+2) Flash Player cannot allocate memory
+for the <code>POST</code> data. This error is
+applicable if the URLRequest object
+passed to the <code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code>
+method is set to perform a <code>POST</code>
+operation.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>Local untrusted content may not
+communicate with the Internet. To avoid
+this situation, reclassify this SWF file
+as local-with-networking or trusted.
+This exception is thrown with a message
+indicating the filename and the URL that
+may not be accessed because of local
+file security restrictions.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>You cannot connect to commonly reserved
+ports. For a complete list of blocked
+ports, see "Restricting Networking APIs"
+in the <em>ActionScript 3.0 Developer's
+Guide</em>.</p></td></tr></table><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>cancel</code></th><td><p>Dispatched when the user dismisses the dialog
+box.</p></td></tr><tr class="indent"><th style="width:25%;"><code>complete</code></th><td><p>Dispatched when the file download operation
+successfully completes.</p></td></tr><tr class="indent"><th style="width:25%;"><code>ioError</code></th><td><p>Dispatched for any of the following reasons:
+<em> An input/output error occurs while the file is
+being read or transmitted.
+</em> SWF content running in the stand-alone or
+external versions of Flash Player tries to
+download a file from a server that requires
+authentication. During download, the standalone
+and external players do not provide a means for
+users to enter passwords. If a SWF file in these
+players tries to download a file from a server
+that requires authentication, the download fails.
+File download can succeed only in the ActiveX
+control and browser plug-in players.</p></td></tr><tr class="indent"><th style="width:25%;"><code>open</code></th><td><p>Dispatched when a download operation starts.</p></td></tr><tr class="indent"><th style="width:25%;"><code>progress</code></th><td><p>Dispatched periodically during the file download
+operation.</p></td></tr><tr class="indent"><th style="width:25%;"><code>securityError</code></th><td><p>Dispatched when a download fails because of a
+security error.</p></td></tr><tr class="indent"><th style="width:25%;"><code>select</code></th><td><p>Dispatched when the user selects a file for
+download from the dialog box.</p></td></tr></table></div></div><div class="field "><a name="load"></a><h3 class="anchor"><code><a href="#load"><span class="identifier">load</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Starts the load of a local file selected by a user. Although Flash
+Player has no restriction on the size of files you can upload,
+download, load or save, it officially supports sizes of up to 100 MB.
+For content running in Flash Player, you must call the
+<code><a href="../../openfl/net/FileReference.html#browse">FileReference.browse</a>()</code> or <code>FileReferenceList.browse()</code> method before
+you call the <code>load()</code> method. However, content running in AIR in the
+application sandbox can call the <code>load()</code> method of a File object
+without first calling the <code>browse()</code> method. (The AIR File class
+extends the FileReference class.)
+Listeners receive events to indicate the progress, success, or failure
+of the load. Although you can use the FileReferenceList object to let
+users select multiple files to load, you must load the files one by
+one. To load the files one by one, iterate through the
+<code>FileReferenceList.fileList</code> array of FileReference objects.</p>
+<p>Adobe AIR also includes the FileStream class which provides more
+options for reading files.</p>
+<p>The <code><a href="../../openfl/net/FileReference.html#upload">FileReference.upload</a>()</code>, <code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code>,
+<code><a href="../../openfl/net/FileReference.html#load">FileReference.load</a>()</code> and <code><a href="../../openfl/net/FileReference.html#save">FileReference.save</a>()</code> functions are
+nonblocking. These functions return after they are called, before the
+file transmission is complete. In addition, if the FileReference
+object goes out of scope, any transaction that is not yet completed on
+that object is canceled upon leaving the scope. Be sure that your
+FileReference object remains in scope for as long as the upload,
+download, load or save is expected to continue.</p>
+<p>If the file finishes loading successfully, its contents are stored as
+a byte array in the <code>data</code> property of the FileReference object.</p>
+<p>The following security considerations apply:</p><ul><li>Loading operations are not allowed if the calling SWF file is in an
+untrusted local sandbox.</li><li>The default behavior is to deny access between sandboxes. A website
+can enable access to a resource by adding a cross-domain policy file.</li><li>You can prevent a file from using this method by setting the
+<code>allowNetworking</code> parameter of the the <code>object</code> and <code>embed</code> tags in
+the HTML page that contains the SWF content.</li></ul>
+<p>However, these considerations do not apply to AIR content in the
+application sandbox.</p>
+<p>Note that when publishing to Flash Player 10 or AIR 1.5, you can have
+only one of the following operations active at one time:
+<code><a href="../../openfl/net/FileReference.html#browse">FileReference.browse</a>()</code>, <code><a href="../../openfl/net/FileReference.html#upload">FileReference.upload</a>()</code>,
+<code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code>, <code><a href="../../openfl/net/FileReference.html#load">FileReference.load</a>()</code>,
+<code><a href="../../openfl/net/FileReference.html#save">FileReference.save</a>()</code>. Otherwise, the application throws a runtime
+error (code 2174). Use <code><a href="../../openfl/net/FileReference.html#cancel">FileReference.cancel</a>()</code> to stop an operation
+in progress. This restriction applies only to Flash Player 10 and AIR
+1.5. Previous versions of Flash Player or AIR are unaffected by this
+restriction on simultaneous multiple operations.</p>
+<p>In Adobe AIR, the file-browsing dialog is not always displayed in
+front of windows that are "owned" by another window (windows that have
+a non-null <code>owner</code> property). To avoid window ordering issues, hide
+owned windows before calling this method.</p><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>Thrown in the following situations: 1)
+Another FileReference or
+FileReferenceList browse session is in
+progress; only one file browsing session
+may be performed at a time. 2) A setting
+in the user's mms.cfg file prohibits
+this operation.</p></td></tr><tr class="indent"><th style="width:25%;"><code>MemoryError</code></th><td><p>This error can occur if the application
+cannot allocate memory for the file. The
+file may be too large or available
+memory may be too low.</p></td></tr></table><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>complete</code></th><td><p>Dispatched when the file load operation completes
+successfully.</p></td></tr><tr class="indent"><th style="width:25%;"><code>ioError</code></th><td><p>Invoked if the load fails because of an input/output
+error while the application is reading or writing the
+file.</p></td></tr><tr class="indent"><th style="width:25%;"><code>open</code></th><td><p>Dispatched when an load operation starts.</p></td></tr><tr class="indent"><th style="width:25%;"><code>progress</code></th><td><p>Dispatched periodically during the file load
+operation.</p></td></tr></table></div></div><div class="field "><a name="save"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ defaultFileName : null })</span><a href="#save"><span class="identifier">save</span></a>(<span style="white-space:nowrap">data:<a class="type" title="Dynamic - Dynamic is a special type which is compatible with all other types." href="../../Dynamic.html">Dynamic</a>,</span> <span style="white-space:nowrap">?defaultFileName:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Opens a dialog box that lets the user save a file to the local
+filesystem. Although Flash Player has no restriction on the size of
+files you can upload, download, load or save, the player officially
+supports sizes of up to 100 MB.
+The <code>save()</code> method first opens an operating-system dialog box that
+asks the user to enter a filename and select a location on the local
+computer to save the file. When the user selects a location and
+confirms the save operation (for example, by clicking Save), the save
+process begins. Listeners receive events to indicate the progress,
+success, or failure of the save operation. To ascertain the status of
+the dialog box and the save operation after calling <code>save()</code>, your
+code must listen for events such as <code>cancel</code>, <code>open</code>, <code>progress</code>, and
+<code>complete</code>.</p>
+<p>Adobe AIR also includes the FileStream class which provides more
+options for saving files locally.</p>
+<p>The <code><a href="../../openfl/net/FileReference.html#upload">FileReference.upload</a>()</code>, <code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code>,
+<code><a href="../../openfl/net/FileReference.html#load">FileReference.load</a>()</code> and <code><a href="../../openfl/net/FileReference.html#save">FileReference.save</a>()</code> functions are
+nonblocking. These functions return after they are called, before the
+file transmission is complete. In addition, if the FileReference
+object goes out of scope, any transaction that is not yet completed on
+that object is canceled upon leaving the scope. Be sure that your
+FileReference object remains in scope for as long as the upload,
+download, load or save is expected to continue.</p>
+<p>When the file is saved successfully, the properties of the
+FileReference object are populated with the properties of the local
+file. The <code>complete</code> event is dispatched if the save is successful.</p>
+<p>Only one <code>browse()</code> or <code>save()</code> session can be performed at a time
+(because only one dialog box can be invoked at a time).</p>
+<p>In Flash Player, you can only call this method successfully in
+response to a user event (for example, in an event handler for a mouse
+click or keypress event). Otherwise, calling this method results in
+Flash Player throwing an Error exception. This limitation does not
+apply to AIR content in the application sandbox.</p>
+<p>In Adobe AIR, the save dialog is not always displayed in front of
+windows that are "owned" by another window (windows that have a
+non-null <code>owner</code> property). To avoid window ordering issues, hide
+owned windows before calling this method.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>data</code></th><td><p>The data to be saved. The data can be in one of
+several formats, and will be treated
+appropriately:
+<em> If the value is <code>null</code>, the application
+throws an ArgumentError exception.
+</em> If the value is a String, it is saved as a
+UTF-8 text file.
+<em> If the value is XML, it is written to a text
+file in XML format, with all formatting
+preserved.
+</em> If the value is a ByteArray object, it is
+written to a data file verbatim.
+* If the value is none of the above, the
+<code>save()</code> method calls the <code>toString()</code> method
+of the object to convert the data to a string,
+and it then saves the data as a text file. If
+that fails, the application throws an
+ArgumentError exception.</p></td></tr><tr><th style="width:25%;"><code>defaultFileName</code></th><td><p>The default filename displayed in the dialog
+box for the file to be saved. This string must
+not contain the following characters: <code>/ \ : * ? " &lt; &gt; | %</code>
+If a File object calls this method, the
+filename will be that of the file the File
+object references. (The AIR File class extends
+the FileReference class.)</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>ArgumentError</code></th><td><p>If <code>data</code> is not of type ByteArray, and
+it does not have a <code>toString()</code> method,
+an exception is thrown. If <code>data</code> is not
+of type XML, and it does not have a
+<code>toXMLString()</code> method, an exception is
+thrown.</p></td></tr><tr class="indent"><th style="width:25%;"><code>Error</code></th><td><p>If the method is not called in response
+to a user action, such as a mouse event
+or keypress event.</p></td></tr><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>Thrown in the following situations: 1)
+Another browse session is in progress;
+only one file browsing session can be
+performed at a time. 2) The filename to
+download contains prohibited characters.
+3) A setting in the user's mms.cfg file
+prohibits this operation.</p></td></tr><tr class="indent"><th style="width:25%;"><code>MemoryError</code></th><td><p>This error can occur if Flash Player
+cannot allocate memory for the file. The
+file may be too large or available
+memory may be too low.</p></td></tr></table><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>cancel</code></th><td><p>Dispatched when the user dismisses the dialog box.</p></td></tr><tr class="indent"><th style="width:25%;"><code>complete</code></th><td><p>Dispatched when the file download operation
+successfully completes.</p></td></tr><tr class="indent"><th style="width:25%;"><code>ioError</code></th><td><p>Dispatched if an input/output error occurs while the
+file is being read or transmitted.</p></td></tr><tr class="indent"><th style="width:25%;"><code>open</code></th><td><p>Dispatched when a download operation starts.</p></td></tr><tr class="indent"><th style="width:25%;"><code>progress</code></th><td><p>Dispatched periodically during the file download
+operation.</p></td></tr><tr class="indent"><th style="width:25%;"><code>select</code></th><td><p>Dispatched when the user selects a file for download
+from the dialog box.</p></td></tr></table></div></div><div class="field "><a name="upload"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ testUpload : false, uploadDataFieldName : &quot;Filedata&quot; })</span><a href="#upload"><span class="identifier">upload</span></a>(<span style="white-space:nowrap">request:<a class="type" title="openfl.net.URLRequest - The URLRequest class captures all of the information in a single HTTP request." href="../../openfl/net/URLRequest.html">URLRequest</a>,</span> <span style="white-space:nowrap">uploadDataFieldName:<a class="type" title="String - The basic String class." href="../../String.html">String</a> = &quot;Filedata&quot;,</span> <span style="white-space:nowrap">testUpload:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Starts the upload of the file to a remote server. Although Flash
+Player has no restriction on the size of files you can upload or
+download, the player officially supports uploads or downloads of up to
+100 MB. You must call the <code><a href="../../openfl/net/FileReference.html#browse">FileReference.browse</a>()</code> or
+<code>FileReferenceList.browse()</code> method before you call this method.
+For the Adobe AIR File class, which extends the FileReference class,
+you can use the <code>upload()</code> method to upload any file. For the
+FileReference class (used in Flash Player), the user must first select
+a file.</p>
+<p>Listeners receive events to indicate the progress, success, or failure
+of the upload. Although you can use the FileReferenceList object to
+let users select multiple files for upload, you must upload the files
+one by one; to do so, iterate through the <code>FileReferenceList.fileList</code>
+array of FileReference objects.</p>
+<p>The <code><a href="../../openfl/net/FileReference.html#upload">FileReference.upload</a>()</code> and <code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code> functions
+are nonblocking. These functions return after they are called, before
+the file transmission is complete. In addition, if the FileReference
+object goes out of scope, any upload or download that is not yet
+completed on that object is canceled upon leaving the scope. Be sure
+that your FileReference object remains in scope for as long as the
+upload or download is expected to continue.</p>
+<p>The file is uploaded to the URL passed in the <code>url</code> parameter. The URL
+must be a server script configured to accept uploads. Flash Player
+uploads files by using the HTTP <code>POST</code> method. The server script that
+handles the upload should expect a <code>POST</code> request with the following
+elements:</p><ul><li><code>Content-<a href="../../Type.html">Type</a></code> of <code>multipart/form-data</code></li><li><code>Content-Disposition</code> with a <code>name</code> attribute set to <code>"Filedata"</code> by
+default and a <code>filename</code> attribute set to the name of the original
+file</li><li>The binary contents of the file</li></ul>
+<p>You cannot connect to commonly reserved ports. For a complete list of
+blocked ports, see "Restricting Networking APIs" in the <em>ActionScript
+3.0 Developer's Guide</em>.</p>
+<p>For a sample <code>POST</code> request, see the description of the
+<code>uploadDataFieldName</code> parameter. You can send <code>POST</code> or <code>GET</code>
+parameters to the server with the <code>upload()</code> method; see the
+description of the <code>request</code> parameter.</p>
+<p>If the <code>testUpload</code> parameter is <code><a href="../../Bool.html">true</a></code>, and the file to be uploaded
+is bigger than approximately 10 KB, Flash Player on Windows first
+sends a test upload <code>POST</code> operation with zero content before
+uploading the actual file, to verify that the transmission is likely
+to succeed. Flash Player then sends a second <code>POST</code> operation that
+contains the actual file content. For files smaller than 10 KB, Flash
+Player performs a single upload <code>POST</code> with the actual file content to
+be uploaded. Flash Player on Macintosh does not perform test upload
+<code>POST</code> operations.</p>
+<p><strong>Note</strong>: If your server requires user authentication, only SWF files
+running in a browser ?that is, using the browser plug-in or ActiveX
+control ?can provide a dialog box to prompt the user for a username
+and password for authentication, and only for downloads. For uploads
+using the plug-in or ActiveX control, or for uploads and downloads
+using the stand-alone or external player, the file transfer fails.</p>
+<p>When you use this method , consider the Flash Player security model:</p><ul><li>Loading operations are not allowed if the calling SWF file is in an
+untrusted local sandbox.</li><li>The default behavior is to deny access between sandboxes. A website
+can enable access to a resource by adding a URL policy file.</li><li>You can prevent a SWF file from using this method by setting the
+<code>allowNetworking</code> parameter of the the <code>object</code> and <code>embed</code> tags in
+the HTML page that contains the SWF content.</li></ul>
+<p>However, in Adobe AIR, content in the <code>application</code> security sandbox
+(content installed with the AIR application) are not restricted by
+these security limitations.</p>
+<p>For more information related to security, see the Flash Player
+Developer Center Topic: &lt;a
+href="<a href="http://www.adobe.com/go/devnet_security_en">http://www.adobe.com/go/devnet_security_en</a>"
+scope="external">Security</a>.</p>
+<p>Note that because of new functionality added to the Flash Player, when
+publishing to Flash Player 10, you can have only one of the following
+operations active at one time: <code><a href="../../openfl/net/FileReference.html#browse">FileReference.browse</a>()</code>,
+<code><a href="../../openfl/net/FileReference.html#upload">FileReference.upload</a>()</code>, <code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code>,
+<code><a href="../../openfl/net/FileReference.html#load">FileReference.load</a>()</code>, <code><a href="../../openfl/net/FileReference.html#save">FileReference.save</a>()</code>. Otherwise, Flash
+Player throws a runtime error (code 2174). Use
+<code><a href="../../openfl/net/FileReference.html#cancel">FileReference.cancel</a>()</code> to stop an operation in progress. This
+restriction applies only to Flash Player 10. Previous versions of
+Flash Player are unaffected by this restriction on simultaneous
+multiple operations.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>request</code></th><td><p>The URLRequest object; the <code>url</code> property
+of the URLRequest object should contain the
+URL of the server script configured to
+handle upload through HTTP <code>POST</code> calls. On
+some browsers, URL strings are limited in
+length. Lengths greater than 256 characters
+may fail on some browsers or servers. If
+this parameter is <code>null</code>, an exception is
+thrown. The <code>requestHeaders</code> property of
+the URLRequest object is ignored; custom
+HTTP request headers are not supported in
+uploads or downloads.
+The URL can be HTTP or, for secure uploads,
+HTTPS. To use HTTPS, use an HTTPS url in
+the <code>url</code> parameter. If you do not specify
+a port number in the <code>url</code> parameter, port
+80 is used for HTTP and port 443 us used
+for HTTPS, by default.</p>
+<p>To send <code>POST</code> or <code>GET</code> parameters to the
+server, set the <code>data</code> property of the
+URLRequest object to your parameters, and
+set the <code>method</code> property to either
+<code><a href="../../openfl/net/URLRequestMethod.html#POST">URLRequestMethod.POST</a></code> or
+<code><a href="../../openfl/net/URLRequestMethod.html#GET">URLRequestMethod.GET</a></code>.</p></td></tr><tr><th style="width:25%;"><code>uploadDataFieldName</code></th><td><p>The field name that precedes the file data
+in the upload <code>POST</code> operation. The
+<code>uploadDataFieldName</code> value must be
+non-null and a non-empty String. By
+default, the value of <code>uploadDataFieldName</code>
+is <code>"Filedata"</code>, as shown in the following
+sample <code>POST</code> request: &lt;pre
+xml:space="preserve"> Content-Type:
+multipart/form-data; boundary=AaB03x
+--AaB03x Content-Disposition: form-data;
+name="Filedata"; filename="example.jpg"
+Content-Type: application/octet-stream ...
+contents of example.jpg ... --AaB03x--
+</pre></p></td></tr><tr><th style="width:25%;"><code>testUpload</code></th><td><p>A setting to request a test file upload. If
+<code>testUpload</code> is <code><a href="../../Bool.html">true</a></code>, for files larger
+than 10 KB, Flash Player attempts a test
+file upload <code>POST</code> with a Content-Length of
+0. The test upload checks whether the
+actual file upload will be successful and
+that server authentication, if required,
+will succeed. A test upload is only
+available for Windows players.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>ArgumentError</code></th><td><p>Thrown in the following situations: 1)
+The <code>uploadDataFieldName</code> parameter is
+an empty string. 2) <code>url.data</code> is of
+type ByteArray. For use with the
+<code><a href="../../openfl/net/FileReference.html#upload">FileReference.upload</a>()</code> and
+<code><a href="../../openfl/net/FileReference.html#download">FileReference.download</a>()</code> methods,
+<code>url.data</code> may only be of type
+URLVariables or String. 3) In the AIR
+runtime (in the application security
+sandbox), the method of the URLRequest
+is not GET or POST (use
+<code>uploadEncoded()</code> instead).</p></td></tr><tr class="indent"><th style="width:25%;"><code>IllegalOperationError</code></th><td><p>Thrown in the following situations: 1)
+Another FileReference or
+FileReferenceList browse session is in
+progress; only one file browsing session
+may be performed at a time. 2) The URL
+parameter is not a valid path or
+protocol. File upload must use HTTP, and
+file download must use FTP or HTTP. 3)
+The <code>uploadDataFieldName</code> parameter is
+set to <code>null</code>. 4) A setting in the
+user's mms.cfg file prohibits this
+operation.</p></td></tr><tr class="indent"><th style="width:25%;"><code>MemoryError</code></th><td><p>This error can occur for the following
+reasons: 1) Flash Player cannot convert
+the <code><a href="../../openfl/net/URLRequest.html#data">URLRequest.data</a></code> parameter from
+UTF8 to MBCS. This error is applicable
+if the URLRequest object passed to
+<code><a href="../../openfl/net/FileReference.html#upload">FileReference.upload</a>()</code> is set to
+perform a GET operation and if
+<code><a href="../../openfl/system/System.html#useCodePage">System.useCodePage</a></code> is set to <code><a href="../../Bool.html">true</a></code>.
+2) Flash Player cannot allocate memory
+for the <code>POST</code> data. This error is
+applicable if the URLRequest object
+passed to <code><a href="../../openfl/net/FileReference.html#upload">FileReference.upload</a>()</code> is
+set to perform a <code>POST</code> operation.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>Local untrusted SWF files may not
+communicate with the Internet. To avoid
+this situation, reclassify this SWF file
+as local-with-networking or trusted.
+This exception is thrown with a message
+indicating the name of the local file
+and the URL that may not be accessed.</p></td></tr><tr class="indent"><th style="width:25%;"><code>SecurityError</code></th><td><p>You cannot connect to commonly reserved
+ports. For a complete list of blocked
+ports, see "Restricting Networking APIs"
+in the <em>ActionScript 3.0 Developer's
+Guide</em>.</p></td></tr></table><p class="javadoc">Events:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>complete</code></th><td><p>Dispatched when the file upload operation
+completes successfully.</p></td></tr><tr class="indent"><th style="width:25%;"><code>httpResponseStatus</code></th><td><p>The upload operation completes successfully
+and the server returns a response URL and
+response headers.</p></td></tr><tr class="indent"><th style="width:25%;"><code>httpStatus</code></th><td><p>Dispatched when an upload fails because of
+an HTTP error.</p></td></tr><tr class="indent"><th style="width:25%;"><code>ioError</code></th><td><p>Invoked in any of the following situations:
+<em> The upload fails because of an
+input/output error while Flash Player or
+Adobe AIR is reading, writing, or
+transmitting the file.
+</em> The upload fails because an attempt to
+upload a file to a server that requires
+authentication (such as a user name and
+password). During upload, no mean is
+provided for users to enter passwords.
+* The upload fails because the <code>url</code>
+parameter contains an invalid protocol.
+<code><a href="../../openfl/net/FileReference.html#upload">FileReference.upload</a>()</code> must use HTTP or
+HTTPS.</p></td></tr><tr class="indent"><th style="width:25%;"><code>open</code></th><td><p>Dispatched when an upload operation starts.</p></td></tr><tr class="indent"><th style="width:25%;"><code>progress</code></th><td><p>Dispatched periodically during the file
+upload operation.</p></td></tr><tr class="indent"><th style="width:25%;"><code>securityError</code></th><td><p>Dispatched when an upload fails because of a
+security violation.</p></td></tr><tr class="indent"><th style="width:25%;"><code>uploadCompleteData</code></th><td><p>Dispatched when data has been received from
+the server after a successful file upload.</p></td></tr></table></div></div></div><h4><a href="#" class="expand-button"><i class="fa fa-arrow-circle-o-right"></i></a> Defined by <a class="type" title="openfl.events.EventDispatcher - The EventDispatcher class is the base class for all classes that dispatch events." href="../../openfl/events/EventDispatcher.html">EventDispatcher</a></h4><div style="display:none"><div class="field "><a name="addEventListener"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ useWeakReference : false, priority : 0, useCapture : false })</span><a href="#addEventListener"><span class="identifier">addEventListener</span></a>&lt;<span class="type">T</span>&gt;(<span style="white-space:nowrap">type:<a class="type" title="openfl.events.EventType - The EventType abstract type provides type safety when matching dispatch events with the correct type of listener For example, the following code has the wrong type in the event listener, it should be a MouseEvent: addEventListener(MouseEvent." href="../../openfl/events/EventType.html">EventType</a>&lt;<span class="type">T</span>&gt;,</span> <span style="white-space:nowrap">listener:<span class="type">T</span>&nbsp;&#8209;&gt;&nbsp;<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a>,</span> <span style="white-space:nowrap">useCapture:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false,</span> <span style="white-space:nowrap">priority:<a class="type" title="Int - The standard Int type." href="../../Int.html">Int</a> = 0,</span> <span style="white-space:nowrap">useWeakReference:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Registers an event listener object with an EventDispatcher object so that
+the listener receives notification of an event. You can register event
+listeners on all nodes in the display list for a specific type of event,
+phase, and priority.</p>
+<p>After you successfully register an event listener, you cannot change
+its priority through additional calls to <code>addEventListener()</code>.
+To change a listener's priority, you must first call
+<code>removeListener()</code>. Then you can register the listener again
+with the new priority level.</p>
+<p>Keep in mind that after the listener is registered, subsequent calls to
+<code>addEventListener()</code> with a different <code>type</code> or
+<code>useCapture</code> value result in the creation of a separate
+listener registration. For example, if you first register a listener with
+<code>useCapture</code> set to <code><a href="../../Bool.html">true</a></code>, it listens only during
+the capture phase. If you call <code>addEventListener()</code> again using
+the same listener object, but with <code>useCapture</code> set to
+<code><a href="../../Bool.html">false</a></code>, you have two separate listeners: one that listens
+during the capture phase and another that listens during the target and
+bubbling phases.</p>
+<p>You cannot register an event listener for only the target phase or the
+bubbling phase. Those phases are coupled during registration because
+bubbling applies only to the ancestors of the target node.</p>
+<p>If you no longer need an event listener, remove it by calling
+<code>removeEventListener()</code>, or memory problems could result. Event
+listeners are not automatically removed from memory because the garbage
+collector does not remove the listener as long as the dispatching object
+exists(unless the <code>useWeakReference</code> parameter is set to
+<code><a href="../../Bool.html">true</a></code>).</p>
+<p>Copying an EventDispatcher instance does not copy the event listeners
+attached to it.(If your newly created node needs an event listener, you
+must attach the listener after creating the node.) However, if you move an
+EventDispatcher instance, the event listeners attached to it move along
+with it.</p>
+<p>If the event listener is being registered on a node while an event is
+being processed on this node, the event listener is not triggered during
+the current phase but can be triggered during a later phase in the event
+flow, such as the bubbling phase.</p>
+<p>If an event listener is removed from a node while an event is being
+processed on the node, it is still triggered by the current actions. After
+it is removed, the event listener is never invoked again(unless
+registered again for future processing).</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>type</code></th><td><p>The type of event.</p></td></tr><tr><th style="width:25%;"><code>useCapture</code></th><td><p>Determines whether the listener works in the
+capture phase or the target and bubbling phases.
+If <code>useCapture</code> is set to
+<code><a href="../../Bool.html">true</a></code>, the listener processes the
+event only during the capture phase and not in the
+target or bubbling phase. If
+<code>useCapture</code> is <code><a href="../../Bool.html">false</a></code>, the
+listener processes the event only during the
+target or bubbling phase. To listen for the event
+in all three phases, call
+<code>addEventListener</code> twice, once with
+<code>useCapture</code> set to <code><a href="../../Bool.html">true</a></code>,
+then again with <code>useCapture</code> set to
+<code><a href="../../Bool.html">false</a></code>.</p></td></tr><tr><th style="width:25%;"><code>priority</code></th><td><p>The priority level of the event listener. The
+priority is designated by a signed 32-bit integer.
+The higher the number, the higher the priority.
+All listeners with priority <em>n</em> are processed
+before listeners of priority <em>n</em>-1. If two or
+more listeners share the same priority, they are
+processed in the order in which they were added.
+The default priority is 0.</p></td></tr><tr><th style="width:25%;"><code>useWeakReference</code></th><td><p>Determines whether the reference to the listener
+is strong or weak. A strong reference(the
+default) prevents your listener from being
+garbage-collected. A weak reference does not.</p>
+<p>Class-level member functions are not subject to
+garbage collection, so you can set
+<code>useWeakReference</code> to <code><a href="../../Bool.html">true</a></code>
+for class-level member functions without
+subjecting them to garbage collection. If you set
+<code>useWeakReference</code> to <code><a href="../../Bool.html">true</a></code>
+for a listener that is a nested inner function,
+the function will be garbage-collected and no
+longer persistent. If you create references to the
+inner function(save it in another variable) then
+it is not garbage-collected and stays
+persistent.</p>
+<p>Weak references are supported on some OpenFL
+targets only, including html5, cpp, and
+flash/air. On other targets, this parameter is
+ignored, and the reference will be strong instead.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>ArgumentError</code></th><td><p>The <code>listener</code> specified is not a
+function.</p></td></tr></table></div></div><div class="field "><a name="dispatchEvent"></a><h3 class="anchor"><code><a href="#dispatchEvent"><span class="identifier">dispatchEvent</span></a>(<span style="white-space:nowrap">event:<a class="type" title="openfl.events.Event - The Event class is used as the base class for the creation of Event objects, which are passed as parameters to event listeners when an event occurs." href="../../openfl/events/Event.html">Event</a></span>):<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Dispatches an event into the event flow. The event target is the
+EventDispatcher object upon which the <code>dispatchEvent()</code> method
+is called.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>event</code></th><td><p>The Event object that is dispatched into the event flow. If
+the event is being redispatched, a clone of the event is
+created automatically. After an event is dispatched, its
+<code>target</code> property cannot be changed, so you must
+create a new copy of the event for redispatching to work.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>A value of <code><a href="../../Bool.html">true</a></code> if the event was successfully
+dispatched. A value of <code><a href="../../Bool.html">false</a></code> indicates failure or
+that <code>preventDefault()</code> was called on the event.</p></div><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>Error</code></th><td><p>The event dispatch recursion limit has been reached.</p></td></tr></table></div></div><div class="field "><a name="hasEventListener"></a><h3 class="anchor"><code><a href="#hasEventListener"><span class="identifier">hasEventListener</span></a>(<span style="white-space:nowrap">type:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Checks whether the EventDispatcher object has any listeners registered for
+a specific type of event. This allows you to determine where an
+EventDispatcher object has altered handling of an event type in the event
+flow hierarchy. To determine whether a specific event type actually
+triggers an event listener, use <code>willTrigger()</code>.</p>
+<p>The difference between <code>hasEventListener()</code> and
+<code>willTrigger()</code> is that <code>hasEventListener()</code>
+examines only the object to which it belongs, whereas
+<code>willTrigger()</code> examines the entire event flow for the event
+specified by the <code>type</code> parameter.</p>
+<p>When <code>hasEventListener()</code> is called from a LoaderInfo
+object, only the listeners that the caller can access are considered.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>type</code></th><td><p>The type of event.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>A value of <code><a href="../../Bool.html">true</a></code> if a listener of the specified type
+is registered; <code><a href="../../Bool.html">false</a></code> otherwise.</p></div></div></div><div class="field "><a name="removeEventListener"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ useCapture : false })</span><a href="#removeEventListener"><span class="identifier">removeEventListener</span></a>&lt;<span class="type">T</span>&gt;(<span style="white-space:nowrap">type:<a class="type" title="openfl.events.EventType - The EventType abstract type provides type safety when matching dispatch events with the correct type of listener For example, the following code has the wrong type in the event listener, it should be a MouseEvent: addEventListener(MouseEvent." href="../../openfl/events/EventType.html">EventType</a>&lt;<span class="type">T</span>&gt;,</span> <span style="white-space:nowrap">listener:<span class="type">T</span>&nbsp;&#8209;&gt;&nbsp;<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a>,</span> <span style="white-space:nowrap">useCapture:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Removes a listener from the EventDispatcher object. If there is no
+matching listener registered with the EventDispatcher object, a call to
+this method has no effect.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>type</code></th><td><p>The type of event.</p></td></tr><tr><th style="width:25%;"><code>useCapture</code></th><td><p>Specifies whether the listener was registered for the
+capture phase or the target and bubbling phases. If the
+listener was registered for both the capture phase and
+the target and bubbling phases, two calls to
+<code>removeEventListener()</code> are required to
+remove both, one call with <code>useCapture()</code> set
+to <code><a href="../../Bool.html">true</a></code>, and another call with
+<code>useCapture()</code> set to <code><a href="../../Bool.html">false</a></code>.</p></td></tr></table></div></div><div class="field "><a name="toString"></a><h3 class="anchor"><code><a href="#toString"><span class="identifier">toString</span></a>():<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p></p></div></div><div class="field "><a name="willTrigger"></a><h3 class="anchor"><code><a href="#willTrigger"><span class="identifier">willTrigger</span></a>(<span style="white-space:nowrap">type:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Checks whether an event listener is registered with this EventDispatcher
+object or any of its ancestors for the specified event type. This method
+returns <code><a href="../../Bool.html">true</a></code> if an event listener is triggered during any
+phase of the event flow when an event of the specified type is dispatched
+to this EventDispatcher object or any of its descendants.</p>
+<p>The difference between the <code>hasEventListener()</code> and the
+<code>willTrigger()</code> methods is that <code>hasEventListener()</code>
+examines only the object to which it belongs, whereas the
+<code>willTrigger()</code> method examines the entire event flow for the
+event specified by the <code>type</code> parameter.</p>
+<p>When <code>willTrigger()</code> is called from a LoaderInfo object,
+only the listeners that the caller can access are considered.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>type</code></th><td><p>The type of event.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>A value of <code><a href="../../Bool.html">true</a></code> if a listener of the specified type
+will be triggered; <code><a href="../../Bool.html">false</a></code> otherwise.</p></div></div></div></div></div></div></div></div></div></div><footer class="section site-footer" style="background:#FAFAFA"><div class="container"><div class="copyright"><p style="color:#000000">&copy; 2024 &nbsp;</p></div></div></footer><script src="../../highlighter.js"></script><link href="../../highlighter.css" rel="stylesheet"/></body></html>

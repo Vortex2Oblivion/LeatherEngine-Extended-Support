@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"><!-- use theme color or fallback -->
+<!--use textcolor from settings, otherwise create a contrasting color to theme color-->
+<head><meta charset="utf-8"/><link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-select.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,600italic,400" rel="stylesheet" type="text/css"/><link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet" type="text/css"/><script src="../../jquery-3.6.0.min.js"></script><script src="../../bootstrap/js/bootstrap.min.js"></script><script src="../../bootstrap/js/bootstrap-select.min.js"></script><link href="../../styles.css" rel="stylesheet"/><link href="../../extra-styles.css" rel="stylesheet"/><link href="../../haxe-nav.css" rel="stylesheet"/><link href="../../dark-mode.css" rel="stylesheet"/><script>var dox = {rootPath: "../../",platforms: ["doc"]};</script><script src="../../nav.js"></script><script src="../../index.js"></script><link rel="icon" href="../../favicon.ico" type="image/x-icon"/><title>openfl.display.NativeWindowInitOptions - Leather Engine Documentation</title><meta name="description" content="The NativeWindowInitOptions class defines the initialization options used
+to construct a new NativeWindow instance."/></head><body><script>/* Here to prevent flash of unstyled content */let systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;if ((!localStorage.theme && systemDarkMode) || localStorage.theme == "dark") {document.body.style.backgroundColor = "#111";document.body.style.opacity = "0";document.addEventListener("DOMContentLoaded", function(event) {toggleTheme();document.body.style.backgroundColor = "";document.body.style.opacity = "";});}</script><style>
+.navbar .brand {
+	display: inline-block;
+	float: none;
+	text-shadow: 0 0 0 transparent;
+}
+</style><nav class="nav"><div class="navbar"><div class="navbar-inner" style="background:#FAFAFA; border-bottom:1px solid rgba(0,0,0,.09)"><div class="container"><a class="brand" style="color:#000000" href="../../">Leather Engine Documentation</a><a href="#" id="theme-toggle" class="brand" style="color:#000000" onclick="toggleTheme()" title="Toggle Dark Mode"><i class="fa fa-moon-o"></i></a></div></div></div></nav><div class="container main-content"><div class="row-fluid"><div class="span3"><div class="well sidebar-nav"><form class="form-search" id="searchForm"><div class="input-prepend input-block-level"><span class="add-on"><i class="fa fa-search"></i></span><input id="search" type="text" placeholder="Filter (Ctrl+P)" autocomplete="off"/></div></form></div><div class="well sidebar-nav" id="explorer"><div id="nav"></div></div></div><div class="span9"><div class="page-header"><h1><small>class</small> NativeWindowInitOptions</h1><h4><small>package <a href="../../openfl/display/index.html">openfl.display</a></small></h4>    <span class="label label-meta label-meta-directlyUsed" title="Marks types that are directly referenced by non-extern code.">@:directlyUsed</span></div><div class="body"><div class="doc doc-main"><p>The NativeWindowInitOptions class defines the initialization options used
+to construct a new NativeWindow instance.</p>
+<p>The properties defined in the initialization options cannot be changed after
+a window is created.</p>
+<p><strong>Note:</strong> For the initial application window created automatically by AIR,
+all of these properties (except <code>type</code>) are set in the application
+descriptor. The initial window is always type <code><a href="../../openfl/display/NativeWindowType.html#NORMAL">NativeWindowType.NORMAL</a></code>.</p><p class="javadoc">See also:</p><ul><li><div class="inline-content"><p><code><a href="../../openfl/display/NativeWindow.html#NativeWindow">openfl.display.NativeWindow</a></code></p></div></li><li><div class="inline-content"><p><code><a href="../../openfl/display/NativeWindowType.html#NativeWindowType">openfl.display.NativeWindowType</a></code></p></div></li><li><div class="inline-content"><p><code><a href="../../openfl/display/NativeWindowSystemChrome.html#NativeWindowSystemChrome">openfl.display.NativeWindowSystemChrome</a></code></p></div></li></ul></div><h3 class="section">Constructor</h3><div class="fields"><div class="field "><a name="new"></a><h3 class="anchor"><code><a href="#new"><span class="identifier">new</span></a>()</code></h3><div class="doc"><p>Creates a new NativeWindowInitOptions object.</p>
+<p>The default values of the newly created object are:</p><ul><li><code>systemChrome = <a href="../../openfl/display/NativeWindowSystemChrome.html#STANDARD">NativeWindowSystemChrome.STANDARD</a></code></li><li><code>type = <a href="../../openfl/display/NativeWindowType.html#NORMAL">NativeWindowType.NORMAL</a></code></li><li><code>transparent = <a href="../../Bool.html">false</a></code></li><li><code>owner = null</code></li><li><code>resizable = <a href="../../Bool.html">true</a></code></li><li><code>maximizable = <a href="../../Bool.html">true</a></code></li><li><code>minimizable = <a href="../../Bool.html">true</a></code></li></ul></div></div></div><h3 class="section">Variables</h3><div class="fields"><div class="field "><a name="maximizable"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value(true)</span><a href="#maximizable"><span class="identifier">maximizable</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a><span> = true</span></code></h3><div class="doc"><p>Specifies whether the window can be maximized by the user.</p>
+<p>For windows with system chrome, this setting will affect the appearance
+of the window maximize button. It will also affect other parts of the
+system-managed user interface, such as the window menu on Microsoft
+Windows.</p>
+<p>When set to <code><a href="../../Bool.html">false</a></code>, the window cannot be maximized by the user. Calling
+the NativeWindow <code>maximize()</code> method directly will maximize the window.</p>
+<p><strong>OS behavior notes:</strong></p><ul><li>On operating systems, such as Mac OS X, in which maximizing a window
+does not also prevent resizing, both <code>maximizable</code> and <code>resizable</code> must
+be set to <code><a href="../../Bool.html">false</a></code> to prevent the window from being zoomed or resized.</li><li>Some Linux window managers allow windows to be maximized by the user
+even when the <code>maximizable</code> property is set to <code><a href="../../Bool.html">false</a></code>.</li></ul></div></div><div class="field "><a name="minimizable"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value(true)</span><a href="#minimizable"><span class="identifier">minimizable</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a><span> = true</span></code></h3><div class="doc"><p>Specifies whether the window can be minimized by the user.</p>
+<p>For windows with system chrome, this setting will affect the appearance
+of the window minimize button. It will also affect other parts of the
+system-managed user interface, such as the window menu on Microsoft
+Windows.</p>
+<p>When set to <code><a href="../../Bool.html">false</a></code>, the window cannot be minimized by the user. Calling
+the NativeWindow <code>minimize()</code> method directly will minimize the window.</p>
+<p><strong>Note:</strong> Some Linux window managers allow windows to be minimized by
+the user even when the <code>minimizable</code> property is set to <code><a href="../../Bool.html">false</a></code>.</p></div></div><div class="field "><a name="owner"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value(null)</span><a href="#owner"><span class="identifier">owner</span></a>:<a class="type" title="openfl.display.NativeWindow - The NativeWindow class provides an interface for creating and controlling native desktop windows." href="../../openfl/display/NativeWindow.html">NativeWindow</a><span> = null</span></code></h3><div class="doc"><p>Specifies the NativeWindow object that should own any windows created
+with this NativeWindowInitOptions.</p>
+<p>When a window has an owner, that window is always displayed in front of
+its owner, is minimized and hidden along with its owner, and closes when
+its owner closes.</p></div></div><div class="field "><a name="renderMode"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value(null)</span><a href="#renderMode"><span class="identifier">renderMode</span></a>:<a class="type" title="String - The basic String class." href="../../String.html">String</a><span> = null</span></code></h3><div class="doc"><p>Specifies the render mode of the NativeWindow object created with this
+NativeWindowInitOptions.</p>
+<p>Constants for the valid values of this property are defined in the
+NativeWindowRenderMode class.</p></div></div><div class="field "><a name="resizable"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value(true)</span><a href="#resizable"><span class="identifier">resizable</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a><span> = true</span></code></h3><div class="doc"><p>Specifies whether the window can be resized by the user.</p>
+<p>When set to <code><a href="../../Bool.html">false</a></code>, the window cannot be resized by the user using
+system chrome. Calling the NativeWindow <code>startResize()</code> method in
+response to a mouse event will allow the user to resize the window.
+Setting the window bounds directly will also change the window size.</p>
+<p><strong>OS behavior notes:</strong></p><ul><li>On operating systems, such as Mac OS X, in which maximizing windows
+is a resizing operation, both <code>maximizable</code> and <code>resizable</code> must be set
+to <code><a href="../../Bool.html">false</a></code> to prevent the window from being zoomed or resized.</li><li>Some Linux window managers allow windows to be resized by the user
+even when the <code>resizable</code> property is set to false.</li></ul></div></div><div class="field "><a name="systemChrome"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value(NativeWindowSystemChrome.STANDARD)</span><a href="#systemChrome"><span class="identifier">systemChrome</span></a>:<a class="type" title="openfl.display.NativeWindowSystemChrome - The NativeWindowSystemChrome class defines constants for the systemChrome property of the NativeWindowInitOptions object used to create a native window." href="../../openfl/display/NativeWindowSystemChrome.html">NativeWindowSystemChrome</a><span> = NativeWindowSystemChrome.STANDARD</span></code></h3><div class="doc"><p>Specifies whether system chrome is provided for the window.</p>
+<p>Chrome refers to the window controls that allow a user to control the
+desktop properties of a window. System chrome uses the standard controls
+for the desktop environment in which the OpenFL application is run and
+conforms to the standard look-and-feel of the native operating system.</p>
+<p>To use chrome provided by a framework (such as Feathers UI or Flex), or
+to provide your own window chrome, set <code>systemChrome</code> to
+<code><a href="../../openfl/display/NativeWindowSystemChrome.html#NONE">NativeWindowSystemChrome.NONE</a></code>.</p>
+<p>Setting the <code>transparent</code> property to true for a window with system
+chrome is not supported.</p></div></div><div class="field "><a name="transparent"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value(false)</span><a href="#transparent"><span class="identifier">transparent</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a><span> = false</span></code></h3><div class="doc"><p>Specifies whether the window supports transparency and alpha blending
+against the desktop.</p>
+<p>If <code><a href="../../Bool.html">true</a></code>, the window display is composited against the desktop. Areas
+of the window not covered by a display object, or covered by display
+objects with an alpha setting near zero, are effectively invisible and
+will not intercept mouse events (which will be received by the desktop
+object below the window). The <code>alpha</code> value at which an object will no
+longer intercepting mouse events varies between about <code>.06</code> and <code>.01</code>,
+depending on the operating system.</p>
+<p>Setting the <code>transparent</code> property to <code><a href="../../Bool.html">true</a></code> for a window with system
+chrome is not supported.</p>
+<p><strong>Note:</strong> Not all Linux window managers support transparency. On such
+systems, transparent areas of a window are composited against black.</p></div></div><div class="field "><a name="type"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value(NativeWindowType.NORMAL)</span><a href="#type"><span class="identifier">type</span></a>:<a class="type" title="openfl.display.NativeWindowType - The NativeWindowType class defines constants for the type property of the NativeWindowInitOptions object used to create a native window." href="../../openfl/display/NativeWindowType.html">NativeWindowType</a><span> = NativeWindowType.NORMAL</span></code></h3><div class="doc"><p>Specifies the type of the window to be created.</p>
+<p>Constants for the valid values of this property are defined in the
+NativeWindowType class:</p><ul><li>NativeWindowType.NORMAL — A typical window. Normal windows use
+full-size chrome and appear on the Windows or Linux task bar.</li><li>NativeWindowType.UTILITY — A tool palette. Utility windows use a
+slimmer version of the system chrome and do not appear on the Windows
+task bar.</li><li>NativeWindowType.LIGHTWEIGHT — Lightweight windows cannot have system
+chrome and do not appear on the Windows or Linux task bar. In addition,
+lightweight windows do not have the System (Alt-Space) menu on Windows.
+Lightweight windows are suitable for notification bubbles and controls
+such as combo-boxes that open a short-lived display area. When the
+lightweight type is used, <code>systemChrome</code> must be set to
+<code><a href="../../openfl/display/NativeWindowSystemChrome.html#NONE">NativeWindowSystemChrome.NONE</a></code>.</li></ul></div></div></div></div></div></div></div><footer class="section site-footer" style="background:#FAFAFA"><div class="container"><div class="copyright"><p style="color:#000000">&copy; 2024 &nbsp;</p></div></div></footer><script src="../../highlighter.js"></script><link href="../../highlighter.css" rel="stylesheet"/></body></html>

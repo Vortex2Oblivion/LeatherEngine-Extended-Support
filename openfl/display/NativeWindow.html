@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en"><!-- use theme color or fallback -->
+<!--use textcolor from settings, otherwise create a contrasting color to theme color-->
+<head><meta charset="utf-8"/><link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-select.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,600italic,400" rel="stylesheet" type="text/css"/><link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet" type="text/css"/><script src="../../jquery-3.6.0.min.js"></script><script src="../../bootstrap/js/bootstrap.min.js"></script><script src="../../bootstrap/js/bootstrap-select.min.js"></script><link href="../../styles.css" rel="stylesheet"/><link href="../../extra-styles.css" rel="stylesheet"/><link href="../../haxe-nav.css" rel="stylesheet"/><link href="../../dark-mode.css" rel="stylesheet"/><script>var dox = {rootPath: "../../",platforms: ["doc"]};</script><script src="../../nav.js"></script><script src="../../index.js"></script><link rel="icon" href="../../favicon.ico" type="image/x-icon"/><title>openfl.display.NativeWindow - Leather Engine Documentation</title><meta name="description" content="The NativeWindow class provides an interface for creating and controlling
+native desktop windows."/></head><body><script>/* Here to prevent flash of unstyled content */let systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;if ((!localStorage.theme && systemDarkMode) || localStorage.theme == "dark") {document.body.style.backgroundColor = "#111";document.body.style.opacity = "0";document.addEventListener("DOMContentLoaded", function(event) {toggleTheme();document.body.style.backgroundColor = "";document.body.style.opacity = "";});}</script><style>
+.navbar .brand {
+	display: inline-block;
+	float: none;
+	text-shadow: 0 0 0 transparent;
+}
+</style><nav class="nav"><div class="navbar"><div class="navbar-inner" style="background:#FAFAFA; border-bottom:1px solid rgba(0,0,0,.09)"><div class="container"><a class="brand" style="color:#000000" href="../../">Leather Engine Documentation</a><a href="#" id="theme-toggle" class="brand" style="color:#000000" onclick="toggleTheme()" title="Toggle Dark Mode"><i class="fa fa-moon-o"></i></a></div></div></div></nav><div class="container main-content"><div class="row-fluid"><div class="span3"><div class="well sidebar-nav"><form class="form-search" id="searchForm"><div class="input-prepend input-block-level"><span class="add-on"><i class="fa fa-search"></i></span><input id="search" type="text" placeholder="Filter (Ctrl+P)" autocomplete="off"/></div></form></div><div class="well sidebar-nav" id="explorer"><div id="nav"></div></div></div><div class="span9"><div class="page-header"><h1><small>class</small> NativeWindow</h1><h4><small>package <a href="../../openfl/display/index.html">openfl.display</a></small></h4><h4><small>extends <a class="type" title="openfl.events.EventDispatcher - The EventDispatcher class is the base class for all classes that dispatch events." href="../../openfl/events/EventDispatcher.html">EventDispatcher</a></small></h4>    <span class="label label-meta label-meta-directlyUsed" title="Marks types that are directly referenced by non-extern code.">@:directlyUsed</span><span class="label label-meta label-meta-access" title="Forces private access to package, type or field.">@:access(openfl.desktop.NativeApplication)</span><span class="label label-meta label-meta-access" title="Forces private access to package, type or field.">@:access(openfl.display.NativeWindowInitOptions)</span><span class="label label-meta label-meta-access" title="Forces private access to package, type or field.">@:access(openfl.display.Stage)</span><span class="label label-meta label-meta-access" title="Forces private access to package, type or field.">@:access(lime.ui.Window)</span></div><div class="body"><div class="doc doc-main"><p>The NativeWindow class provides an interface for creating and controlling
+native desktop windows.</p>
+<p>You can test for support at run time on desktop devices using the
+<code><a href="../../openfl/display/NativeWindow.html#isSupported">NativeWindow.isSupported</a></code> property.</p>
+<p><em>OpenFL target support:</em> This feature is supported on all desktop operating
+systems, but is not supported on mobile operating systems, including iOS and
+Android.</p>
+<p><em>Adobe AIR profile support:</em> This feature is supported on all desktop
+operating systems, but is not supported on mobile devices or AIR for TV
+devices. See
+<a href="http://help.adobe.com/en_US/air/build/WS144092a96ffef7cc16ddeea2126bb46b82f-8000.html">AIR Profile Support</a>
+for more information regarding API support across multiple profiles.</p>
+<p>A reference to the NativeWindow instance is returned by the window
+constructor. A reference to a NativeWindow instance can also be accessed
+using the <code>stage.nativeWindow </code>property of any display object on that
+window's stage:</p>
+<pre><code class="prettyprint haxe">var window:NativeWindow = displayObject.stage.nativeWindow;</code></pre>
+<p>The properties of a NativeWindow instance can only be accessed by
+application content. If non-application content attempts to access the
+NativeWindow object, a security error will be thrown.</p>
+<p>Content can be added to a window using the DisplayObjectContainer methods of
+the Stage object such as <code>addChild()</code>.</p>
+<p>The following operations on NativeWindow objects are asynchronous:
+<code>close()</code>, <code>maximize()</code>, <code>minimize()</code>, <code>restore()</code>, and bounds changes. An
+application can detect when these operations have completed by listening for
+the appropriate events.</p>
+<p>If the <code><a href="../../openfl/desktop/NativeApplication.html#autoExit">NativeApplication.autoExit</a></code> property is <code><a href="../../Bool.html">true</a></code>, which is the
+default, the application will close when its last window is closed (and all
+close event handlers have returned). If <code>autoExit</code> is false, then
+<code><a href="../../openfl/desktop/NativeApplication.html#exit">NativeApplication.nativeApplication.exit</a>()</code> must be called to terminate the
+application.</p>
+<p>NativeWindow objects will not be garbage collected after the window
+constructor has been called and before <code>close()</code> has been called. It is the
+responsibility of the application to close its own windows.</p></div><h3 class="section">Static variables</h3><div class="fields"><div class="field "><a name="isSupported"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#isSupported"><span class="identifier">isSupported</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether native windows are supported on the client system.</p></div></div><div class="field "><a name="supportsMenu"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#supportsMenu"><span class="identifier">supportsMenu</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether OpenFL supports native window menus on the current
+computer system.</p>
+<p>When <code><a href="../../openfl/display/NativeWindow.html#supportsMenu">NativeWindow.supportsMenu</a></code> is <code><a href="../../Bool.html">true</a></code>, a native menu will be
+displayed for a window when a NativeMenu object is assigned to the
+window <code>menu</code> property (unless the window <code>systemChrome</code> property is
+<code><a href="../../openfl/display/NativeWindowSystemChrome.html#NONE">NativeWindowSystemChrome.NONE</a></code>). Be sure to use the
+<code><a href="../../openfl/display/NativeWindow.html#supportsMenu">NativeWindow.supportsMenu</a></code> property to determine whether the operating
+system supports native window menus. Using other means (such as
+<code>Capabilities.os</code>) to determine support can lead to programming errors
+(if some possible target operating systems are not considered).</p>
+<p>Note: Assigning a menu to a window when <code><a href="../../openfl/display/NativeWindow.html#supportsMenu">NativeWindow.supportsMenu</a></code> is
+<code><a href="../../Bool.html">false</a></code> or when the window <code>systemChrome</code> property is
+<code><a href="../../openfl/display/NativeWindowSystemChrome.html#NONE">NativeWindowSystemChrome.NONE</a></code> is allowed, but does nothing.</p></div></div><div class="field "><a name="supportsTransparency"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#supportsTransparency"><span class="identifier">supportsTransparency</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether OpenFL supports native windows with transparent pixels.</p>
+<p>When <code><a href="../../openfl/display/NativeWindow.html#supportsTransparency">NativeWindow.supportsTransparency</a></code> is <code><a href="../../Bool.html">true</a></code>, transparency in
+pixels of a native window will be honored, if the window transparent
+property is set to <code><a href="../../Bool.html">true</a></code>. Opacity of all pixels will be set to <code>1</code> if
+<code><a href="../../openfl/display/NativeWindow.html#supportsTransparency">NativeWindow.supportsTransparency</a></code> is <code>fals</code>e, regardless of the value
+of the window transparent property. Fully transparent pixels will render
+as black when <code><a href="../../openfl/display/NativeWindow.html#supportsTransparency">NativeWindow.supportsTransparency</a></code> is <code><a href="../../Bool.html">false</a></code>. Be sure to
+use the <code><a href="../../openfl/display/NativeWindow.html#supportsTransparency">NativeWindow.supportsTransparency</a></code> property to determine
+whether the operating system supports transparency. Using other means
+(such as <code>Capabilities.os</code>) to determine support can lead to programmin
+errors (if some possible target operating systems are not considered).</p>
+<p>Note: The value of this property might change while an application is
+running, based on user preferences set for the operating system.</p></div></div></div><h3 class="section">Constructor</h3><div class="fields"><div class="field "><a name="new"></a><h3 class="anchor"><code><a href="#new"><span class="identifier">new</span></a>(<span style="white-space:nowrap">initOptions:<a class="type" title="openfl.display.NativeWindowInitOptions - The NativeWindowInitOptions class defines the initialization options used to construct a new NativeWindow instance." href="../../openfl/display/NativeWindowInitOptions.html">NativeWindowInitOptions</a></span>)</code></h3><div class="doc"><p>Creates a new NativeWindow instance and a corresponding operating system
+window.</p>
+<p>The settings defined in the <code>initOptions</code> parameter cannot be changed
+after the window is created. Invalid <code>initOptions</code> settings will cause
+an illegal operation error to be thrown. Settings that are valid but not
+available on the current system will not throw an exception. The window
+capabilities specific to the current operating system can be detected,
+if desired, using the static <code><a href="../../openfl/display/NativeWindow.html#NativeWindow">NativeWindow</a></code> members such as
+<code>systemMaxSize</code>.</p>
+<p>The default window size is determined by the operating system, and
+windows are created in an invisible state. To prevent changes to the
+window from being visible, do not change the window <code>visible</code> property
+to <code><a href="../../Bool.html">true</a></code> or call <code>activate()</code> until the window changes are finished.</p></div></div></div><h3 class="section">Variables</h3><div class="fields"><div class="field "><a name="active"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#active"><span class="identifier">active</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether this window is the active application window.</p>
+<p>Use the <code>activate()</code> method to make a window active.</p></div></div><div class="field "><a name="bounds"></a><h3 class="anchor"><code><a href="#bounds"><span class="identifier">bounds</span></a>:<a class="type" title="openfl.geom.Rectangle - A Rectangle object is an area defined by its position, as indicated by its top-left corner point(x, y) and by its width and its height." href="../../openfl/geom/Rectangle.html">Rectangle</a></code></h3><div class="doc"><p>The size and location of this window.</p>
+<p>The dimensions of a window include any system chrome. The dimensions of
+a window's stage are equal to the dimensions of the window, minus the
+size of any system chrome. Changing the width and height of the window
+will change the stage's <code>stageWidth</code> and <code>stageHeight</code>. The reverse also
+applies; changing the stage dimensions will change the window size.</p>
+<p>A <code>resize</code> event is dispatched whenever the width or height of this
+window changes. Likewise, a <code>move</code> event is dispatched whenever the
+origin (x,y) of this window changes. On Mac OS and Windows, setting the
+<code>bounds</code> property directly will not dispatch a <code>moving</code> or <code>resizing</code>
+event. However, on Linux the NativeWindow does dispatch a <code>moving</code> and
+<code>resizing</code> events when you set the <code>bounds</code> property.</p>
+<p>Setting the <code>bounds</code> property of a window is equivalent to setting its
+<code>x</code>, <code>y</code>, <code>width</code>, and <code>height</code> properties. Likewise, setting any of the
+individual dimensions is equivalent to setting the <code>bounds</code> property.
+When you set all the dimensions at the same time by using the <code>bounds</code>
+property, fewer events are dispatched.</p>
+<p>The order in which the individual dimensions are set is not guaranteed.
+On Linux window managers that do not allow windows to extend off the
+desktop area, a change to an individual property may be blocked even
+though the net affect of applying all the property changes would have
+resulted in a legal window.</p>
+<p>If the width or height specified is less than the minimum or greater
+than the maximum allowed width or height, then the window width or
+height is set to the closest legal size. The factors that determine the
+minimum and maximum width and height are the following:</p><ul><li>The <code>minSize</code> and <code>maxSize</code> properties of the NativeWindow object</li><li>The minimum and maximum operating system limits, which are the values
+of <code><a href="../../openfl/display/NativeWindow.html#systemMinSize">NativeWindow.systemMinSize</a></code> and <code><a href="../../openfl/display/NativeWindow.html#systemMaxSize">NativeWindow.systemMaxSize</a></code>.</li><li>The maximum width and height of a window in Adobe AIR, which are each
+4095 pixels. (In AIR 1.5 and earlier, the maximum width and height of a
+window is 2880 pixels each.)</li><li>The minimum width and height required by any displayed system chrome.</li></ul>
+<p>Pixel values are rounded to the nearest integer when the position or
+dimensions of a window are changed.</p></div></div><div class="field "><a name="closed"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#closed"><span class="identifier">closed</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether this window has been closed.</p>
+<p>Accessing the following properties on a closed window will throw an
+illegal operation error:</p><ul><li><code>title</code></li><li><code>bounds</code></li><li><code>x</code>, <code>y</code>, <code>width</code>, <code>height</code></li><li><code>displayState</code></li><li><code>visible</code></li></ul>
+<p>Likewise, calling the following methods on a closed window will also
+throw an illegal operation error:</p><ul><li><code>minimize()</code></li><li><code>maximize()</code></li><li><code>restore()</code></li><li><code>startResize()</code></li><li><code>startMove()</code></li></ul></div></div><div class="field "><a name="displayState"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#displayState"><span class="identifier">displayState</span></a>:<a class="type" title="openfl.display.NativeWindowDisplayState - The NativeWindowDisplayState class defines constants for the names of the window display states." href="../../openfl/display/NativeWindowDisplayState.html">NativeWindowDisplayState</a></code></h3><div class="doc"><p>The display state of this window.</p></div></div><div class="field "><a name="height"></a><h3 class="anchor"><code><a href="#height"><span class="identifier">height</span></a>:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a></code></h3><div class="doc"><p>The height of this window in pixels.</p>
+<p>The dimensions of a window include any system window chrome that is
+displayed. The height of the usable display area inside a window is
+available from the <code><a href="../../openfl/display/Stage.html#stageHeight">Stage.stageHeight</a></code> property.</p>
+<p>Changing the <code>height</code> property of a window is equivalent to changing the
+height through the <code>bounds</code> property.</p>
+<p>If the height specified is less than the minimum or greater than the
+maximum allowed height, then the window height is set to the closest
+legal size. The factors that determine the minimum and maximum height
+are the following:</p><ul><li>The <code>minSize.y</code> and <code>maxSize.y</code> properties of the NativeWindow object</li><li>The minimum and maximum operating system limits, which are the values
+of <code><a href="../../openfl/display/NativeWindow.html#y">NativeWindow.systemMinSize.y</a></code> and <code><a href="../../openfl/display/NativeWindow.html#y">NativeWindow.systemMaxSize.y</a></code>.</li><li>The maximum height of a window in Adobe AIR, which is 4095 pixels
+(2880 pixels in AIR 1.5 and earlier).</li></ul>
+<p>On Linux, setting the <code>height</code> property is an asynchronous operation.</p>
+<p>To detect the completion of the height change, listen for the <code>resize</code>
+event, which is dispatched on all platforms.</p>
+<p>Pixel values are rounded to the nearest integer when the height of a
+window is changed.</p></div></div><div class="field "><a name="maxSize"></a><h3 class="anchor"><code><a href="#maxSize"><span class="identifier">maxSize</span></a>:<a class="type" title="openfl.geom.Point - The Point object represents a location in a two-dimensional coordinate system, where x represents the horizontal axis and y represents the vertical axis." href="../../openfl/geom/Point.html">Point</a></code></h3><div class="doc"><p>The maximum size for this window.</p>
+<p>The size limit is specified as the coordinates of a Point object. The
+point <code>x</code> property corresponds to the window width, the <code>y</code> property to
+the window height.</p>
+<p>The <code>maxSize</code> restriction is enforced for window resizing operation
+invoked both through Haxe code and through the operating system.</p>
+<p>Setting <code>maxSize</code> will change the window bounds if the current bounds
+are larger than the new maximum size.</p>
+<p>If the width or height specified is greater than the maximum allowed
+width or height, then the window width is set to the closest legal size.
+The factors that determine the minimum and maximum width and height are
+the following:</p><ul><li>The maximum operating system limit, which is the value
+<code><a href="../../openfl/display/NativeWindow.html#systemMaxSize">NativeWindow.systemMaxSize</a></code>.</li><li>The maximum width and height of a window in Adobe AIR, which is 4095
+pixels for each. (In AIR 1.5 and earlier, the maximum width and height
+of a window is 2880 pixels each.)</li></ul>
+<p>Note: On some operating systems, such as Mac OS X, maximizing a window
+will only enlarge the window to the <code>maxSize</code> value even if the
+maximized window will be smaller than the operating system screen. The
+window will still be in the maximized display state.</p><p class="javadoc">See also:</p><ul><li><div class="inline-content"><p><code><a href="../../openfl/display/NativeWindow.html#maxSize">NativeWindow.maxSize</a></code></p></div></li><li><div class="inline-content"><p><code><a href="../../openfl/display/NativeWindow.html#width">NativeWindow.width</a></code></p></div></li><li><div class="inline-content"><p><code><a href="../../openfl/display/NativeWindow.html#height">NativeWindow.height</a></code></p></div></li></ul></div></div><div class="field "><a name="maximizable"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#maximizable"><span class="identifier">maximizable</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Reports the maximizable setting used to create this window.</p>
+<p>The <code>maximizable</code> setting cannot be changed after a window is created.</p>
+<p><strong>Note:</strong> Some Linux window managers allow windows to be maximized by
+the user even when the <code>maximizable</code> property is set to <code><a href="../../Bool.html">false</a></code>.</p></div></div><div class="field "><a name="minSize"></a><h3 class="anchor"><code><a href="#minSize"><span class="identifier">minSize</span></a>:<a class="type" title="openfl.geom.Point - The Point object represents a location in a two-dimensional coordinate system, where x represents the horizontal axis and y represents the vertical axis." href="../../openfl/geom/Point.html">Point</a></code></h3><div class="doc"><p>The minimum size for this window.</p>
+<p>The size limit is specified as the coordinates of a Point object. The
+point <code>x</code> property corresponds to the window width, the <code>y</code> property to
+the window height.</p>
+<p>Setting <code>minSize</code>, will change the window bounds if the current bounds
+are smaller than the new minimum size.</p>
+<p>The <code>minSize</code> restriction is enforced for window resizing operations
+invoked both through ActionScript code and through the operating system.</p>
+<p>Note: The width and height of any displayed system chrome may make it
+impossible to set a window as small as the specified minimum size.</p><p class="javadoc">See also:</p><ul><li><div class="inline-content"><p><code><a href="../../openfl/display/NativeWindow.html#maxSize">NativeWindow.maxSize</a></code></p></div></li><li><div class="inline-content"><p><code><a href="../../openfl/display/NativeWindow.html#width">NativeWindow.width</a></code></p></div></li><li><div class="inline-content"><p><code><a href="../../openfl/display/NativeWindow.html#height">NativeWindow.height</a></code></p></div></li></ul></div></div><div class="field "><a name="minimizable"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#minimizable"><span class="identifier">minimizable</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Reports the minimizable setting used to create this window.</p>
+<p>The <code>minimizable</code> setting cannot be changed after a window is created.</p>
+<p><strong>Note:</strong> Some Linux window managers allow windows to be minimizable by
+the user even when the <code>minimizable</code> property is set to <code><a href="../../Bool.html">false</a></code>.</p></div></div><div class="field "><a name="owner"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#owner"><span class="identifier">owner</span></a>:<a class="type" title="openfl.display.NativeWindow - The NativeWindow class provides an interface for creating and controlling native desktop windows." href="../../openfl/display/NativeWindow.html">NativeWindow</a></code></h3><div class="doc"><p>The NativeWindow object that owns this window.</p>
+<p>Window ownership is established when a window is created and cannot be
+changed. To create a window that has an owner, set the owning
+NativeWindow object as the <code>owner</code> property of the
+NativeWindowInitOptions object used to create the owned window.</p>
+<p><strong>Note:</strong> On Linux, some window managers do not display owned windows in
+front of the owning window when the owner is in fullscreen mode.</p></div></div><div class="field "><a name="renderMode"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#renderMode"><span class="identifier">renderMode</span></a>:<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>Reports the window <code>renderMode</code> setting used to create this window.</p>
+<p>The value returned by <code><a href="../../openfl/display/NativeWindow.html#renderMode">NativeWindow.renderMode</a></code> will be one of the
+constants defined in the NativeWindowRenderMode class.</p>
+<p>The <code>renderMode</code> setting cannot be changed after a window is created.</p></div></div><div class="field "><a name="resizable"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#resizable"><span class="identifier">resizable</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Reports the resizable setting used to create this window.</p>
+<p>The <code>resizable</code> setting cannot be changed after a window is created.</p></div></div><div class="field "><a name="stage"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#stage"><span class="identifier">stage</span></a>:<a class="type" title="openfl.display.Stage - The Stage class represents the main drawing area." href="../../openfl/display/Stage.html">Stage</a></code></h3><div class="doc"><p>The Stage object for this window. The Stage object is the root object in
+the display list architecture used in OpenFL.</p>
+<p>The stage is the root of the display list for the window. Add visual
+display objects to a window by adding them to the stage or to another
+object already in the display list of this stage. The stage dimensions
+are those of the window client area when the window uses system chrome.
+The stage dimensions are equal to the dimensions of the window if
+system chrome is not used.</p></div></div><div class="field "><a name="systemChrome"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#systemChrome"><span class="identifier">systemChrome</span></a>:<a class="type" title="openfl.display.NativeWindowSystemChrome - The NativeWindowSystemChrome class defines constants for the systemChrome property of the NativeWindowInitOptions object used to create a native window." href="../../openfl/display/NativeWindowSystemChrome.html">NativeWindowSystemChrome</a></code></h3><div class="doc"><p>Reports the system chrome setting used to create this window.</p>
+<p>The values returned by <code><a href="../../openfl/display/NativeWindow.html#systemChrome">NativeWindow.systemChrome</a></code> will be one of the
+constants defined in the NativeWindowSystemChrome class.</p>
+<p>The system chrome setting cannot be changed after a window is created.</p></div></div><div class="field "><a name="title"></a><h3 class="anchor"><code><a href="#title"><span class="identifier">title</span></a>:<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>The window title.</p>
+<p>The title will appear in the system chrome for the window, if displayed,
+as well as in other system-dependent locations (such as the task bar).</p></div></div><div class="field "><a name="transparent"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#transparent"><span class="identifier">transparent</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Reports the transparency setting used to create this window.</p>
+<p>The <code>transparent</code> property cannot be changed after a window is created
+Transparency affects both the visual appearance and the mouse behavior
+of the window. On Windows and Mac OS X, the window will not capture
+mouse events when the <code>alpha</code> value of the pixel is below a certain
+threshold, which varies between about <code>.06</code> and <code>.01</code> depending on th
+operating system. On Linux, the window will capture mouse events above
+completely transparent areas and therefore will prevent users from
+accessing other windows and items on the desktop.</p>
+<p><strong>Note:</strong> Window transparency cannot always be supported. If the user's
+operating system configuration is such that transparency is not
+available, the window will be created without transparency. Areas that
+would have been transparent are composited against black. Use the
+<code><a href="../../openfl/display/NativeWindow.html#supportsTransparency">NativeWindow.supportsTransparency</a></code> property to determine whether window
+transparency is supported.</p></div></div><div class="field "><a name="visible"></a><h3 class="anchor"><code><a href="#visible"><span class="identifier">visible</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Specifies whether this window is visible.</p>
+<p>An invisible window is not displayed on the desktop, but all window
+properties and methods are valid.</p>
+<p>By default, <code>visible</code> is set to false. To display a window, set
+<code>visible</code> to <code><a href="../../Bool.html">true</a></code> or call <code><a href="../../openfl/display/NativeWindow.html#activate">NativeWindow.activate</a>()</code>.</p>
+<p>If this window has an owner, the visible state of that owning window
+determines whether this window is displayed. If the owning window is not
+displayed, then any owned windows are not displayed, even if their
+<code>visible</code> properties are <code><a href="../../Bool.html">true</a></code>.</p>
+<p>Note: On Mac OS X, setting <code>visible</code> to <code><a href="../../Bool.html">false</a></code> on a minimized window
+will not remove the window icon from the dock. If a user subsequently
+clicks the dock icon, the window will return to the visible state and be
+displayed on the desktop.</p></div></div><div class="field "><a name="width"></a><h3 class="anchor"><code><a href="#width"><span class="identifier">width</span></a>:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a></code></h3><div class="doc"><p>The width of this window in pixels.</p>
+<p>The dimensions reported for a native window include any system window
+chrome that is displayed. The width of the usable display area inside a
+window is available from the <code><a href="../../openfl/display/Stage.html#stageWidth">Stage.stageWidth</a></code> property.</p>
+<p>Changing the <code>width</code> property of a window is equivalent to changing the
+width through the <code>bounds</code> property.</p>
+<p>If the width specified is less than the minimum or greater than the
+maximum allowed width, then the window width is set to the closest
+legal size. The factors that determine the minimum and maximum width are the following:</p><ul><li>The <code>minSize.x</code> and <code>maxSize.x</code> properties of the NativeWindow object</li><li>The minimum and maximum operating system limits, which are the values
+of <code><a href="../../openfl/display/NativeWindow.html#x">NativeWindow.systemMinSize.x</a></code> and <code><a href="../../openfl/display/NativeWindow.html#x">NativeWindow.systemMaxSize.x</a></code>.</li><li>The maximum width of a window in Adobe AIR, which is 4095 pixels (2880
+pixels in AIR 1.5 and earlier).</li></ul>
+<p>On Linux, setting the <code>width</code> property is an asynchronous operation.</p>
+<p>To detect the completion of the width change, listen for the <code>resize</code>
+event, which is dispatched on all platforms.</p>
+<p>Pixel values are rounded to the nearest integer when the width of a window is changed.</p></div></div><div class="field "><a name="x"></a><h3 class="anchor"><code><a href="#x"><span class="identifier">x</span></a>:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a></code></h3><div class="doc"><p>The horizontal axis coordinate of this window's top left corner relative
+to the origin of the operating system desktop.</p>
+<p>On systems with more than one monitor, <code>x</code> can be negative. If you save
+the value, perhaps to reposition a window at its previous location, you
+should always verify that the window is placed in a usable location when
+the position is restored. Changes in screen resolution or monitor
+arrangement can can result in a window being placed off screen. Use the
+<code>Screen</code> class to obtain information about the desktop geometry.</p>
+<p>Changing the <code>x</code> property of a window is equivalent to changing the
+location through the <code>bounds</code> property.</p>
+<p>On Linux, setting the <code>x</code> property is an asynchronous operation.</p>
+<p>To detect the completion of the position change, listen for the <code>move</code>
+event, which is dispatched on all platforms.</p>
+<p>Pixel values are rounded to the nearest integer when the x-coordinate
+of a window is changed.</p></div></div><div class="field "><a name="y"></a><h3 class="anchor"><code><a href="#y"><span class="identifier">y</span></a>:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a></code></h3><div class="doc"><p>The vertical axis coordinate of this window's top left corner relative
+to the upper left corner of the operating system's desktop.</p>
+<p>On systems with more than one monitor, <code>y</code> can be negative. If you save
+the value, perhaps to reposition a window at its previous location, you
+should always verify that the window is placed in a usable location when
+the position is restored. Changes in screen resolution or monitor
+arrangement can can result in a window being placed off screen. Use the
+<code>Screen</code> class to obtain information about the desktop geometry.</p>
+<p>Changing the <code>y</code> property of a window is equivalent to changing the
+location through the <code>bounds</code> property.</p>
+<p>On Linux, setting the <code>y</code> property is an asynchronous operation.</p>
+<p>To detect the completion of the position change, listen for the <code>move</code>
+event, which is dispatched on all platforms.</p>
+<p>Pixel values are rounded to the nearest integer when the y-coordinate of
+a window is changed.</p></div></div></div><h3 class="section">Methods</h3><div class="fields"><div class="field "><a name="activate"></a><h3 class="anchor"><code><a href="#activate"><span class="identifier">activate</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Activates this window.</p>
+<p>Activating a window will:</p><ul><li>Make the window visible</li><li>Bring the window to the front</li><li>Give the window keyboard and mouse focus</li></ul>
+<p>On Linux, <code>activate()</code> is an asynchronous operation.</p>
+<p>The NativeWindow object dispatches an <code>activate</code> event on all platforms.</p></div></div><div class="field "><a name="close"></a><h3 class="anchor"><code><a href="#close"><span class="identifier">close</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Closes this window.</p>
+<p>A <code>close</code> event is dispatched as soon as the close operation is
+complete. A <code>closing</code> event will not be dispatched. If cancellation of
+the close operation should be allowed, manually dispatch a <code>closing</code>
+event and check whether any registered listeners cancel the default
+behavior before calling the <code>close()</code> method.</p>
+<p>When a window is closed, any windows that it owns are also closed. The
+owned windows do not dispatch <code>closing</code> events.</p>
+<p>If display object instances that are currently in the window are not
+referenced elsewhere they will be garbage collected and destroyed,
+except on the initial application window created by AIR. To allow
+display objects on the initial window to be garbage collected, remove
+them from the window stage.</p>
+<p>After being closed, the NativeWindow object is still a valid reference,
+but accessing most properties and methods will throw an illegal
+operation error.</p>
+<p>Closed windows cannot be reopened. If the window is already closed, no
+action is taken and no events are dispatched.</p>
+<p>Note: to hide a window without closing it, set the window's <code>visible</code>
+property to <code><a href="../../Bool.html">false</a></code>.</p></div></div><div class="field "><a name="listOwnedWindows"></a><h3 class="anchor"><code><a href="#listOwnedWindows"><span class="identifier">listOwnedWindows</span></a>():<a class="type" title="openfl.Vector - The Vector class lets you access and manipulate a vector — an array whose elements all have the same data type." href="../../openfl/Vector.html">Vector</a>&lt;<a class="type" title="openfl.display.NativeWindow - The NativeWindow class provides an interface for creating and controlling native desktop windows." href="../../openfl/display/NativeWindow.html">NativeWindow</a>&gt;</code></h3><div class="doc"><p>Returns a list of the NativeWindow objects that are owned by this
+window.</p>
+<p>You cannot change ownership of NativeWindows by adding or removing
+objects from the returned vector. Window ownership cannot be changed
+after a window is created.</p></div></div><div class="field "><a name="maximize"></a><h3 class="anchor"><code><a href="#maximize"><span class="identifier">maximize</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Maximizes this window.</p>
+<p>Calling <code>maximize()</code> method dispatches a <code>displayStateChange</code> event,
+and, if applicable, a <code>move</code> and a <code>resize</code> event. Whereas system chrome
+will dispatch a <code>displayStateChanging</code> event that can be canceled when a
+maximize command is initiated by a user, your maximize logic must
+manually implement this behavior, if desired.</p>
+<p>The <code>maximize()</code> method executes asynchronously. To detect the
+completion of the state change, listen for the <code>displayStateChange</code>
+event. If the window is already maximized, no action is taken and no
+events are dispatched.</p>
+<p><strong>OS behavior notes:</strong></p><ul><li>On operating systems, such as Mac OS X, in which maximizing a window
+does not also prevent resizing, calling <code>maximize()</code> will zoom the
+window to fill the screen, but will not prevent subsequent resizing of
+the window. Resizing a zoomed window will also restore the display
+state.</li><li>On some operating systems, such as Mac OS X, as well as on some Linux
+window managers, maximizing a window will not expand the window beyond
+the width and height specified in the <code>maxSize</code> property. On others, the
+window will expand to fill the screen even if the screen is larger than
+the <code>maxSize</code>.</li><li>Some Linux window managers do not allow utility windows to be
+maximized.</li></ul></div></div><div class="field "><a name="minimize"></a><h3 class="anchor"><code><a href="#minimize"><span class="identifier">minimize</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Minimizes this window.</p>
+<p>Calling <code>minimize()</code> dispatches a <code>displayStateChange</code> event, and, if
+applicable, a <code>move</code> and a <code>resize</code> event. Whereas system chrome will
+dispatch a <code>displayStateChanging</code> event that can be canceled when a
+minimize command is initiated by a user, calling <code>minimize()</code> directly
+does not. Your minimize logic may manually implement this behavior, if
+desired.</p>
+<p>The <code>minimize()</code> method executes asynchronously. To detect th
+completion of the state change, listen for the <code>displayStateChange</code>
+event, which is dispatched on all platforms. If the window is already
+minimized, no action is taken and no events are dispatched.</p>
+<p>Any windows owned by this window are hidden when it is minimized. The
+owned windows do not dispatch <code>displayStateChanging</code> or
+<code>displayStateChange</code> events.</p>
+<p><strong>Notes:</strong></p><ul><li>On Windows, minimizing an invisible window (<code>visible == <a href="../../Bool.html">false</a></code>), will
+make the window visible.</li><li>Some Linux window managers do not allow utility windows to be
+minimized.</li></ul></div></div><div class="field "><a name="restore"></a><h3 class="anchor"><code><a href="#restore"><span class="identifier">restore</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Restores this window from either a minimized or a maximized state.</p>
+<p>Calling <code>restore()</code> dispatches a <code>displayStateChange</code> event, and, if
+applicable, a <code>move</code> and a <code>resize</code> event. Whereas system chrome will
+dispatch a <code>displayStateChanging</code> event that can be canceled when a
+restore command is initiated by a user, your restore logic must manually
+implement this behavior, if desired.</p>
+<p>If the window is already in the <code><a href="../../openfl/display/NativeWindowDisplayState.html#NORMAL">NativeWindowDisplayState.NORMAL</a></code> state,
+no action is taken and no events are dispatched.</p>
+<p>To detect the completion of the state change, listen for the
+<code>displayStateChange</code> event, which is dispatched on all platforms.</p></div></div></div>  <div class="inherited-fields well"><h3 class="section">Inherited Variables</h3><div class="fields"><div style="display:none"></div></div><h3 class="section">Inherited Methods</h3><div class="fields"><h4><a href="#" class="expand-button"><i class="fa fa-arrow-circle-o-right"></i></a> Defined by <a class="type" title="openfl.events.EventDispatcher - The EventDispatcher class is the base class for all classes that dispatch events." href="../../openfl/events/EventDispatcher.html">EventDispatcher</a></h4><div style="display:none"><div class="field "><a name="addEventListener"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ useWeakReference : false, priority : 0, useCapture : false })</span><a href="#addEventListener"><span class="identifier">addEventListener</span></a>&lt;<span class="type">T</span>&gt;(<span style="white-space:nowrap">type:<a class="type" title="openfl.events.EventType - The EventType abstract type provides type safety when matching dispatch events with the correct type of listener For example, the following code has the wrong type in the event listener, it should be a MouseEvent: addEventListener(MouseEvent." href="../../openfl/events/EventType.html">EventType</a>&lt;<span class="type">T</span>&gt;,</span> <span style="white-space:nowrap">listener:<span class="type">T</span>&nbsp;&#8209;&gt;&nbsp;<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a>,</span> <span style="white-space:nowrap">useCapture:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false,</span> <span style="white-space:nowrap">priority:<a class="type" title="Int - The standard Int type." href="../../Int.html">Int</a> = 0,</span> <span style="white-space:nowrap">useWeakReference:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Registers an event listener object with an EventDispatcher object so that
+the listener receives notification of an event. You can register event
+listeners on all nodes in the display list for a specific type of event,
+phase, and priority.</p>
+<p>After you successfully register an event listener, you cannot change
+its priority through additional calls to <code>addEventListener()</code>.
+To change a listener's priority, you must first call
+<code>removeListener()</code>. Then you can register the listener again
+with the new priority level.</p>
+<p>Keep in mind that after the listener is registered, subsequent calls to
+<code>addEventListener()</code> with a different <code>type</code> or
+<code>useCapture</code> value result in the creation of a separate
+listener registration. For example, if you first register a listener with
+<code>useCapture</code> set to <code><a href="../../Bool.html">true</a></code>, it listens only during
+the capture phase. If you call <code>addEventListener()</code> again using
+the same listener object, but with <code>useCapture</code> set to
+<code><a href="../../Bool.html">false</a></code>, you have two separate listeners: one that listens
+during the capture phase and another that listens during the target and
+bubbling phases.</p>
+<p>You cannot register an event listener for only the target phase or the
+bubbling phase. Those phases are coupled during registration because
+bubbling applies only to the ancestors of the target node.</p>
+<p>If you no longer need an event listener, remove it by calling
+<code>removeEventListener()</code>, or memory problems could result. Event
+listeners are not automatically removed from memory because the garbage
+collector does not remove the listener as long as the dispatching object
+exists(unless the <code>useWeakReference</code> parameter is set to
+<code><a href="../../Bool.html">true</a></code>).</p>
+<p>Copying an EventDispatcher instance does not copy the event listeners
+attached to it.(If your newly created node needs an event listener, you
+must attach the listener after creating the node.) However, if you move an
+EventDispatcher instance, the event listeners attached to it move along
+with it.</p>
+<p>If the event listener is being registered on a node while an event is
+being processed on this node, the event listener is not triggered during
+the current phase but can be triggered during a later phase in the event
+flow, such as the bubbling phase.</p>
+<p>If an event listener is removed from a node while an event is being
+processed on the node, it is still triggered by the current actions. After
+it is removed, the event listener is never invoked again(unless
+registered again for future processing).</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>type</code></th><td><p>The type of event.</p></td></tr><tr><th style="width:25%;"><code>useCapture</code></th><td><p>Determines whether the listener works in the
+capture phase or the target and bubbling phases.
+If <code>useCapture</code> is set to
+<code><a href="../../Bool.html">true</a></code>, the listener processes the
+event only during the capture phase and not in the
+target or bubbling phase. If
+<code>useCapture</code> is <code><a href="../../Bool.html">false</a></code>, the
+listener processes the event only during the
+target or bubbling phase. To listen for the event
+in all three phases, call
+<code>addEventListener</code> twice, once with
+<code>useCapture</code> set to <code><a href="../../Bool.html">true</a></code>,
+then again with <code>useCapture</code> set to
+<code><a href="../../Bool.html">false</a></code>.</p></td></tr><tr><th style="width:25%;"><code>priority</code></th><td><p>The priority level of the event listener. The
+priority is designated by a signed 32-bit integer.
+The higher the number, the higher the priority.
+All listeners with priority <em>n</em> are processed
+before listeners of priority <em>n</em>-1. If two or
+more listeners share the same priority, they are
+processed in the order in which they were added.
+The default priority is 0.</p></td></tr><tr><th style="width:25%;"><code>useWeakReference</code></th><td><p>Determines whether the reference to the listener
+is strong or weak. A strong reference(the
+default) prevents your listener from being
+garbage-collected. A weak reference does not.</p>
+<p>Class-level member functions are not subject to
+garbage collection, so you can set
+<code>useWeakReference</code> to <code><a href="../../Bool.html">true</a></code>
+for class-level member functions without
+subjecting them to garbage collection. If you set
+<code>useWeakReference</code> to <code><a href="../../Bool.html">true</a></code>
+for a listener that is a nested inner function,
+the function will be garbage-collected and no
+longer persistent. If you create references to the
+inner function(save it in another variable) then
+it is not garbage-collected and stays
+persistent.</p>
+<p>Weak references are supported on some OpenFL
+targets only, including html5, cpp, and
+flash/air. On other targets, this parameter is
+ignored, and the reference will be strong instead.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>ArgumentError</code></th><td><p>The <code>listener</code> specified is not a
+function.</p></td></tr></table></div></div><div class="field "><a name="dispatchEvent"></a><h3 class="anchor"><code><a href="#dispatchEvent"><span class="identifier">dispatchEvent</span></a>(<span style="white-space:nowrap">event:<a class="type" title="openfl.events.Event - The Event class is used as the base class for the creation of Event objects, which are passed as parameters to event listeners when an event occurs." href="../../openfl/events/Event.html">Event</a></span>):<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Dispatches an event into the event flow. The event target is the
+EventDispatcher object upon which the <code>dispatchEvent()</code> method
+is called.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>event</code></th><td><p>The Event object that is dispatched into the event flow. If
+the event is being redispatched, a clone of the event is
+created automatically. After an event is dispatched, its
+<code>target</code> property cannot be changed, so you must
+create a new copy of the event for redispatching to work.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>A value of <code><a href="../../Bool.html">true</a></code> if the event was successfully
+dispatched. A value of <code><a href="../../Bool.html">false</a></code> indicates failure or
+that <code>preventDefault()</code> was called on the event.</p></div><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>Error</code></th><td><p>The event dispatch recursion limit has been reached.</p></td></tr></table></div></div><div class="field "><a name="hasEventListener"></a><h3 class="anchor"><code><a href="#hasEventListener"><span class="identifier">hasEventListener</span></a>(<span style="white-space:nowrap">type:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Checks whether the EventDispatcher object has any listeners registered for
+a specific type of event. This allows you to determine where an
+EventDispatcher object has altered handling of an event type in the event
+flow hierarchy. To determine whether a specific event type actually
+triggers an event listener, use <code>willTrigger()</code>.</p>
+<p>The difference between <code>hasEventListener()</code> and
+<code>willTrigger()</code> is that <code>hasEventListener()</code>
+examines only the object to which it belongs, whereas
+<code>willTrigger()</code> examines the entire event flow for the event
+specified by the <code>type</code> parameter.</p>
+<p>When <code>hasEventListener()</code> is called from a LoaderInfo
+object, only the listeners that the caller can access are considered.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>type</code></th><td><p>The type of event.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>A value of <code><a href="../../Bool.html">true</a></code> if a listener of the specified type
+is registered; <code><a href="../../Bool.html">false</a></code> otherwise.</p></div></div></div><div class="field "><a name="removeEventListener"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ useCapture : false })</span><a href="#removeEventListener"><span class="identifier">removeEventListener</span></a>&lt;<span class="type">T</span>&gt;(<span style="white-space:nowrap">type:<a class="type" title="openfl.events.EventType - The EventType abstract type provides type safety when matching dispatch events with the correct type of listener For example, the following code has the wrong type in the event listener, it should be a MouseEvent: addEventListener(MouseEvent." href="../../openfl/events/EventType.html">EventType</a>&lt;<span class="type">T</span>&gt;,</span> <span style="white-space:nowrap">listener:<span class="type">T</span>&nbsp;&#8209;&gt;&nbsp;<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a>,</span> <span style="white-space:nowrap">useCapture:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Removes a listener from the EventDispatcher object. If there is no
+matching listener registered with the EventDispatcher object, a call to
+this method has no effect.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>type</code></th><td><p>The type of event.</p></td></tr><tr><th style="width:25%;"><code>useCapture</code></th><td><p>Specifies whether the listener was registered for the
+capture phase or the target and bubbling phases. If the
+listener was registered for both the capture phase and
+the target and bubbling phases, two calls to
+<code>removeEventListener()</code> are required to
+remove both, one call with <code>useCapture()</code> set
+to <code><a href="../../Bool.html">true</a></code>, and another call with
+<code>useCapture()</code> set to <code><a href="../../Bool.html">false</a></code>.</p></td></tr></table></div></div><div class="field "><a name="toString"></a><h3 class="anchor"><code><a href="#toString"><span class="identifier">toString</span></a>():<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p></p></div></div><div class="field "><a name="willTrigger"></a><h3 class="anchor"><code><a href="#willTrigger"><span class="identifier">willTrigger</span></a>(<span style="white-space:nowrap">type:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Checks whether an event listener is registered with this EventDispatcher
+object or any of its ancestors for the specified event type. This method
+returns <code><a href="../../Bool.html">true</a></code> if an event listener is triggered during any
+phase of the event flow when an event of the specified type is dispatched
+to this EventDispatcher object or any of its descendants.</p>
+<p>The difference between the <code>hasEventListener()</code> and the
+<code>willTrigger()</code> methods is that <code>hasEventListener()</code>
+examines only the object to which it belongs, whereas the
+<code>willTrigger()</code> method examines the entire event flow for the
+event specified by the <code>type</code> parameter.</p>
+<p>When <code>willTrigger()</code> is called from a LoaderInfo object,
+only the listeners that the caller can access are considered.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>type</code></th><td><p>The type of event.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>A value of <code><a href="../../Bool.html">true</a></code> if a listener of the specified type
+will be triggered; <code><a href="../../Bool.html">false</a></code> otherwise.</p></div></div></div></div></div></div></div></div></div></div><footer class="section site-footer" style="background:#FAFAFA"><div class="container"><div class="copyright"><p style="color:#000000">&copy; 2024 &nbsp;</p></div></div></footer><script src="../../highlighter.js"></script><link href="../../highlighter.css" rel="stylesheet"/></body></html>

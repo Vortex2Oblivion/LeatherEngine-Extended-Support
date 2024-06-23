@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en"><!-- use theme color or fallback -->
+<!--use textcolor from settings, otherwise create a contrasting color to theme color-->
+<head><meta charset="utf-8"/><link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-select.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,600italic,400" rel="stylesheet" type="text/css"/><link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet" type="text/css"/><script src="../../jquery-3.6.0.min.js"></script><script src="../../bootstrap/js/bootstrap.min.js"></script><script src="../../bootstrap/js/bootstrap-select.min.js"></script><link href="../../styles.css" rel="stylesheet"/><link href="../../extra-styles.css" rel="stylesheet"/><link href="../../haxe-nav.css" rel="stylesheet"/><link href="../../dark-mode.css" rel="stylesheet"/><script>var dox = {rootPath: "../../",platforms: ["doc"]};</script><script src="../../nav.js"></script><script src="../../index.js"></script><link rel="icon" href="../../favicon.ico" type="image/x-icon"/><title>openfl.desktop.NativeApplication - Leather Engine Documentation</title><meta name="description" content="The NativeApplication class represents this OpenFL application."/></head><body><script>/* Here to prevent flash of unstyled content */let systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;if ((!localStorage.theme && systemDarkMode) || localStorage.theme == "dark") {document.body.style.backgroundColor = "#111";document.body.style.opacity = "0";document.addEventListener("DOMContentLoaded", function(event) {toggleTheme();document.body.style.backgroundColor = "";document.body.style.opacity = "";});}</script><style>
+.navbar .brand {
+	display: inline-block;
+	float: none;
+	text-shadow: 0 0 0 transparent;
+}
+</style><nav class="nav"><div class="navbar"><div class="navbar-inner" style="background:#FAFAFA; border-bottom:1px solid rgba(0,0,0,.09)"><div class="container"><a class="brand" style="color:#000000" href="../../">Leather Engine Documentation</a><a href="#" id="theme-toggle" class="brand" style="color:#000000" onclick="toggleTheme()" title="Toggle Dark Mode"><i class="fa fa-moon-o"></i></a></div></div></div></nav><div class="container main-content"><div class="row-fluid"><div class="span3"><div class="well sidebar-nav"><form class="form-search" id="searchForm"><div class="input-prepend input-block-level"><span class="add-on"><i class="fa fa-search"></i></span><input id="search" type="text" placeholder="Filter (Ctrl+P)" autocomplete="off"/></div></form></div><div class="well sidebar-nav" id="explorer"><div id="nav"></div></div></div><div class="span9"><div class="page-header"><h1><small>class</small> NativeApplication</h1><h4><small>package <a href="../../openfl/desktop/index.html">openfl.desktop</a></small></h4><h4><small>extends <a class="type" title="openfl.events.EventDispatcher - The EventDispatcher class is the base class for all classes that dispatch events." href="../../openfl/events/EventDispatcher.html">EventDispatcher</a></small></h4>    <span class="label label-meta label-meta-directlyUsed" title="Marks types that are directly referenced by non-extern code.">@:directlyUsed</span></div><div class="body"><div class="doc doc-main"><p>The NativeApplication class represents this OpenFL application.</p>
+<p>The NativeApplication class provides application information,
+application-wide functions, and dispatches application-level events.</p>
+<p>The NativeApplication object is a singleton object, created automatically
+at startup. Get the NativeApplication instance of an application with the
+static property <code><a href="../../openfl/desktop/NativeApplication.html#nativeApplication">NativeApplication.nativeApplication</a></code>.</p></div><h3 class="section">Static variables</h3><div class="fields"><div class="field "><a name="nativeApplication"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#nativeApplication"><span class="identifier">nativeApplication</span></a>:<a class="type" title="openfl.desktop.NativeApplication - The NativeApplication class represents this OpenFL application." href="../../openfl/desktop/NativeApplication.html">NativeApplication</a></code></h3><div class="doc"><p>The singleton instance of the <code><a href="../../openfl/desktop/NativeApplication.html#NativeApplication">NativeApplication</a></code> object.</p></div></div><div class="field "><a name="supportsDefaultApplication"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#supportsDefaultApplication"><span class="identifier">supportsDefaultApplication</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether <code>setAsDefaultApplication()</code>,
+<code>removeAsDefaultApplication()</code>, and <code>isSetAsDefaultApplication()</code> are
+supported on the current platform.</p>
+<p><em>OpenFL target support:</em> Not currently supported, except when targeting AIR.</p>
+<p>If <code><a href="../../Bool.html">true</a></code>, then the above methods will work as documented. If <code><a href="../../Bool.html">false</a></code>,
+then <code>setAsDefaultApplication()</code> and <code>removeDefaultApplication()</code> do
+nothing and <code>isSetAsDefaultApplication()</code> returns <code><a href="../../Bool.html">false</a></code>.</p><p class="javadoc">See also:</p><ul><li><div class="inline-content"><p><code><a href="../../openfl/desktop/NativeApplication.html#setAsDefaultApplication">NativeApplication.setAsDefaultApplication</a>()</code></p></div></li><li><div class="inline-content"><p><code><a href="../../openfl/desktop/NativeApplication.html#removeAsDefaultApplication">NativeApplication.removeAsDefaultApplication</a>()</code></p></div></li><li><div class="inline-content"><p><code><a href="../../openfl/desktop/NativeApplication.html#isSetAsDefaultApplication">NativeApplication.isSetAsDefaultApplication</a>()</code></p></div></li></ul></div></div><div class="field "><a name="supportsDockIcon"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#supportsDockIcon"><span class="identifier">supportsDockIcon</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether OpenFL supports dock-style application icons on the
+current operating system.</p>
+<p><em>OpenFL target support:</em> Not currently supported, except when targeting AIR.</p>
+<p>If <code><a href="../../Bool.html">true</a></code>, the <code><a href="../../openfl/desktop/NativeApplication.html#icon">NativeApplication.icon</a></code> property is of type <code>DockIcon</code>.</p>
+<p>The Mac OS X user interface provides an application "dock" containing
+icons for applications that are running or are frequently used.</p>
+<p>Be sure to use the <code><a href="../../openfl/desktop/NativeApplication.html#supportsDockIcon">NativeApplication.supportsDockIcon</a></code> property to
+determine whether the operating system supports application dock icons.
+Using other means (such as <code>Capabilities.os</code>) to determine support can
+lead to programming errors (if some possible target operating systems
+are not considered).</p></div></div><div class="field "><a name="supportsMenu"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#supportsMenu"><span class="identifier">supportsMenu</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Specifies whether the current operating system supports a global
+application menu bar.</p>
+<p><em>OpenFL target support:</em> Not currently supported, except when targeting AIR.</p>
+<p>When <code><a href="../../Bool.html">true</a></code>, the <code><a href="../../openfl/desktop/NativeApplication.html#menu">NativeApplication.menu</a></code> property can be used to
+define (or access) a native application menu.</p>
+<p>Be sure to use the <code><a href="../../openfl/desktop/NativeApplication.html#supportsMenu">NativeApplication.supportsMenu</a></code> property to
+determine whether the operating system supports the application menu
+bar. Using other means (such as <code>Capabilities.os</code>) to determine support
+can lead to programming errors (if some possible target operating
+systems are not considered).</p></div></div><div class="field "><a name="supportsStartAtLogin"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#supportsStartAtLogin"><span class="identifier">supportsStartAtLogin</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether <code>startAtLogin</code> is supported on the current platform.</p>
+<p><em>OpenFL target support:</em> Not currently supported, except when targeting AIR.</p>
+<p>If <code><a href="../../Bool.html">true</a></code>, then <code>startAtLogin</code> works as documented. If <code><a href="../../Bool.html">false</a></code>, then
+<code>startAtLogin</code> has no effect.</p><p class="javadoc">See also:</p><ul><li><div class="inline-content"><p><code><a href="../../openfl/desktop/NativeApplication.html#startAtLogin">NativeApplication.startAtLogin</a></code></p></div></li></ul></div></div><div class="field "><a name="supportsSystemTrayIcon"></a><h3 class="anchor"><code><span class="label label-static">static</span><span class="label">read only</span><a href="#supportsSystemTrayIcon"><span class="identifier">supportsSystemTrayIcon</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Specifies whether OpenFL supports system tray icons on the current
+operating system.</p>
+<p><em>OpenFL target support:</em> Not currently supported, except when targeting AIR.</p>
+<p>If true, the <code><a href="../../openfl/desktop/NativeApplication.html#icon">NativeApplication.icon</a></code> property is of type
+<code>SystemTrayIcon</code>.</p>
+<p>The Windows user interface provides the "system tray" region of the task
+bar, officially called the Notification Area, in which application icons
+can be displayed. No default icon is shown. You must set the bitmaps
+array of the icon object to display an icon.</p>
+<p>Be sure to use the <code><a href="../../openfl/desktop/NativeApplication.html#supportsSystemTrayIcon">NativeApplication.supportsSystemTrayIcon</a></code> property
+to determine whether the operating system supports system tray icons.
+Using other means (such as <code>Capabilities.os</code>) to determine support can
+lead to programming errors (if some possible target operating systems
+are not considered).</p></div></div></div><h3 class="section">Variables</h3><div class="fields"><div class="field "><a name="activeWindow"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#activeWindow"><span class="identifier">activeWindow</span></a>:<a class="type" title="openfl.display.NativeWindow - The NativeWindow class provides an interface for creating and controlling native desktop windows." href="../../openfl/display/NativeWindow.html">NativeWindow</a></code></h3><div class="doc"><p>The active application window.</p>
+<p>If the active desktop window does not belong to this application, or
+there is no active window, <code>activeWindow</code> is <code>null</code>.</p>
+<p>This property is not supported on platforms that do not support the
+NativeWindow class.</p></div></div><div class="field "><a name="applicationID"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#applicationID"><span class="identifier">applicationID</span></a>:<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>The application ID of this application.</p>
+<p>The value of this ID is set in the application descriptor file.</p></div></div><div class="field "><a name="autoExit"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value(true)</span><a href="#autoExit"><span class="identifier">autoExit</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a><span> = true</span></code></h3><div class="doc"><p>Specifies whether the application should automatically terminate when
+all windows have been closed.</p>
+<p>When <code>autoExit</code> is <code><a href="../../Bool.html">true</a></code>, which is the default, the application
+terminates when all windows are closed. Both <code>exiting</code> and <code>exit</code> events
+are dispatched. When <code>autoExit</code> is <code><a href="../../Bool.html">false</a></code>, you must call
+<code><a href="../../openfl/desktop/NativeApplication.html#exit">NativeApplication.nativeApplication.exit</a>()</code> to terminate the
+application.</p>
+<p>This property is not supported on platforms that do not support the
+<code><a href="../../openfl/display/NativeWindow.html#NativeWindow">NativeWindow</a></code> class.</p></div></div><div class="field "><a name="icon"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value(null)</span><span class="label">read only</span><a href="#icon"><span class="identifier">icon</span></a>:<a class="type" title="openfl.desktop.InteractiveIcon - The InteractiveIcon class is the base class for the operating system icons associated with applications." href="../../openfl/desktop/InteractiveIcon.html">InteractiveIcon</a><span> = null</span></code></h3><div class="doc"><p>The application icon.</p>
+<p><em>OpenFL target support:</em> Not currently supported, except when targeting AIR.</p>
+<p>Use <code><a href="../../openfl/desktop/NativeApplication.html#supportsDockIcon">NativeApplication.supportsDockIcon</a></code> and
+<code><a href="../../openfl/desktop/NativeApplication.html#supportsSystemTrayIcon">NativeApplication.supportsSystemTrayIcon</a></code> to determine the icon class.
+The type will be one of the subclasses of InteractiveIcon. On macOS,
+<code><a href="../../openfl/desktop/NativeApplication.html#icon">NativeApplication.icon</a></code> is an object of type DockIcon. On Windows,
+<code><a href="../../openfl/desktop/NativeApplication.html#icon">NativeApplication.icon</a></code> is an object of type SystemTrayIcon. When an
+application icon is not supported, <code><a href="../../openfl/desktop/NativeApplication.html#supportsDockIcon">NativeApplication.supportsDockIcon</a></code>
+and <code><a href="../../openfl/desktop/NativeApplication.html#supportsSystemTrayIcon">NativeApplication.supportsSystemTrayIcon</a></code> are both <code><a href="../../Bool.html">false</a></code> and the
+<code>icon</code> property is <code>null</code>.</p>
+<p>The <code>icon</code> object is automatically created, but it is not initialized
+with image data. On some operating systems, such as macOS, a default
+image is supplied. On others, such as Windows, the icon is not displayed
+unless image data is assigned to it. To assign an icon image, set the
+<code>icon.bitmaps</code> property with an array containing at least one BitmapData
+object. If more than one BitmapData object is included in the array,
+then the operating system chooses the image that is closest in size to
+the icon's display dimensions, scaling the image if necessary.</p></div></div><div class="field "><a name="isCompiledAOT"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#isCompiledAOT"><span class="identifier">isCompiledAOT</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>In Adobe AIR, when targeting iOS, this property indicates if the
+application was compiled AOT or if code is using the slower interpreter
+without JIT. On all other platforms and operating systems, this
+property returns <code><a href="../../Bool.html">false</a></code>.</p></div></div><div class="field "><a name="openedWindows"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#openedWindows"><span class="identifier">openedWindows</span></a>:<a class="type" title="Array - An Array is a storage for values." href="../../Array.html">Array</a>&lt;<a class="type" title="openfl.display.NativeWindow - The NativeWindow class provides an interface for creating and controlling native desktop windows." href="../../openfl/display/NativeWindow.html">NativeWindow</a>&gt;</code></h3><div class="doc"><p>An array containing all the open native windows of this application.</p>
+<p>This property is not supported on platforms that do not support the
+NativeWindow class.</p></div></div><div class="field "><a name="startAtLogin"></a><h3 class="anchor"><code><a href="#startAtLogin"><span class="identifier">startAtLogin</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Specifies whether this application is automatically launched whenever
+the current user logs in.</p>
+<p>You can test for support at run time using the
+<code><a href="../../openfl/desktop/NativeApplication.html#supportsStartAtLogin">NativeApplication.supportsStartAtLogin</a></code> property.</p>
+<p><em>OpenFL target support:</em> Not currently supported, except when targeting AIR.</p>
+<p><em>Adobe AIR profile support:</em> This feature is supported on all desktop
+operating systems, but is not supported on mobile devices or AIR for
+TV devices. See
+<a href="http://help.adobe.com/en_US/air/build/WS144092a96ffef7cc16ddeea2126bb46b82f-8000.html">AIR Profile Support</a>
+for more information regarding API support across multiple profiles.</p>
+<p>The <code>startAtLogin</code> property reflects the status of the
+operating-system-defined mechanism for designating that an application
+should start automatically when a user logs in. The user can change the
+status manually by using the operating system user interface. This
+property reflects the current status, whether the status was last
+changed by the application or by the operating system.</p><p class="javadoc">See also:</p><ul><li><div class="inline-content"><p><code><a href="../../openfl/desktop/NativeApplication.html#supportsStartAtLogin">NativeApplication.supportsStartAtLogin</a></code></p></div></li></ul></div></div></div><h3 class="section">Methods</h3><div class="fields"><div class="field "><a name="exit"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ code : 0 })</span><a href="#exit"><span class="identifier">exit</span></a>(<span style="white-space:nowrap">code:<a class="type" title="Int - The standard Int type." href="../../Int.html">Int</a> = 0</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Terminates this application.</p>
+<p>The call to the <code>exit()</code> method will return; the shutdown sequence does
+not begin until the currently executing code (such as a current event
+handler) has completed. Pending asynchronous operations are canceled and
+may or may not complete.</p>
+<p>Note that an <code>exiting</code> event is not dispatched. If an <code>exiting</code> event is
+required by application logic, call
+<code><a href="../../openfl/desktop/NativeApplication.html#dispatchEvent">NativeApplication.nativeApplication.dispatchEvent</a>()</code>, passing in an
+<code><a href="../../openfl/events/Event.html#Event">Event</a></code> object of type <code>exiting</code>. For any open windows, <code><a href="../../openfl/display/NativeWindow.html#NativeWindow">NativeWindow</a></code>
+objects do dispatch <code>closing</code> and <code>close</code> events. Calling the
+<code>preventDefault()</code> method of <code>closing</code> event object prevents the
+application from exiting.</p>
+<p><strong>Note:</strong> This method is not supported on the iOS operating system.</p></div></div><div class="field "><a name="isSetAsDefaultApplication"></a><h3 class="anchor"><code><a href="#isSetAsDefaultApplication"><span class="identifier">isSetAsDefaultApplication</span></a>(<span style="white-space:nowrap">extension:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Specifies whether this application is currently the default application
+for opening files with the specified extension.</p>
+<p>You can test for support at run time using the
+<code><a href="../../openfl/desktop/NativeApplication.html#supportsDefaultApplication">NativeApplication.supportsDefaultApplication</a></code> property.</p>
+<p><em>OpenFL target support:</em> Not currently supported, except when targeting AIR.</p>
+<p><em>Adobe AIR profile support:</em> This feature is supported on all desktop
+operating systems, but is not supported on mobile devices or AIR for TV
+devices. See
+<a href="http://help.adobe.com/en_US/air/build/WS144092a96ffef7cc16ddeea2126bb46b82f-8000.html">AIR Profile Support</a>
+for more information regarding API support across multiple profiles.</p></div></div><div class="field "><a name="removeAsDefaultApplication"></a><h3 class="anchor"><code><a href="#removeAsDefaultApplication"><span class="identifier">removeAsDefaultApplication</span></a>(<span style="white-space:nowrap">extension:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Removes this application as the default for opening files with the
+specified extension.</p>
+<p><em>OpenFL target support:</em> Not currently supported, except when targeting AIR.</p>
+<p><strong>Note:</strong> This method can only be used with file types listed in the
+fileTypes statement in the application descriptor.</p></div></div><div class="field "><a name="setAsDefaultApplication"></a><h3 class="anchor"><code><a href="#setAsDefaultApplication"><span class="identifier">setAsDefaultApplication</span></a>(<span style="white-space:nowrap">extension:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Sets this application as the default application for opening files with
+the specified extension.</p>
+<p><em>OpenFL target support:</em> Not currently supported, except when targeting AIR.</p>
+<p><strong>Note:</strong> This method can only be used with file types declared in the
+fileTypes statement in the application descriptor.</p></div></div></div>  <div class="inherited-fields well"><h3 class="section">Inherited Variables</h3><div class="fields"><div style="display:none"></div></div><h3 class="section">Inherited Methods</h3><div class="fields"><h4><a href="#" class="expand-button"><i class="fa fa-arrow-circle-o-right"></i></a> Defined by <a class="type" title="openfl.events.EventDispatcher - The EventDispatcher class is the base class for all classes that dispatch events." href="../../openfl/events/EventDispatcher.html">EventDispatcher</a></h4><div style="display:none"><div class="field "><a name="addEventListener"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ useWeakReference : false, priority : 0, useCapture : false })</span><a href="#addEventListener"><span class="identifier">addEventListener</span></a>&lt;<span class="type">T</span>&gt;(<span style="white-space:nowrap">type:<a class="type" title="openfl.events.EventType - The EventType abstract type provides type safety when matching dispatch events with the correct type of listener For example, the following code has the wrong type in the event listener, it should be a MouseEvent: addEventListener(MouseEvent." href="../../openfl/events/EventType.html">EventType</a>&lt;<span class="type">T</span>&gt;,</span> <span style="white-space:nowrap">listener:<span class="type">T</span>&nbsp;&#8209;&gt;&nbsp;<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a>,</span> <span style="white-space:nowrap">useCapture:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false,</span> <span style="white-space:nowrap">priority:<a class="type" title="Int - The standard Int type." href="../../Int.html">Int</a> = 0,</span> <span style="white-space:nowrap">useWeakReference:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Registers an event listener object with an EventDispatcher object so that
+the listener receives notification of an event. You can register event
+listeners on all nodes in the display list for a specific type of event,
+phase, and priority.</p>
+<p>After you successfully register an event listener, you cannot change
+its priority through additional calls to <code>addEventListener()</code>.
+To change a listener's priority, you must first call
+<code>removeListener()</code>. Then you can register the listener again
+with the new priority level.</p>
+<p>Keep in mind that after the listener is registered, subsequent calls to
+<code>addEventListener()</code> with a different <code>type</code> or
+<code>useCapture</code> value result in the creation of a separate
+listener registration. For example, if you first register a listener with
+<code>useCapture</code> set to <code><a href="../../Bool.html">true</a></code>, it listens only during
+the capture phase. If you call <code>addEventListener()</code> again using
+the same listener object, but with <code>useCapture</code> set to
+<code><a href="../../Bool.html">false</a></code>, you have two separate listeners: one that listens
+during the capture phase and another that listens during the target and
+bubbling phases.</p>
+<p>You cannot register an event listener for only the target phase or the
+bubbling phase. Those phases are coupled during registration because
+bubbling applies only to the ancestors of the target node.</p>
+<p>If you no longer need an event listener, remove it by calling
+<code>removeEventListener()</code>, or memory problems could result. Event
+listeners are not automatically removed from memory because the garbage
+collector does not remove the listener as long as the dispatching object
+exists(unless the <code>useWeakReference</code> parameter is set to
+<code><a href="../../Bool.html">true</a></code>).</p>
+<p>Copying an EventDispatcher instance does not copy the event listeners
+attached to it.(If your newly created node needs an event listener, you
+must attach the listener after creating the node.) However, if you move an
+EventDispatcher instance, the event listeners attached to it move along
+with it.</p>
+<p>If the event listener is being registered on a node while an event is
+being processed on this node, the event listener is not triggered during
+the current phase but can be triggered during a later phase in the event
+flow, such as the bubbling phase.</p>
+<p>If an event listener is removed from a node while an event is being
+processed on the node, it is still triggered by the current actions. After
+it is removed, the event listener is never invoked again(unless
+registered again for future processing).</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>type</code></th><td><p>The type of event.</p></td></tr><tr><th style="width:25%;"><code>useCapture</code></th><td><p>Determines whether the listener works in the
+capture phase or the target and bubbling phases.
+If <code>useCapture</code> is set to
+<code><a href="../../Bool.html">true</a></code>, the listener processes the
+event only during the capture phase and not in the
+target or bubbling phase. If
+<code>useCapture</code> is <code><a href="../../Bool.html">false</a></code>, the
+listener processes the event only during the
+target or bubbling phase. To listen for the event
+in all three phases, call
+<code>addEventListener</code> twice, once with
+<code>useCapture</code> set to <code><a href="../../Bool.html">true</a></code>,
+then again with <code>useCapture</code> set to
+<code><a href="../../Bool.html">false</a></code>.</p></td></tr><tr><th style="width:25%;"><code>priority</code></th><td><p>The priority level of the event listener. The
+priority is designated by a signed 32-bit integer.
+The higher the number, the higher the priority.
+All listeners with priority <em>n</em> are processed
+before listeners of priority <em>n</em>-1. If two or
+more listeners share the same priority, they are
+processed in the order in which they were added.
+The default priority is 0.</p></td></tr><tr><th style="width:25%;"><code>useWeakReference</code></th><td><p>Determines whether the reference to the listener
+is strong or weak. A strong reference(the
+default) prevents your listener from being
+garbage-collected. A weak reference does not.</p>
+<p>Class-level member functions are not subject to
+garbage collection, so you can set
+<code>useWeakReference</code> to <code><a href="../../Bool.html">true</a></code>
+for class-level member functions without
+subjecting them to garbage collection. If you set
+<code>useWeakReference</code> to <code><a href="../../Bool.html">true</a></code>
+for a listener that is a nested inner function,
+the function will be garbage-collected and no
+longer persistent. If you create references to the
+inner function(save it in another variable) then
+it is not garbage-collected and stays
+persistent.</p>
+<p>Weak references are supported on some OpenFL
+targets only, including html5, cpp, and
+flash/air. On other targets, this parameter is
+ignored, and the reference will be strong instead.</p></td></tr></table><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>ArgumentError</code></th><td><p>The <code>listener</code> specified is not a
+function.</p></td></tr></table></div></div><div class="field "><a name="dispatchEvent"></a><h3 class="anchor"><code><a href="#dispatchEvent"><span class="identifier">dispatchEvent</span></a>(<span style="white-space:nowrap">event:<a class="type" title="openfl.events.Event - The Event class is used as the base class for the creation of Event objects, which are passed as parameters to event listeners when an event occurs." href="../../openfl/events/Event.html">Event</a></span>):<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Dispatches an event into the event flow. The event target is the
+EventDispatcher object upon which the <code>dispatchEvent()</code> method
+is called.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>event</code></th><td><p>The Event object that is dispatched into the event flow. If
+the event is being redispatched, a clone of the event is
+created automatically. After an event is dispatched, its
+<code>target</code> property cannot be changed, so you must
+create a new copy of the event for redispatching to work.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>A value of <code><a href="../../Bool.html">true</a></code> if the event was successfully
+dispatched. A value of <code><a href="../../Bool.html">false</a></code> indicates failure or
+that <code>preventDefault()</code> was called on the event.</p></div><p class="javadoc">Throws:</p><table class="table table-bordered params"><tr class="indent"><th style="width:25%;"><code>Error</code></th><td><p>The event dispatch recursion limit has been reached.</p></td></tr></table></div></div><div class="field "><a name="hasEventListener"></a><h3 class="anchor"><code><a href="#hasEventListener"><span class="identifier">hasEventListener</span></a>(<span style="white-space:nowrap">type:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Checks whether the EventDispatcher object has any listeners registered for
+a specific type of event. This allows you to determine where an
+EventDispatcher object has altered handling of an event type in the event
+flow hierarchy. To determine whether a specific event type actually
+triggers an event listener, use <code>willTrigger()</code>.</p>
+<p>The difference between <code>hasEventListener()</code> and
+<code>willTrigger()</code> is that <code>hasEventListener()</code>
+examines only the object to which it belongs, whereas
+<code>willTrigger()</code> examines the entire event flow for the event
+specified by the <code>type</code> parameter.</p>
+<p>When <code>hasEventListener()</code> is called from a LoaderInfo
+object, only the listeners that the caller can access are considered.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>type</code></th><td><p>The type of event.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>A value of <code><a href="../../Bool.html">true</a></code> if a listener of the specified type
+is registered; <code><a href="../../Bool.html">false</a></code> otherwise.</p></div></div></div><div class="field "><a name="removeEventListener"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ useCapture : false })</span><a href="#removeEventListener"><span class="identifier">removeEventListener</span></a>&lt;<span class="type">T</span>&gt;(<span style="white-space:nowrap">type:<a class="type" title="openfl.events.EventType - The EventType abstract type provides type safety when matching dispatch events with the correct type of listener For example, the following code has the wrong type in the event listener, it should be a MouseEvent: addEventListener(MouseEvent." href="../../openfl/events/EventType.html">EventType</a>&lt;<span class="type">T</span>&gt;,</span> <span style="white-space:nowrap">listener:<span class="type">T</span>&nbsp;&#8209;&gt;&nbsp;<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a>,</span> <span style="white-space:nowrap">useCapture:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>):<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Removes a listener from the EventDispatcher object. If there is no
+matching listener registered with the EventDispatcher object, a call to
+this method has no effect.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>type</code></th><td><p>The type of event.</p></td></tr><tr><th style="width:25%;"><code>useCapture</code></th><td><p>Specifies whether the listener was registered for the
+capture phase or the target and bubbling phases. If the
+listener was registered for both the capture phase and
+the target and bubbling phases, two calls to
+<code>removeEventListener()</code> are required to
+remove both, one call with <code>useCapture()</code> set
+to <code><a href="../../Bool.html">true</a></code>, and another call with
+<code>useCapture()</code> set to <code><a href="../../Bool.html">false</a></code>.</p></td></tr></table></div></div><div class="field "><a name="toString"></a><h3 class="anchor"><code><a href="#toString"><span class="identifier">toString</span></a>():<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p></p></div></div><div class="field "><a name="willTrigger"></a><h3 class="anchor"><code><a href="#willTrigger"><span class="identifier">willTrigger</span></a>(<span style="white-space:nowrap">type:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Checks whether an event listener is registered with this EventDispatcher
+object or any of its ancestors for the specified event type. This method
+returns <code><a href="../../Bool.html">true</a></code> if an event listener is triggered during any
+phase of the event flow when an event of the specified type is dispatched
+to this EventDispatcher object or any of its descendants.</p>
+<p>The difference between the <code>hasEventListener()</code> and the
+<code>willTrigger()</code> methods is that <code>hasEventListener()</code>
+examines only the object to which it belongs, whereas the
+<code>willTrigger()</code> method examines the entire event flow for the
+event specified by the <code>type</code> parameter.</p>
+<p>When <code>willTrigger()</code> is called from a LoaderInfo object,
+only the listeners that the caller can access are considered.</p><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>type</code></th><td><p>The type of event.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>A value of <code><a href="../../Bool.html">true</a></code> if a listener of the specified type
+will be triggered; <code><a href="../../Bool.html">false</a></code> otherwise.</p></div></div></div></div></div></div></div></div></div></div><footer class="section site-footer" style="background:#FAFAFA"><div class="container"><div class="copyright"><p style="color:#000000">&copy; 2024 &nbsp;</p></div></div></footer><script src="../../highlighter.js"></script><link href="../../highlighter.css" rel="stylesheet"/></body></html>

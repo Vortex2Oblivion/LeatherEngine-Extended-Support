@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><!-- use theme color or fallback -->
+<!--use textcolor from settings, otherwise create a contrasting color to theme color-->
+<head><meta charset="utf-8"/><link href="../../bootstrap/css/bootstrap.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet"/><link href="../../bootstrap/css/bootstrap-select.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic" rel="stylesheet" type="text/css"/><link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,600italic,400" rel="stylesheet" type="text/css"/><link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet" type="text/css"/><script src="../../jquery-3.6.0.min.js"></script><script src="../../bootstrap/js/bootstrap.min.js"></script><script src="../../bootstrap/js/bootstrap-select.min.js"></script><link href="../../styles.css" rel="stylesheet"/><link href="../../extra-styles.css" rel="stylesheet"/><link href="../../haxe-nav.css" rel="stylesheet"/><link href="../../dark-mode.css" rel="stylesheet"/><script>var dox = {rootPath: "../../",platforms: ["doc"]};</script><script src="../../nav.js"></script><script src="../../index.js"></script><link rel="icon" href="../../favicon.ico" type="image/x-icon"/><title>openfl.events.SampleDataEvent - Leather Engine Documentation</title><meta name="description" content="Dispatched when a Sound object requests new audio data or when a
+Microphone object has new audio data to provide.
+This event has two uses:"/></head><body><script>/* Here to prevent flash of unstyled content */let systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;if ((!localStorage.theme && systemDarkMode) || localStorage.theme == "dark") {document.body.style.backgroundColor = "#111";document.body.style.opacity = "0";document.addEventListener("DOMContentLoaded", function(event) {toggleTheme();document.body.style.backgroundColor = "";document.body.style.opacity = "";});}</script><style>
+.navbar .brand {
+	display: inline-block;
+	float: none;
+	text-shadow: 0 0 0 transparent;
+}
+</style><nav class="nav"><div class="navbar"><div class="navbar-inner" style="background:#FAFAFA; border-bottom:1px solid rgba(0,0,0,.09)"><div class="container"><a class="brand" style="color:#000000" href="../../">Leather Engine Documentation</a><a href="#" id="theme-toggle" class="brand" style="color:#000000" onclick="toggleTheme()" title="Toggle Dark Mode"><i class="fa fa-moon-o"></i></a></div></div></div></nav><div class="container main-content"><div class="row-fluid"><div class="span3"><div class="well sidebar-nav"><form class="form-search" id="searchForm"><div class="input-prepend input-block-level"><span class="add-on"><i class="fa fa-search"></i></span><input id="search" type="text" placeholder="Filter (Ctrl+P)" autocomplete="off"/></div></form></div><div class="well sidebar-nav" id="explorer"><div id="nav"></div></div></div><div class="span9"><div class="page-header"><h1><small>class</small> SampleDataEvent</h1><h4><small>package <a href="../../openfl/events/index.html">openfl.events</a></small></h4><h4><small>extends <a class="type" title="openfl.events.Event - The Event class is used as the base class for the creation of Event objects, which are passed as parameters to event listeners when an event occurs." href="../../openfl/events/Event.html">Event</a></small></h4>    <span class="label label-meta label-meta-directlyUsed" title="Marks types that are directly referenced by non-extern code.">@:directlyUsed</span><span class="label label-meta label-meta-fileXml" title="Include a given XML attribute snippet in the `Build.xml` entry for the file.">@:fileXml(&quot;tags=\&quot;haxe,release\&quot;&quot;)</span><span class="label label-meta label-meta-noDebug" title="Does not generate debug information even if `--debug` is set.">@:noDebug</span></div><div class="body"><div class="doc doc-main"><p>Dispatched when a Sound object requests new audio data or when a
+Microphone object has new audio data to provide.
+This event has two uses:</p><ul><li>To provide dynamically generated audio data for a Sound object</li><li>To get audio data for a Microphone object</li></ul>
+<p><strong>Dynamically generating audio using the Sound object</strong> Use the
+<code>sampleData</code> event to play dynamically generated audio. In this
+environment, the Sound object doesn't actually contain sound data.
+Instead, it acts as a socket for sound data that is being streamed to it
+through the use of the function you assign as the handler for the
+<code>sampleData</code> event.</p>
+<p>In your function, you use the <code><a href="../../openfl/utils/ByteArray.html#writeFloat">ByteArray.writeFloat</a>()</code> method to write to
+the event's <code>data</code>) property, which contains the sampled data you want to
+play.</p>
+<p>If a Sound object has not loaded an MP3 file, when you call its <code>play()</code>
+method the object starts dispatching <code>sampleData</code> events, requesting sound
+samples. The Sound object continues to send events as the sound plays back
+until you stop providing data, or until the <code>stop()</code> method of the
+SoundChannel object is called.</p>
+<p>Thes latency of the event varies from platform to platform, and it could
+change in future versions of Flash Player or AIR. Don't depend on a
+specific latency. Instead calculate it using
+<code>((<a href="../../openfl/events/SampleDataEvent.html#position">SampleDataEvent.position</a>/44.1) - SoundChannelObject.position)</code>.</p>
+<p>Provide between 2048 and 8192 samples to the <code>data</code> property of the
+SampleDataEvent object. For best performance, provide as many samples as
+possible. The fewer samples you provide, the more likely it is that clicks
+and pops will occur during playback. This behavior can differ on various
+platforms and can occur in various situations - for example, when resizing
+the browser. You might write code that works on one platform when you
+provide only 2048 samples, but that same code might not work as well when
+run on a different platform. If you require the lowest latency possible,
+consider making the amount of data user-selectable.</p>
+<p>If you provide fewer than 2048 samples, tha Sound object plays the
+remaining samples and then stops the sound as if the end of a sound file
+was reached, generating a <code>complete</code> event.</p>
+<p>You can use the <code>extract()</code> method of a Sound object to extract its sound
+data, which you can then write to the dynamic stream for playback.</p>
+<p>When you use the <code>sampleData</code> event with a Sound object, the only Sound
+methods that are enabled are <code>extract()</code> and <code>play()</code>. Calling any other
+methods or properties results in an "invalid call" exception. All methods
+and properties of the SoundChannel object are still enabled.</p>
+<p><strong>Capturing Microphone audio</strong> Use the <code>sampleData</code> event to capture audio
+data from a microphone. When you add an event listener for the
+<code>sampleData</code> event, the Microphone dispatches the event as audio samples
+become available.</p>
+<p>In the event handler function, use the <code><a href="../../openfl/utils/ByteArray.html#readFloat">ByteArray.readFloat</a>()</code> method to
+read the event's <code>data</code>) property, which contains the sampled data. The
+event will contain multiple samples, so you should use a <code>while</code> loop to
+read the available data:</p>
+<pre><code class="prettyprint haxe">var soundBytes = new ByteArray();
+while(event.data.bytesAvailable) {
+	var sample = event.data.readFloat();
+	soundBytes.writeFloat(sample);
+}</code></pre></div><h3 class="section">Static variables</h3><div class="fields"><div class="field "><a name="SAMPLE_DATA"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value(&quot;sampleData&quot;)</span><span class="label label-static">static</span><span class="label label-inline">inline</span><span class="label">read only</span><a href="#SAMPLE_DATA"><span class="identifier">SAMPLE_DATA</span></a>:<a class="type" title="openfl.events.EventType - The EventType abstract type provides type safety when matching dispatch events with the correct type of listener For example, the following code has the wrong type in the event listener, it should be a MouseEvent: addEventListener(MouseEvent." href="../../openfl/events/EventType.html">EventType</a>&lt;<a class="type" title="openfl.events.SampleDataEvent - Dispatched when a Sound object requests new audio data or when a Microphone object has new audio data to provide." href="../../openfl/events/SampleDataEvent.html">SampleDataEvent</a>&gt;<span> = &quot;sampleData&quot;</span></code></h3><div class="doc"><p>Defines the value of the <code>type</code> property of a <code><a href="../../openfl/events/SampleDataEvent.html#SampleDataEvent">SampleDataEvent</a></code> event
+object.
+This event has the following properties:</p><table><thead><th>Property</th><th>Value</th></thead><tbody><tr><td><code>bubbles</code></td><td><code><a href="../../Bool.html">false</a></code></td></tr><tr><td><code>cancelable</code></td><td><code><a href="../../Bool.html">false</a></code>; there is no default behavior to cancel.</td></tr><tr><td><code>position</code></td><td>The point from which audio data is provided.</td></tr></tbody></table></div></div></div><h3 class="section">Constructor</h3><div class="fields"><div class="field "><a name="new"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ cancelable : false, bubbles : false })</span><a href="#new"><span class="identifier">new</span></a>(<span style="white-space:nowrap">type:<a class="type" title="String - The basic String class." href="../../String.html">String</a>,</span> <span style="white-space:nowrap">bubbles:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false,</span> <span style="white-space:nowrap">cancelable:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a> = false</span>)</code></h3><div class="doc"><p></p></div></div></div><h3 class="section">Variables</h3><div class="fields"><div class="field "><a name="data"></a><h3 class="anchor"><code><span class="label label-meta label-meta-keep" title="Causes a field or type to be kept by DCE.">@:keep</span><a href="#data"><span class="identifier">data</span></a>:<a class="type" title="openfl.utils.ByteArray - The ByteArray class provides methods and properties to optimize reading, writing, and working with binary data." href="../../openfl/utils/ByteArray.html">ByteArray</a></code></h3><div class="doc"><p>The data in the audio stream.</p></div></div><div class="field "><a name="position"></a><h3 class="anchor"><code><span class="label label-meta label-meta-keep" title="Causes a field or type to be kept by DCE.">@:keep</span><a href="#position"><span class="identifier">position</span></a>:<a class="type" title="Float - The standard Float type, this is a double-precision IEEE 64bit float." href="../../Float.html">Float</a></code></h3><div class="doc"><p>The position of the data in the audio stream.</p></div></div></div><h3 class="section">Methods</h3><div class="fields"></div>  <div class="inherited-fields well"><h3 class="section">Inherited Variables</h3><div class="fields"><h4><a href="#" class="expand-button"><i class="fa fa-arrow-circle-o-right"></i></a> Defined by <a class="type" title="openfl.events.Event - The Event class is used as the base class for the creation of Event objects, which are passed as parameters to event listeners when an event occurs." href="../../openfl/events/Event.html">Event</a></h4><div style="display:none"><div class="field "><a name="bubbles"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#bubbles"><span class="identifier">bubbles</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether an event is a bubbling event. If the event can bubble,
+this value is <code><a href="../../Bool.html">true</a></code>; otherwise it is <code><a href="../../Bool.html">false</a></code>.</p>
+<p>When an event occurs, it moves through the three phases of the event
+flow: the capture phase, which flows from the top of the display list
+hierarchy to the node just before the target node; the target phase, which
+comprises the target node; and the bubbling phase, which flows from the
+node subsequent to the target node back up the display list hierarchy.</p>
+<p>Some events, such as the <code>activate</code> and <code>unload</code>
+events, do not have a bubbling phase. The <code>bubbles</code> property
+has a value of <code><a href="../../Bool.html">false</a></code> for events that do not have a bubbling
+phase.</p></div></div><div class="field "><a name="cancelable"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#cancelable"><span class="identifier">cancelable</span></a>:<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Indicates whether the behavior associated with the event can be prevented.
+If the behavior can be canceled, this value is <code><a href="../../Bool.html">true</a></code>;
+otherwise it is <code><a href="../../Bool.html">false</a></code>.</p></div></div><div class="field "><a name="currentTarget"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#currentTarget"><span class="identifier">currentTarget</span></a>:<a class="type" title="openfl.utils.Object" href="../../openfl/utils/Object.html">Object</a></code></h3><div class="doc"><p>The object that is actively processing the Event object with an event
+listener. For example, if a user clicks an OK button, the current target
+could be the node containing that button or one of its ancestors that has
+registered an event listener for that event.</p></div></div><div class="field "><a name="eventPhase"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#eventPhase"><span class="identifier">eventPhase</span></a>:<a class="type" title="openfl.events.EventPhase - The EventPhase class provides values for the eventPhase property of the Event class." href="../../openfl/events/EventPhase.html">EventPhase</a></code></h3><div class="doc"><p>The current phase in the event flow. This property can contain the
+following numeric values:</p><ul><li>The capture phase(<code><a href="../../openfl/events/EventPhase.html#CAPTURING_PHASE">EventPhase.CAPTURING_PHASE</a></code>).</li><li>The target phase(<code><a href="../../openfl/events/EventPhase.html#AT_TARGET">EventPhase.AT_TARGET</a></code>).</li><li>The bubbling phase(<code><a href="../../openfl/events/EventPhase.html#BUBBLING_PHASE">EventPhase.BUBBLING_PHASE</a></code>).</li></ul></div></div><div class="field "><a name="target"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#target"><span class="identifier">target</span></a>:<a class="type" title="openfl.utils.Object" href="../../openfl/utils/Object.html">Object</a></code></h3><div class="doc"><p>The event target. This property contains the target node. For example, if
+a user clicks an OK button, the target node is the display list node
+containing that button.</p></div></div><div class="field "><a name="type"></a><h3 class="anchor"><code><span class="label">read only</span><a href="#type"><span class="identifier">type</span></a>:<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>The type of event. The type is case-sensitive.</p></div></div></div></div><h3 class="section">Inherited Methods</h3><div class="fields"><h4><a href="#" class="expand-button"><i class="fa fa-arrow-circle-o-right"></i></a> Defined by <a class="type" title="openfl.events.Event - The Event class is used as the base class for the creation of Event objects, which are passed as parameters to event listeners when an event occurs." href="../../openfl/events/Event.html">Event</a></h4><div style="display:none"><div class="field "><a name="formatToString"></a><h3 class="anchor"><code><span class="label label-meta label-meta-value" title="Used to store default values for fields and function arguments.">@:value({ p5 : null, p4 : null, p3 : null, p2 : null, p1 : null })</span><a href="#formatToString"><span class="identifier">formatToString</span></a>(<span style="white-space:nowrap">className:<a class="type" title="String - The basic String class." href="../../String.html">String</a>,</span> <span style="white-space:nowrap">?p1:<a class="type" title="String - The basic String class." href="../../String.html">String</a>,</span> <span style="white-space:nowrap">?p2:<a class="type" title="String - The basic String class." href="../../String.html">String</a>,</span> <span style="white-space:nowrap">?p3:<a class="type" title="String - The basic String class." href="../../String.html">String</a>,</span> <span style="white-space:nowrap">?p4:<a class="type" title="String - The basic String class." href="../../String.html">String</a>,</span> <span style="white-space:nowrap">?p5:<a class="type" title="String - The basic String class." href="../../String.html">String</a></span>):<a class="type" title="String - The basic String class." href="../../String.html">String</a></code></h3><div class="doc"><p>A utility function for implementing the <code>toString()</code> method in custom
+ActionScript 3.0 Event classes. Overriding the <code>toString()</code> method is
+recommended, but not required.</p>
+<pre><code class="prettyprint haxe">class PingEvent extends Event {
+	var URL:String;
+
+	public function new() {
+		super();
+	}
+
+	public override function toString():String {
+		return formatToString("PingEvent", "type", "bubbles", "cancelable", "eventPhase", "URL");
+	}
+}</code></pre><p class="javadoc">Parameters:</p><table class="table table-bordered params"><tr><th style="width:25%;"><code>className</code></th><td><p>The name of your custom Event class. In the previous
+example, the <code>className</code> parameter is <code>PingEvent</code>.</p></td></tr></table><p class="javadoc">Returns:</p><div class="indent inline-content"><p>The name of your custom Event class and the String value of
+your <code>...arguments</code> parameter.</p></div></div></div><div class="field "><a name="isDefaultPrevented"></a><h3 class="anchor"><code><a href="#isDefaultPrevented"><span class="identifier">isDefaultPrevented</span></a>():<a class="type" title="Bool - The standard Boolean type, which can either be true or false." href="../../Bool.html">Bool</a></code></h3><div class="doc"><p>Checks whether the <code>preventDefault()</code> method has been called on
+the event. If the <code>preventDefault()</code> method has been called,
+returns <code><a href="../../Bool.html">true</a></code>; otherwise, returns <code><a href="../../Bool.html">false</a></code>.</p><p class="javadoc">Returns:</p><div class="indent inline-content"><p>If <code>preventDefault()</code> has been called, returns
+<code><a href="../../Bool.html">true</a></code>; otherwise, returns <code><a href="../../Bool.html">false</a></code>.</p></div></div></div><div class="field "><a name="preventDefault"></a><h3 class="anchor"><code><a href="#preventDefault"><span class="identifier">preventDefault</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Cancels an event's default behavior if that behavior can be canceled.
+Many events have associated behaviors that are carried out by default. For example, if a user types a character into a text field, the default behavior is that the character is displayed in the text field. Because the <code><a href="../../openfl/events/TextEvent.html#TEXT_INPUT">TextEvent.TEXT_INPUT</a></code> event's default behavior can be canceled, you can use the <code>preventDefault()</code> method to prevent the character from appearing.
+An example of a behavior that is not cancelable is the default behavior associated with the Event.REMOVED event, which is generated whenever Flash Player is about to remove a display object from the display list. The default behavior (removing the element) cannot be canceled, so the <code>preventDefault()</code> method has no effect on this default behavior.
+You can use the <code><a href="../../openfl/events/Event.html#cancelable">Event.cancelable</a></code> property to check whether you can prevent the default behavior associated with a particular event. If the value of <code><a href="../../openfl/events/Event.html#cancelable">Event.cancelable</a></code> is true, then <code>preventDefault()</code> can be used to cancel the event; otherwise, <code>preventDefault()</code> has no effect.</p></div></div><div class="field "><a name="stopImmediatePropagation"></a><h3 class="anchor"><code><a href="#stopImmediatePropagation"><span class="identifier">stopImmediatePropagation</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Prevents processing of any event listeners in the current node and any
+subsequent nodes in the event flow. This method takes effect immediately,
+and it affects event listeners in the current node. In contrast, the
+<code>stopPropagation()</code> method doesn't take effect until all the
+event listeners in the current node finish processing.</p>
+<p><strong>Note: </strong> This method does not cancel the behavior associated with
+this event; see <code>preventDefault()</code> for that functionality.</p></div></div><div class="field "><a name="stopPropagation"></a><h3 class="anchor"><code><a href="#stopPropagation"><span class="identifier">stopPropagation</span></a>():<a class="type" title="Void - The standard Void type." href="../../Void.html">Void</a></code></h3><div class="doc"><p>Prevents processing of any event listeners in nodes subsequent to the
+current node in the event flow. This method does not affect any event
+listeners in the current node(<code>currentTarget</code>). In contrast,
+the <code>stopImmediatePropagation()</code> method prevents processing of
+event listeners in both the current node and subsequent nodes. Additional
+calls to this method have no effect. This method can be called in any
+phase of the event flow.</p>
+<p><strong>Note: </strong> This method does not cancel the behavior associated with
+this event; see <code>preventDefault()</code> for that functionality.</p></div></div></div></div></div></div></div></div></div><footer class="section site-footer" style="background:#FAFAFA"><div class="container"><div class="copyright"><p style="color:#000000">&copy; 2024 &nbsp;</p></div></div></footer><script src="../../highlighter.js"></script><link href="../../highlighter.css" rel="stylesheet"/></body></html>
